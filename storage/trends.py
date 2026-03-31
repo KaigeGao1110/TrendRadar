@@ -118,3 +118,40 @@ def get_all_latest() -> dict:
         if snapshots:
             result[source] = snapshots[0]
     return result
+
+
+def save_digest(digest: dict) -> dict:
+    """Save a generated digest.
+
+    Args:
+        digest: Digest dict with date, type, content.
+
+    Returns:
+        The saved digest with timestamp.
+    """
+    trend_data = _load()
+    if "digests" not in trend_data:
+        trend_data["digests"] = []
+
+    digest["timestamp"] = datetime.now(timezone.utc).isoformat()
+    trend_data["digests"].insert(0, digest)
+    trend_data["digests"] = trend_data["digests"][:100]
+
+    _save(trend_data)
+    return digest
+
+
+def get_latest_digest(digest_type: str = "daily") -> Optional[dict]:
+    """Get the most recent digest of a given type.
+
+    Args:
+        digest_type: "daily" or "weekly".
+
+    Returns:
+        Latest digest dict or None.
+    """
+    trend_data = _load()
+    for d in trend_data.get("digests", []):
+        if d.get("type") == digest_type:
+            return d
+    return None
