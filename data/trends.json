@@ -1,0 +1,284 @@
+{
+  "sources": {
+    "yc": [
+      {
+        "source": "yc",
+        "data": [
+          {
+            "name": "TestYC"
+          }
+        ],
+        "timestamp": "2026-03-31T21:59:12.894062+00:00"
+      },
+      {
+        "source": "yc",
+        "data": [
+          {
+            "name": "TestYC"
+          }
+        ],
+        "timestamp": "2026-03-31T21:58:42.190359+00:00"
+      }
+    ],
+    "producthunt": [
+      {
+        "source": "producthunt",
+        "data": [
+          {
+            "name": "TestPH"
+          }
+        ],
+        "timestamp": "2026-03-31T21:59:12.910513+00:00"
+      },
+      {
+        "source": "producthunt",
+        "data": [
+          {
+            "name": "TestPH"
+          }
+        ],
+        "timestamp": "2026-03-31T21:58:42.205490+00:00"
+      }
+    ],
+    "hackernews": [
+      {
+        "source": "hackernews",
+        "data": [
+          {
+            "title": "Test HN"
+          }
+        ],
+        "timestamp": "2026-03-31T21:59:12.928308+00:00"
+      },
+      {
+        "source": "hackernews",
+        "data": [
+          {
+            "title": "Test HN"
+          }
+        ],
+        "timestamp": "2026-03-31T21:58:42.224328+00:00"
+      }
+    ],
+    "vc_funding": [
+      {
+        "source": "vc_funding",
+        "data": [
+          {
+            "company": "TestVC"
+          }
+        ],
+        "timestamp": "2026-03-31T21:59:12.943531+00:00"
+      },
+      {
+        "source": "vc_funding",
+        "data": [
+          {
+            "company": "TestVC"
+          }
+        ],
+        "timestamp": "2026-03-31T21:58:42.240662+00:00"
+      }
+    ],
+    "test_source": [
+      {
+        "source": "test_source",
+        "data": {
+          "items": [
+            "test1",
+            "test2"
+          ]
+        },
+        "timestamp": "2026-03-31T22:05:10.149839+00:00"
+      },
+      {
+        "source": "test_source",
+        "data": {
+          "items": [
+            "test1",
+            "test2"
+          ]
+        },
+        "timestamp": "2026-03-31T22:04:34.498630+00:00"
+      }
+    ]
+  },
+  "history": [
+    {
+      "source": "test_source",
+      "data": {
+        "items": [
+          "test1",
+          "test2"
+        ]
+      },
+      "timestamp": "2026-03-31T22:05:10.149839+00:00"
+    },
+    {
+      "source": "test_source",
+      "data": {
+        "items": [
+          "test1",
+          "test2"
+        ]
+      },
+      "timestamp": "2026-03-31T22:04:34.498630+00:00"
+    },
+    {
+      "source": "vc_funding",
+      "data": [
+        {
+          "company": "TestVC"
+        }
+      ],
+      "timestamp": "2026-03-31T21:59:12.943531+00:00"
+    },
+    {
+      "source": "hackernews",
+      "data": [
+        {
+          "title": "Test HN"
+        }
+      ],
+      "timestamp": "2026-03-31T21:59:12.928308+00:00"
+    },
+    {
+      "source": "producthunt",
+      "data": [
+        {
+          "name": "TestPH"
+        }
+      ],
+      "timestamp": "2026-03-31T21:59:12.910513+00:00"
+    },
+    {
+      "source": "yc",
+      "data": [
+        {
+          "name": "TestYC"
+        }
+      ],
+      "timestamp": "2026-03-31T21:59:12.894062+00:00"
+    },
+    {
+      "source": "vc_funding",
+      "data": [
+        {
+          "company": "TestVC"
+        }
+      ],
+      "timestamp": "2026-03-31T21:58:42.240662+00:00"
+    },
+    {
+      "source": "hackernews",
+      "data": [
+        {
+          "title": "Test HN"
+        }
+      ],
+      "timestamp": "2026-03-31T21:58:42.224328+00:00"
+    },
+    {
+      "source": "producthunt",
+      "data": [
+        {
+          "name": "TestPH"
+        }
+      ],
+      "timestamp": "2026-03-31T21:58:42.205490+00:00"
+    },
+    {
+      "source": "yc",
+      "data": [
+        {
+          "name": "TestYC"
+        }
+      ],
+      "timestamp": "2026-03-31T21:58:42.190359+00:00"
+    }
+  ],
+  "digests": [
+    {
+      "date": "2026-03-31",
+      "generated_at": "2026-03-31T22:05:09.938305",
+      "sources_count": 4,
+      "sources_fetched": [
+        "ycombinator",
+        "producthunt",
+        "hackernews",
+        "vc_funding"
+      ],
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [
+          {
+            "name": "YC Company"
+          }
+        ],
+        "producthunt": [
+          {
+            "name": "PH Product"
+          }
+        ],
+        "hackernews": [
+          {
+            "title": "HN Story"
+          }
+        ],
+        "vc_funding": [
+          {
+            "company": "VC Company"
+          }
+        ]
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-03-31T22:05:09.947335+00:00"
+    },
+    {
+      "date": "2026-03-31",
+      "period": "2026-03-24 to 2026-03-31",
+      "type": "weekly",
+      "generated_at": "2026-03-31T22:05:10.090064",
+      "sources_count": 0,
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [],
+        "producthunt": [],
+        "hackernews": [],
+        "vc_funding": []
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-03-31T22:05:10.095142+00:00"
+    }
+  ]
+}
