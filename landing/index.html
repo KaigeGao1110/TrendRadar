@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrendRadar — Know What's Hot Before Everyone Else</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-gradient" aria-hidden="true"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="#6366f1" stroke-width="2"/>
+          <circle cx="14" cy="14" r="6" stroke="#22d3ee" stroke-width="2"/>
+          <circle cx="14" cy="14" r="2" fill="#22d3ee"/>
+          <line x1="14" y1="2" x2="14" y2="6" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+          <line x1="14" y1="22" x2="14" y2="26" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+          <line x1="2" y1="14" x2="6" y2="14" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+          <line x1="22" y1="14" x2="26" y2="14" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>TrendRadar</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#how-it-works">How It Works</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">🚀 Now in Early Access</div>
+      <h1 class="hero-headline">Know what's hot<br /><span class="gradient-text">before everyone else.</span></h1>
+      <p class="hero-sub">Real-time VC trend radar. AI-powered. Delivered daily.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" id="ctaBtn">Get Early Access</button>
+        <span class="hero-note">Free to start — no credit card required</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="problem" id="problem">
+    <div class="section-inner">
+      <p class="problem-line">"VC trends are scattered across 10+ platforms"</p>
+      <p class="problem-line problem-line--mid">"By the time you hear about it, 50 others are already building it"</p>
+      <p class="problem-line problem-line--highlight">"You need a real-time radar, not a newsletter"</p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how" id="how-it-works">
+    <div class="section-inner">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>We Scan</h3>
+          <p>We scan YC, Product Hunt, Hacker News, and funding databases daily to surface every signal.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>AI Analyzes</h3>
+          <p>AI analyzes patterns and detects emerging trends across all sources in real time.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>You Build</h3>
+          <p>You get a daily digest — clear, curated insights on what to build next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <h2 class="section-title">Features</h2>
+      <div class="feature-grid">
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3>4 Data Sources</h3>
+          <p>YC batches, Product Hunt launches, Hacker News threads, and live VC funding rounds — all in one place.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h3>AI Trend Analysis</h3>
+          <p>Cross-source pattern detection finds connections and emerging signals humans would miss.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <h3>Daily Digest</h3>
+          <p>Curated trends delivered to your inbox or Slack every morning — read in 2 minutes, stay ahead all day.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </div>
+          <h3>Real-time Alerts</h3>
+          <p>Know about hot trends the moment they emerge — before they hit the mainstream.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="section-inner">
+      <h2 class="section-title">Simple Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <div class="price">$0<span>/mo</span></div>
+          <ul class="pricing-features">
+            <li>✓ &nbsp;Weekly digest</li>
+            <li>✓ &nbsp;2 data sources</li>
+            <li>✓ &nbsp;Email delivery</li>
+            <li class="muted">✗ &nbsp;AI trend analysis</li>
+            <li class="muted">✗ &nbsp;Slack integration</li>
+          </ul>
+          <button class="btn btn-outline">Start Free</button>
+        </div>
+        <div class="pricing-card pricing-card--featured">
+          <div class="featured-badge">Most Popular</div>
+          <h3>Pro</h3>
+          <div class="price">$19<span>/mo</span></div>
+          <ul class="pricing-features">
+            <li>✓ &nbsp;Daily digest</li>
+            <li>✓ &nbsp;All 4 data sources</li>
+            <li>✓ &nbsp;AI trend analysis</li>
+            <li>✓ &nbsp;Slack integration</li>
+            <li>✓ &nbsp;Real-time alerts</li>
+          </ul>
+          <button class="btn btn-primary">Start Free</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="#6366f1" stroke-width="2"/>
+          <circle cx="14" cy="14" r="6" stroke="#22d3ee" stroke-width="2"/>
+          <circle cx="14" cy="14" r="2" fill="#22d3ee"/>
+        </svg>
+        <span>TrendRadar</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <p class="footer-copy">© 2026 TrendRadar. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Email Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h2>Get Early Access</h2>
+      <p>Join founders who already know what's hot. Enter your email:</p>
+      <form id="emailForm">
+        <input type="email" id="emailInput" placeholder="you@example.com" required />
+        <button type="submit" class="btn btn-primary">Request Access</button>
+      </form>
+      <p class="modal-note" id="modalNote"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

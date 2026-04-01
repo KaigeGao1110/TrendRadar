@@ -1,158 +1,181 @@
-"""YC Batch Scraper — fetches companies from latest Y Combinator batches."""
+"""YC Batch Scraper — fetches companies from Y Combinator."""
 
 import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 
-YC_DIRECTORY_URL = "https://www.ycombinator.com/companies"
-
-# Industry/category keywords for categorization
-CATEGORY_KEYWORDS = {
-    "AI/ML": ["ai", "ml", "machine learning", "deep learning", "llm", "gpt", "nlp", "neural", "artificial intelligence", "generative", "automation", "copilot", "chatbot", "nlp", "computer vision"],
-    "Fintech": ["fintech", "finance", "banking", "payments", "crypto", "defi", "trading", "insurance", "lending", "wealth", "investment"],
-    "Healthcare": ["health", "medical", "biotech", "pharma", "telehealth", "wellness", "diagnostic", "clinical", "patient", "hospital", "drug"],
-    "SaaS": ["saas", "software", "b2b", "enterprise", "productivity", "collaboration", "project management", "crm", "erp"],
-    "Developer Tools": ["developer", "devops", "infrastructure", "cloud", "database", "api", "security", "observability", "cicd", "deployment"],
-    "E-commerce": ["ecommerce", "e-commerce", "retail", "marketplace", "shop", "store", "logistics", "fulfillment", "dropshipping"],
-    "Education": ["edtech", "education", "learning", "training", "courses", "school", "university", "tutoring"],
-    "Climate/Tech": ["climate", "energy", "sustainability", "carbon", "solar", "battery", "grid", "nuclear", "ev", "electric vehicle"],
-}
+YC_API_URL = "https://api.ycombinator.com/v0.1/companies"
 
 
 def fetch_latest_batch(batch_name: str = None) -> list[dict]:
     """Fetch companies from a YC batch.
-    
+
+    Uses YC's public API endpoint.
+
     Args:
-        batch_name: e.g. "W24", "S25". If None, fetches latest.
-    
+        batch_name: e.g. "W24", "S25". If None, fetches latest batch.
+
     Returns:
         [{name, one_liner, batch, industry, tags[], url}]
     """
-    # Try to fetch the YC companies page
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        }
-        response = requests.get(YC_DIRECTORY_URL, headers=headers, timeout=15)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-        
-        companies = []
-        # Look for company cards/links on the directory page
-        # YC directory structure changes frequently, so we try multiple selectors
-        company_links = soup.select("a.company-card") or soup.select(".company-name") or soup.select("h5 a")
-        
-        for link in company_links[:50]:
-            try:
-                name = link.get_text(strip=True)
-                href = link.get("href", "")
-                url = f"https://www.ycombinator.com{href}" if href.startswith("/") else href
-                
-                # Try to find one-liner from parent/sibling
-                parent = link.find_parent("div")
-                one_liner = ""
-                if parent:
-                    desc = parent.select_one(".description, .tagline, p")
-                    if desc:
-                        one_liner = desc.get_text(strip=True)
-                
+        # YC's public API returns all companies
+        response = requests.get(
+            YC_API_URL,
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=15,
+        )
+
+        if response.status_code == 200:
+            raw = response.json()
+            # API returns {"companies": [...]} not a list directly
+            data = raw.get("companies", raw) if isinstance(raw, dict) else raw
+            companies = []
+
+            # Determine latest batch if not specified
+            all_batches = set()
+            for company in data:
+                batch = company.get("batch", "")
+                if batch:
+                    all_batches.add(batch)
+
+            if batch_name is None and all_batches:
+                # Sort batches to find latest (W > S for same year, newest year first)
+                def batch_sort_key(b):
+                    year = int(b[1:]) if len(b) > 1 and b[1:].isdigit() else 0
+                    season = 0 if b[0] == "W" else 1  # W before S
+                    return (-year, season)
+                batch_name = sorted(all_batches, key=batch_sort_key)[0]
+
+            for company in data:
+                batch = company.get("batch", "")
+                if batch_name and batch != batch_name:
+                    continue
+
                 companies.append({
-                    "name": name,
-                    "one_liner": one_liner,
-                    "batch": batch_name or "Current",
-                    "industry": _infer_industry(name, one_liner),
-                    "tags": _infer_tags(name, one_liner),
-                    "url": url,
+                    "name": company.get("name", ""),
+                    "one_liner": company.get("oneLiner", company.get("one_liner", "")),
+                    "batch": batch,
+                    "industry": company.get("industries", []),
+                    "tags": company.get("tags", []),
+                    "url": company.get("url", f"https://www.ycombinator.com/companies/{company.get('slug', '')}"),
+                    "team_size": company.get("teamSize", company.get("team_size", 0)),
+                    "status": company.get("status", ""),
                 })
-            except Exception:
-                continue
-        
-        if companies:
-            return companies
+
+            if companies:
+                return companies
     except Exception:
         pass
-    
-    # Fallback: return sample data structure to avoid breaking the pipeline
-    return [
-        {
-            "name": "Sample YC Company",
-            "one_liner": "AI-powered productivity tool for teams",
-            "batch": batch_name or "W25",
-            "industry": "SaaS",
-            "tags": ["AI", "productivity", "B2B"],
-            "url": "https://www.ycombinator.com/companies",
-        }
-    ]
+
+    # Fallback: scrape YC directory page
+    return _scrape_yc_directory(batch_name)
+
+
+def _scrape_yc_directory(batch_name: str = None) -> list[dict]:
+    """Scrape YC directory page as fallback."""
+    try:
+        url = "https://www.ycombinator.com/companies"
+        params = {}
+        if batch_name:
+            params["batch"] = batch_name
+
+        response = requests.get(
+            url,
+            params=params,
+            headers={"User-Agent": "Mozilla/5.0 Chrome/120"},
+            timeout=15,
+        )
+
+        if response.status_code == 200:
+            import json
+            import re
+
+            companies = []
+            # YC embeds company data in JSON within the page
+            for match in re.finditer(r'"companies"\s*:\s*(\[.*?\])', response.text, re.DOTALL):
+                try:
+                    raw_companies = json.loads(match.group(1))
+                    for c in raw_companies:
+                        companies.append({
+                            "name": c.get("name", ""),
+                            "one_liner": c.get("one_liner", c.get("tagline", "")),
+                            "batch": c.get("batch", ""),
+                            "industry": c.get("industries", []),
+                            "tags": c.get("tags", []),
+                            "url": f"https://www.ycombinator.com/companies/{c.get('slug', '')}",
+                            "team_size": c.get("team_size", 0),
+                            "status": c.get("status", ""),
+                        })
+                    if companies:
+                        return companies[:100]
+                except (json.JSONDecodeError, Exception):
+                    continue
+
+            # Alternative: look for Next.js data
+            for match in re.finditer(r'__NEXT_DATA__[^>]*>(.*?)</script>', response.text, re.DOTALL):
+                try:
+                    next_data = json.loads(match.group(1))
+                    props = next_data.get("props", {}).get("pageProps", {})
+                    raw = props.get("companies", props.get("results", []))
+                    if isinstance(raw, list):
+                        for c in raw:
+                            companies.append({
+                                "name": c.get("name", ""),
+                                "one_liner": c.get("one_liner", c.get("tagline", "")),
+                                "batch": c.get("batch_name", c.get("batch", "")),
+                                "industry": c.get("industries", []),
+                                "tags": c.get("tags", []),
+                                "url": f"https://www.ycombinator.com/companies/{c.get('slug', '')}",
+                                "team_size": c.get("team_size", 0),
+                                "status": c.get("status", ""),
+                            })
+                        if companies:
+                            return companies[:100]
+                except (json.JSONDecodeError, Exception):
+                    continue
+    except Exception:
+        pass
+
+    return []
 
 
 def fetch_all_batches_since(year: int = 2024) -> list[dict]:
     """Fetch all companies from batches since a given year."""
-    batches = []
-    current_year = datetime.now().year
-    seasons = ["W", "S"]  # Winter and Summer
-    
-    for y in range(year, current_year + 1):
-        for season in seasons:
-            batch_name = f"{season}{str(y)[2:]}"
-            try:
-                companies = fetch_latest_batch(batch_name)
-                for c in companies:
-                    c["batch"] = batch_name
-                batches.extend(companies)
-            except Exception:
-                continue
-    
-    return batches
+    all_companies = fetch_latest_batch()  # This fetches all, filter by year
+    return [
+        c for c in all_companies
+        if c.get("batch", "") and _batch_year(c["batch"]) >= year
+    ]
+
+
+def _batch_year(batch: str) -> int:
+    """Extract year from batch string like 'W24' -> 2024."""
+    if len(batch) >= 2 and batch[1:].isdigit():
+        year = int(batch[1:])
+        return 2000 + year if year < 100 else year
+    return 0
 
 
 def categorize_companies(companies: list[dict]) -> dict:
-    """Group companies by category/industry and count.
-    
-    Returns: {category: {count: int, companies: [str], examples: [str]}}
-    """
+    """Group companies by category/industry and count."""
     categories: dict = {}
-    
+
     for company in companies:
-        industry = company.get("industry", "Other")
-        if industry not in categories:
-            categories[industry] = {"count": 0, "companies": [], "examples": []}
-        
-        categories[industry]["count"] += 1
-        categories[industry]["companies"].append(company["name"])
-        if len(categories[industry]["examples"]) < 3:
-            categories[industry]["examples"].append(company["name"])
-    
+        industries = company.get("industry", [])
+        if isinstance(industries, str):
+            industries = [industries]
+        if not industries:
+            industries = ["Other"]
+
+        for industry in industries:
+            if industry and isinstance(industry, str):
+                if industry not in categories:
+                    categories[industry] = {"count": 0, "companies": [], "examples": []}
+                categories[industry]["count"] += 1
+                categories[industry]["companies"].append(company["name"])
+                if len(categories[industry]["examples"]) < 3:
+                    categories[industry]["examples"].append(
+                        f"{company['name']}: {company.get('one_liner', '')[:60]}"
+                    )
+
     return categories
-
-
-def _infer_industry(name: str, one_liner: str) -> str:
-    """Infer industry from company name and description."""
-    text = (name + " " + one_liner).lower()
-    
-    for category, keywords in CATEGORY_KEYWORDS.items():
-        for kw in keywords:
-            if kw in text:
-                return category
-    return "Other"
-
-
-def _infer_tags(name: str, one_liner: str) -> list[str]:
-    """Extract tags from name and one-liner."""
-    text = (name + " " + one_liner).lower()
-    tags = []
-    
-    tag_keywords = {
-        "AI": ["ai", "ml", "machine learning", "llm", "gpt", "nlp", "generative", "copilot"],
-        "B2B": ["b2b", "enterprise", "saas", "business", "team", "company"],
-        "B2C": ["b2c", "consumer", "app", "mobile", "personal"],
-        "Fintech": ["fintech", "payment", "banking", "crypto", "trading"],
-        "Health": ["health", "medical", "bio", "patient", "clinic"],
-        "Climate": ["climate", "energy", "carbon", "sustainable", "ev"],
-        "DevTools": ["developer", "api", "devops", "cloud", "security"],
-    }
-    
-    for tag, keywords in tag_keywords.items():
-        if any(kw in text for kw in keywords):
-            tags.append(tag)
-    
-    return tags or ["Other"]

@@ -89,6 +89,26 @@
             "test2"
           ]
         },
+        "timestamp": "2026-04-01T01:53:30.782867+00:00"
+      },
+      {
+        "source": "test_source",
+        "data": {
+          "items": [
+            "test1",
+            "test2"
+          ]
+        },
+        "timestamp": "2026-03-31T23:39:48.910715+00:00"
+      },
+      {
+        "source": "test_source",
+        "data": {
+          "items": [
+            "test1",
+            "test2"
+          ]
+        },
         "timestamp": "2026-03-31T22:05:10.149839+00:00"
       },
       {
@@ -104,6 +124,26 @@
     ]
   },
   "history": [
+    {
+      "source": "test_source",
+      "data": {
+        "items": [
+          "test1",
+          "test2"
+        ]
+      },
+      "timestamp": "2026-04-01T01:53:30.782867+00:00"
+    },
+    {
+      "source": "test_source",
+      "data": {
+        "items": [
+          "test1",
+          "test2"
+        ]
+      },
+      "timestamp": "2026-03-31T23:39:48.910715+00:00"
+    },
     {
       "source": "test_source",
       "data": {
@@ -279,6 +319,773 @@
       },
       "raw_analysis": "Heuristic analysis (no LLM API key configured)",
       "saved_at": "2026-03-31T22:05:10.095142+00:00"
+    },
+    {
+      "date": "2026-03-31",
+      "generated_at": "2026-03-31T23:39:48.808380",
+      "sources_count": 4,
+      "sources_fetched": [
+        "ycombinator",
+        "producthunt",
+        "hackernews",
+        "vc_funding"
+      ],
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [
+          {
+            "name": "YC Company"
+          }
+        ],
+        "producthunt": [
+          {
+            "name": "PH Product"
+          }
+        ],
+        "hackernews": [
+          {
+            "title": "HN Story"
+          }
+        ],
+        "vc_funding": [
+          {
+            "company": "VC Company"
+          }
+        ]
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-03-31T23:39:48.813325+00:00"
+    },
+    {
+      "date": "2026-03-31",
+      "period": "2026-03-24 to 2026-03-31",
+      "type": "weekly",
+      "generated_at": "2026-03-31T23:39:48.879251",
+      "sources_count": 0,
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [],
+        "producthunt": [],
+        "hackernews": [],
+        "vc_funding": []
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-03-31T23:39:48.882647+00:00"
+    },
+    {
+      "date": "2026-04-01",
+      "generated_at": "2026-04-01T01:41:50.811479",
+      "sources_count": 4,
+      "sources_fetched": [
+        "ycombinator",
+        "producthunt",
+        "hackernews",
+        "vc_funding"
+      ],
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [
+          {
+            "name": "Sample YC Company",
+            "one_liner": "AI-powered productivity tool for teams",
+            "batch": "W25",
+            "industry": "SaaS",
+            "tags": [
+              "AI",
+              "productivity",
+              "B2B"
+            ],
+            "url": "https://www.ycombinator.com/companies"
+          }
+        ],
+        "producthunt": [
+          {
+            "name": "Sample Product",
+            "tagline": "AI-powered design tool for teams",
+            "votes": 420,
+            "url": "https://www.producthunt.com",
+            "topics": [
+              "AI",
+              "Design",
+              "SaaS"
+            ],
+            "featured_date": "2026-04-01"
+          }
+        ],
+        "hackernews": [
+          {
+            "id": 47586778,
+            "title": "The Claude Code Source Leak: fake tools, frustration regexes, undercover mode",
+            "url": "https://alex000kim.com/posts/2026-03-31-claude-code-source-leak/",
+            "score": 775,
+            "comments": 324,
+            "time": "2026-03-31T13:04:30",
+            "by": "alex000kim"
+          },
+          {
+            "id": 47541733,
+            "title": "TinyLoRA \u2013 Learning to Reason in 13 Parameters",
+            "url": "https://arxiv.org/abs/2602.04118",
+            "score": 46,
+            "comments": 2,
+            "time": "2026-03-27T12:11:12",
+            "by": "sorenjan"
+          },
+          {
+            "id": 47593285,
+            "title": "Ministack (Replacement for LocalStack)",
+            "url": "https://ministack.org/",
+            "score": 138,
+            "comments": 24,
+            "time": "2026-03-31T20:48:15",
+            "by": "kerblang"
+          },
+          {
+            "id": 47557171,
+            "title": "TruffleRuby",
+            "url": "https://chrisseaton.com/truffleruby/",
+            "score": 23,
+            "comments": 3,
+            "time": "2026-03-28T18:39:39",
+            "by": "tosh"
+          },
+          {
+            "id": 47593556,
+            "title": "A dot a day keeps the clutter away",
+            "url": "https://scottlawsonbc.com/post/dot-system",
+            "score": 130,
+            "comments": 42,
+            "time": "2026-03-31T21:15:01",
+            "by": "scottlawson"
+          },
+          {
+            "id": 47592755,
+            "title": "OpenAI closes funding round at an $852B valuation",
+            "url": "https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html",
+            "score": 326,
+            "comments": 286,
+            "time": "2026-03-31T20:07:30",
+            "by": "surprisetalk"
+          },
+          {
+            "id": 47593422,
+            "title": "Show HN: 1-Bit Bonsai, the First Commercially Viable 1-Bit LLMs",
+            "url": "https://prismml.com/",
+            "score": 87,
+            "comments": 37,
+            "time": "2026-03-31T21:01:18",
+            "by": "PrismML"
+          },
+          {
+            "id": 47549128,
+            "title": "4D Doom",
+            "url": "https://github.com/danieldugas/HYPERHELL",
+            "score": 119,
+            "comments": 26,
+            "time": "2026-03-27T22:19:34",
+            "by": "chronolitus"
+          },
+          {
+            "id": 47587953,
+            "title": "Slop is not necessarily the future",
+            "url": "https://www.greptile.com/blog/ai-slopware-future",
+            "score": 179,
+            "comments": 326,
+            "time": "2026-03-31T14:32:26",
+            "by": "dakshgupta"
+          },
+          {
+            "id": 47593634,
+            "title": "Ordinary Lab Gloves May Have Skewed Microplastic Data",
+            "url": "https://nautil.us/ordinary-lab-gloves-may-have-skewed-microplastic-data-1279386",
+            "score": 48,
+            "comments": 11,
+            "time": "2026-03-31T21:22:48",
+            "by": "WaitWaitWha"
+          },
+          {
+            "id": 47586614,
+            "title": "Open source CAD in the browser (Solvespace)",
+            "url": "https://solvespace.com/webver.pl",
+            "score": 285,
+            "comments": 92,
+            "time": "2026-03-31T12:50:23",
+            "by": "phkahler"
+          },
+          {
+            "id": 47550433,
+            "title": "Teenage Engineering's PO-32 acoustic modem and synth implementation",
+            "url": "https://github.com/ericlewis/libpo32",
+            "score": 84,
+            "comments": 21,
+            "time": "2026-03-28T01:04:56",
+            "by": "ericlewis"
+          },
+          {
+            "id": 47556074,
+            "title": "Learn Something Old Every Day, Part XVIII: How Does FPU Detection Work?",
+            "url": "https://www.os2museum.com/wp/learn-something-old-every-day-part-xviii-how-does-fpu-detection-work/",
+            "score": 24,
+            "comments": 1,
+            "time": "2026-03-28T16:29:16",
+            "by": "kencausey"
+          },
+          {
+            "id": 47546775,
+            "title": "Back to FreeBSD \u2013 Part 2 \u2013 Jails",
+            "url": "https://hypha.pub/back-to-freebsd-part-2",
+            "score": 42,
+            "comments": 7,
+            "time": "2026-03-27T18:55:02",
+            "by": "vermaden"
+          },
+          {
+            "id": 47589818,
+            "title": "Cohere Transcribe: Speech Recognition",
+            "url": "https://cohere.com/blog/transcribe",
+            "score": 158,
+            "comments": 50,
+            "time": "2026-03-31T16:27:02",
+            "by": "gmays"
+          },
+          {
+            "id": 47591104,
+            "title": "OkCupid gave 3M dating-app photos to facial recognition firm, FTC says",
+            "url": "https://arstechnica.com/tech-policy/2026/03/okcupid-match-pay-no-fine-for-sharing-user-photos-with-facial-recognition-firm/",
+            "score": 359,
+            "comments": 80,
+            "time": "2026-03-31T17:55:04",
+            "by": "whiteboardr"
+          },
+          {
+            "id": 47592462,
+            "title": "I Traced My Traffic Through a Home Tailscale Exit Node",
+            "url": "https://tech.stonecharioteer.com/posts/2026/tailscale-exit-nodes/",
+            "score": 70,
+            "comments": 35,
+            "time": "2026-03-31T19:46:43",
+            "by": "stonecharioteer"
+          },
+          {
+            "id": 47589856,
+            "title": "Show HN: Postgres extension for BM25 relevance-ranked full-text search",
+            "url": "https://github.com/timescale/pg_textsearch",
+            "score": 96,
+            "comments": 32,
+            "time": "2026-03-31T16:29:52",
+            "by": "tjgreen"
+          },
+          {
+            "id": 47541746,
+            "title": "Show HN: Forkrun \u2013 NUMA-aware shell parallelizer (50\u00d7\u2013400\u00d7 faster than parallel)",
+            "url": "https://github.com/jkool702/forkrun",
+            "score": 110,
+            "comments": 28,
+            "time": "2026-03-27T12:12:20",
+            "by": "jkool702"
+          },
+          {
+            "id": 47591928,
+            "title": "GitHub's Historic Uptime",
+            "url": "https://damrnelson.github.io/github-historical-uptime/",
+            "score": 396,
+            "comments": 103,
+            "time": "2026-03-31T19:01:29",
+            "by": "todsacerdoti"
+          },
+          {
+            "id": 47558733,
+            "title": "From 300KB to 69KB per Token: How LLM Architectures Solve the KV Cache Problem",
+            "url": "https://news.future-shock.ai/the-weight-of-remembering/",
+            "score": 84,
+            "comments": 5,
+            "time": "2026-03-28T22:42:23",
+            "by": "future-shock-ai"
+          },
+          {
+            "id": 47584795,
+            "title": "Why the US Navy won't blast the Iranians and 'open' Strait of Hormuz",
+            "url": "https://responsiblestatecraft.org/iran-strait-of-hormuz/",
+            "score": 167,
+            "comments": 472,
+            "time": "2026-03-31T09:30:43",
+            "by": "KoftaBob"
+          },
+          {
+            "id": 47582220,
+            "title": "Axios compromised on NPM \u2013 Malicious versions drop remote access trojan",
+            "url": "https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan",
+            "score": 1778,
+            "comments": 719,
+            "time": "2026-03-31T02:54:17",
+            "by": "mtud"
+          },
+          {
+            "id": 47595620,
+            "title": "U.S. exempts oil industry from protecting Gulf animals, for 'national security'",
+            "url": "https://www.npr.org/2026/03/30/nx-s1-5745926/endangered-species-committee-hegseth-security",
+            "score": 12,
+            "comments": 0,
+            "time": "2026-04-01T01:18:51",
+            "by": "Jimmc414"
+          },
+          {
+            "id": 47542545,
+            "title": "Nematophagous Fungus",
+            "url": "https://en.wikipedia.org/wiki/Nematophagous_fungus",
+            "score": 37,
+            "comments": 5,
+            "time": "2026-03-27T13:41:22",
+            "by": "lordgilman"
+          },
+          {
+            "id": 47555273,
+            "title": "Audio tapes reveal mass rule-breaking in Milgram's obedience experiments",
+            "url": "https://www.psypost.org/audio-tapes-reveal-mass-rule-breaking-in-milgram-s-obedience-experiments-2026-03-26/",
+            "score": 206,
+            "comments": 126,
+            "time": "2026-03-28T15:08:22",
+            "by": "lentoutcry"
+          },
+          {
+            "id": 47537875,
+            "title": "A Primer on Long-Duration Life Support",
+            "url": "https://mceglowski.substack.com/p/a-primer-on-long-duration-life-support",
+            "score": 72,
+            "comments": 19,
+            "time": "2026-03-27T01:00:49",
+            "by": "zdw"
+          },
+          {
+            "id": 47592626,
+            "title": "Super Micro Computer Investors Look for Exits",
+            "url": "https://catenaa.com/markets/equities/super-micro-computer-investors-look-for-exits/",
+            "score": 30,
+            "comments": 16,
+            "time": "2026-03-31T19:57:54",
+            "by": "malindasp"
+          },
+          {
+            "id": 47583959,
+            "title": "Accidentally created my first fork bomb with Claude Code",
+            "url": "https://www.droppedasbaby.com/posts/2602-01/",
+            "score": 58,
+            "comments": 15,
+            "time": "2026-03-31T07:40:18",
+            "by": "offbyone42"
+          },
+          {
+            "id": 47588349,
+            "title": "GitHub Monaspace Case Study",
+            "url": "https://lettermatic.com/custom/monaspace-case-study",
+            "score": 118,
+            "comments": 39,
+            "time": "2026-03-31T15:01:35",
+            "by": "homebrewer"
+          }
+        ],
+        "vc_funding": [
+          {
+            "company": "Venture",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "41 minutes ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/venture/"
+          },
+          {
+            "company": "Startups",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "5 hours ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/startups/"
+          },
+          {
+            "company": "Startups",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "6 hours ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/startups/"
+          },
+          {
+            "company": "Hardware",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "9 hours ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/hardware/"
+          },
+          {
+            "company": "Robotics",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "11 hours ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/robotics/"
+          },
+          {
+            "company": "AI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "12 hours ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/artificial-intelligence/"
+          },
+          {
+            "company": "Biotech & Health",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "12 hours ago",
+            "sector": "Healthcare",
+            "source_url": "https://techcrunch.com/category/biotech-health/"
+          },
+          {
+            "company": "Popular AI gateway startup LiteLLM ditches controversial startup Delve",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "1 day ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "TechCrunch Disrupt 2026",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "1 day ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/events/tc-disrupt-2026/"
+          },
+          {
+            "company": "Delve whistleblower strikes again, with alleged receipts about \u2018fake compliance\u2019",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "1 day ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "AI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "1 day ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/artificial-intelligence/"
+          },
+          {
+            "company": "AI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2 days ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/artificial-intelligence/"
+          },
+          {
+            "company": "Elon Musk\u2019s last co-founder reportedly leaves xAI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "3 days ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Venture",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "4 days ago",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/venture/"
+          },
+          {
+            "company": "Aetherflux reportedly raising Series B at $2 billion valuation",
+            "amount": 2000000000,
+            "round": "Series B",
+            "investors": [],
+            "date": "4 days ago",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Venture",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 26, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/venture/"
+          },
+          {
+            "company": "Defense startup Shield AI lands $12.7B valuation, up 140%, after US Air Force deal",
+            "amount": 12700000000,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 26, 2026",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Startups",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 26, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/startups/"
+          },
+          {
+            "company": "Startups",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 26, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/startups/"
+          },
+          {
+            "company": "AI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 26, 2026",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/artificial-intelligence/"
+          },
+          {
+            "company": "AI",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 25, 2026",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/artificial-intelligence/"
+          },
+          {
+            "company": "Venture",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 25, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/venture/"
+          },
+          {
+            "company": "Harvey confirms $11B valuation: Sequoia triples down",
+            "amount": 11000000000,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 25, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Startups",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "Mar 25, 2026",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/startups/"
+          },
+          {
+            "company": "Google is now letting users in the US change their Gmail address",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Why OpenAI really shut down Sora",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "The Pixel 10a doesn\u2019t have a camera bump, and it\u2019s great",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Anthropic\u2019s Claude popularity with paying consumers is skyrocketing",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "Waymo\u2019s skyrocketing ridership in one chart",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "Other",
+            "source_url": "https://techcrunch.com/category/funding/"
+          },
+          {
+            "company": "The AI skills gap is here, says AI company, and power users are pulling ahead",
+            "amount": 0,
+            "round": "Unknown",
+            "investors": [],
+            "date": "2026-04-01",
+            "sector": "AI/ML",
+            "source_url": "https://techcrunch.com/category/funding/"
+          }
+        ]
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-04-01T01:41:50.821165+00:00"
+    },
+    {
+      "date": "2026-04-01",
+      "generated_at": "2026-04-01T01:53:30.664396",
+      "sources_count": 4,
+      "sources_fetched": [
+        "ycombinator",
+        "producthunt",
+        "hackernews",
+        "vc_funding"
+      ],
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [
+          {
+            "name": "YC Company"
+          }
+        ],
+        "producthunt": [
+          {
+            "name": "PH Product"
+          }
+        ],
+        "hackernews": [
+          {
+            "title": "HN Story"
+          }
+        ],
+        "vc_funding": [
+          {
+            "company": "VC Company"
+          }
+        ]
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-04-01T01:53:30.667775+00:00"
+    },
+    {
+      "date": "2026-04-01",
+      "period": "2026-03-25 to 2026-04-01",
+      "type": "weekly",
+      "generated_at": "2026-04-01T01:53:30.742295",
+      "sources_count": 0,
+      "hot_categories": [
+        "AI/ML applications",
+        "Developer tools",
+        "B2B SaaS"
+      ],
+      "top_signals": [
+        "AI/ML applications showing strong signal",
+        "Developer tools showing strong signal",
+        "B2B SaaS showing strong signal"
+      ],
+      "emerging_patterns": [],
+      "recommendations": [
+        "Monitor YC batch trends for emerging patterns",
+        "Track HN for technology shifts"
+      ],
+      "summary": "# \ud83d\udd25 TrendRadar Daily Summary\n\n## Hot Categories\n- AI/ML applications\n- Developer tools\n- B2B SaaS\n\n## Emerging Patterns\n\n## VC Signals\n- AI/ML applications showing strong signal\n- Developer tools showing strong signal\n- B2B SaaS showing strong signal\n\n## Recommendations\n- Monitor YC batch trends for emerging patterns\n- Track HN for technology shifts",
+      "raw_data": {
+        "ycombinator": [],
+        "producthunt": [],
+        "hackernews": [],
+        "vc_funding": []
+      },
+      "raw_analysis": "Heuristic analysis (no LLM API key configured)",
+      "saved_at": "2026-04-01T01:53:30.746166+00:00"
     }
   ]
 }
