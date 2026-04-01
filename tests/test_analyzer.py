@@ -11,7 +11,7 @@ from analyzer.trends import (
     analyze_daily_trends,
     generate_trend_summary,
     _heuristic_analysis,
-    _extract_signals,
+    _unwrap_list,
 )
 from analyzer.digest import (
     generate_daily_digest,
@@ -54,15 +54,21 @@ class TestTrendAnalysis:
         assert "hot_categories" in result
         assert isinstance(result["hot_categories"], list)
 
-    def test_extract_signals(self):
-        """Test signal extraction from items."""
-        items = [
-            {"name": "AI Startup", "description": "AI-powered tool"},
-            {"name": "Fintech App", "description": "Payment processing"},
-        ]
-        signals = _extract_signals(items)
-        assert "categories" in signals
-        assert isinstance(signals["categories"], list)
+    def test_unwrap_list(self):
+        """Test list unwrapping."""
+        # Simple list
+        items = [{"name": "A"}, {"name": "B"}]
+        result = _unwrap_list(items)
+        assert len(result) == 2
+
+        # Nested data format
+        items = [{"data": [{"name": "A"}, {"name": "B"}]}]
+        result = _unwrap_list(items)
+        assert len(result) == 2
+
+        # Empty
+        assert _unwrap_list([]) == []
+        assert _unwrap_list(None) == []
 
     def test_generate_trend_summary(self):
         """Test trend summary generation."""
