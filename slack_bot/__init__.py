@@ -2,13 +2,14 @@
 
 import os
 import threading
+import requests
 from pathlib import Path
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from analyzer.digest import generate_daily_digest, generate_weekly_digest, format_for_slack
-from sources import yc, producthunt, hackernews, vc_funding
+# TrendRadar API URL (for fast cached digest)
+API_BASE = os.environ.get("TRENDRADAR_API_URL", "https://trend-radar-594674305905.us-central1.run.app")
 
 # Initialize Slack app
 SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN", "")
@@ -20,64 +21,104 @@ else:
     app = None
 
 
-def _respond_async(respond_fn, func, *args, **kwargs):
-    """Run a function in a thread and respond with the result.
-    Sends an initial 'working...' message, then the real result."""
+def _post_async(say_fn, url_path: str, fallback_text: str):
+    """Fetch from API and post result via say()."""
     def worker():
         try:
-            result = func(*args, **kwargs)
-            respond_fn(replace_original=True, **result)
+            resp = requests.get(f"{API_BASE}{url_path}", timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                text = _format_digest(data)
+                say_fn(text=text)
+            else:
+                say_fn(text=f"⚠️ Could not fetch latest digest ({resp.status_code}). Try again soon.")
         except Exception as e:
-            respond_fn(replace_original=True, text=f"❌ Error: {e}")
+            say_fn(text=f"❌ Error: {e}")
 
-    # Send immediate loading message
-    respond_fn(text="⏳ Fetching trends...")
-
-    # Start background thread
+    say_fn(text="⏳ Fetching latest trends...")
     thread = threading.Thread(target=worker, daemon=True)
     thread.start()
 
 
+def _format_digest(data: dict) -> str:
+    """Format a digest dict for Slack text output."""
+    cats = data.get("hot_categories", [])
+    signals = data.get("vc_signals", [])
+    patterns = data.get("emerging_patterns", [])
+    recs = data.get("recommendations", [])
+
+    date_str = data.get("date", "today")
+    lines = [
+        f"🔥 *TrendRadar Daily — {date_str}*",
+        "",
+    ]
+
+    if cats:
+        lines.append("*🔥 Hot Categories*")
+        for c in cats[:5]:
+            lines.append(f"  • {c}")
+        lines.append("")
+
+    if signals:
+        lines.append("*💡 Top Signals*")
+        for s in signals[:3]:
+            lines.append(f"  • {s}")
+        lines.append("")
+
+    if patterns:
+        lines.append("*📈 Trending Now*")
+        for p in patterns[:3]:
+            lines.append(f"  • {p[:120]}")
+        lines.append("")
+
+    if recs:
+        lines.append("*🚀 For Founders*")
+        for r in recs[:3]:
+            lines.append(f"  • {r}")
+
+    return "\n".join(lines)
+
+
 @app.command("/trendradar-today")
-def handle_today(ack, respond, command):
+def handle_today(ack, say, command):
     """Daily digest command."""
     ack()
-    _respond_async(respond, _build_daily_digest)
+    _post_async(say, "/digest/latest", "⚠️ No digest available yet.")
 
 
 @app.command("/trendradar-weekly")
-def handle_weekly(ack, respond, command):
+def handle_weekly(ack, say, command):
     """Weekly digest command."""
     ack()
-    _respond_async(respond, _build_weekly_digest)
+    say(text="📅 Weekly digest coming soon!")
 
 
 @app.command("/trendradar-yc")
-def handle_yc(ack, respond, command):
+def handle_yc(ack, say, command):
     """Latest YC batch trends."""
     ack()
-    _respond_async(respond, _build_yc_trends)
+    _post_async(say, "/sources/ycombinator", "⚠️ Could not fetch YC data.")
 
 
 @app.command("/trendradar-ph")
-def handle_ph(ack, respond, command):
+def handle_ph(ack, say, command):
     """Today's Product Hunt."""
     ack()
-    _respond_async(respond, _build_ph_trends)
+    _post_async(say, "/sources/producthunt", "⚠️ Could not fetch Product Hunt data.")
 
 
 @app.command("/trendradar-hn")
-def handle_hn(ack, respond, command):
+def handle_hn(ack, say, command):
     """Hacker News trends."""
     ack()
-    _respond_async(respond, _build_hn_trends)
+    _post_async(say, "/sources/hackernews", "⚠️ Could not fetch HN data.")
 
 
 @app.command("/trendradar-funding")
-def handle_funding(ack, respond, command):
+def handle_funding(ack, say, command):
     """Recent VC funding."""
     ack()
-    _respond_async(respond, _build_funding_trends)
+    _post_async(say, "/sources/vc_funding", "⚠️ Could not fetch funding data.")
 
 
 @app.command("/trendradar-help")
@@ -99,103 +140,26 @@ _Know what's hot before everyone else._
     respond(text=text)
 
 
-# ---------------------------------------------------------------------------
-# Builder functions (run in threads)
-# ---------------------------------------------------------------------------
-
-def _build_daily_digest() -> dict:
-    """Build daily digest response."""
-    digest = generate_daily_digest()
-    blocks = format_for_slack(digest)
-    return {"blocks": blocks}
-
-
-def _build_weekly_digest() -> dict:
-    """Build weekly digest response."""
-    digest = generate_weekly_digest()
-    blocks = format_for_slack(digest)
-    return {"blocks": blocks}
-
-
-def _build_yc_trends() -> dict:
-    """Build YC trends response."""
-    companies = yc.fetch_latest_batch()
-    categories = yc.categorize_companies(companies)
-
-    text = f"*🔥 Latest YC Batch* ({len(companies)} companies)\n\n"
-    for cat, data in sorted(categories.items(), key=lambda x: x[1]["count"], reverse=True)[:8]:
-        text += f"*{cat}* ({data['count']})\n"
-        for ex in data.get("examples", [])[:2]:
-            text += f"  • {ex}\n"
-        text += "\n"
-
-    return {"text": text}
-
-
-def _build_ph_trends() -> dict:
-    """Build Product Hunt response."""
-    products = producthunt.fetch_today_trending(15)
-
-    text = f"*🚀 Today's Product Hunt* ({len(products)} products)\n\n"
-    for i, p in enumerate(products[:10], 1):
-        tagline = p.get("tagline", "")[:60]
-        topics = ", ".join(p.get("topics", [])[:3])
-        text += f"*{i}. {p['name']}*\n"
-        if tagline:
-            text += f"  {tagline}\n"
-        if topics:
-            text += f"  _{topics}_\n"
-        text += "\n"
-
-    return {"text": text}
-
-
-def _build_hn_trends() -> dict:
-    """Build Hacker News response."""
-    stories = hackernews.fetch_top_stories(15)
-
-    text = f"*📊 Hacker News Top Stories*\n\n"
-    for i, s in enumerate(stories[:10], 1):
-        score = s.get("score", 0)
-        title = s.get("title", "")
-        url = s.get("url", "")
-        text += f"*{i}. {title}* ({score}pts)\n"
-        if url:
-            text += f"  <{url}|Link>\n"
-        text += "\n"
-
-    return {"text": text}
-
-
-def _build_funding_trends() -> dict:
-    """Build VC funding response."""
-    funding = vc_funding.fetch_recent_funding(days=14)
-    categorized = vc_funding.categorize_funding(funding)
-
-    text = f"*💰 Recent VC Funding* ({len(funding)} rounds)\n\n"
-    by_sector = categorized.get("by_sector", {})
-    for sector, data in sorted(by_sector.items(), key=lambda x: x[1]["count"], reverse=True)[:8]:
-        total = data.get("total_raised", 0)
-        if total >= 1e6:
-            total_str = f"${total/1e6:.1f}M"
-        elif total >= 1e3:
-            total_str = f"${total/1e3:.0f}K"
+def _warm_cache():
+    """Pre-populate digest cache on startup."""
+    try:
+        resp = requests.get(f"{API_BASE}/digest/latest", timeout=10)
+        if resp.status_code == 200:
+            print(f"[TrendRadar] Cache warmed, latest digest from {resp.json().get('date')}")
         else:
-            total_str = f"${total}"
-        text += f"*{sector}* — {data['count']} rounds, {total_str}\n"
-        for company in data.get("companies", [])[:2]:
-            text += f"  • {company}\n"
-        text += "\n"
-
-    return {"text": text}
+            print(f"[TrendRadar] No cached digest yet ({resp.status_code}), will fetch on demand")
+    except Exception as e:
+        print(f"[TrendRadar] Cache warmup failed: {e}")
 
 
 def run_slack_bot():
     """Run the Slack bot with Socket Mode."""
     if not SLACK_BOT_TOKEN or not SLACK_APP_TOKEN:
         print("ERROR: SLACK_BOT_TOKEN and SLACK_APP_TOKEN must be set")
-        print("Create .env.slack with these tokens")
         return
+
+    # Warm cache before going live
+    _warm_cache()
 
     handler = SocketModeHandler(app, SLACK_APP_TOKEN)
     handler.start()

@@ -1,5 +1,6 @@
 """Daily/Weekly digest generation."""
 
+import time
 from datetime import datetime, date, timedelta
 from typing import Optional
 
@@ -7,13 +8,23 @@ from sources import yc, producthunt, hackernews, vc_funding
 from analyzer.trends import analyze_daily_trends, generate_trend_summary
 from storage import save_digest, get_latest_digest
 
+# In-memory digest cache (30-min TTL)
+_cached_digest: Optional[dict] = None
+_cache_time: float = 0
+CACHE_TTL_SECONDS: int = 30 * 60  # 30 minutes
+
 
 def generate_daily_digest() -> dict:
     """Generate a daily trend digest from all sources.
-    
-    Returns:
-        {date, sources_count, hot_categories[], top_signals[], summary, raw_data}
+
+    Uses a 30-minute in-memory cache to avoid slow re-fetching.
     """
+    global _cached_digest, _cache_time
+
+    # Return cached if still fresh
+    if _cached_digest and (time.time() - _cache_time) < CACHE_TTL_SECONDS:
+        return _cached_digest
+
     # Fetch data from all sources
     all_data = {}
     
@@ -60,8 +71,13 @@ def generate_daily_digest() -> dict:
         "raw_data": all_data,
         "raw_analysis": trends.get("raw_analysis", ""),
     }
-    
+
     save_digest(digest)
+
+    # Update cache
+    _cached_digest = digest
+    _cache_time = time.time()
+
     return digest
 
 

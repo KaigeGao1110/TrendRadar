@@ -87,10 +87,11 @@ def create_weekly_digest(req: Optional[DigestRequest] = None):
 
 @app.get("/digest/latest")
 def get_latest_digest_endpoint():
-    """Get latest digest."""
+    """Get latest digest, auto-generate if none cached."""
     digest = get_latest_digest()
     if not digest:
-        raise HTTPException(status_code=404, detail="No digest found")
+        # Auto-generate rather than returning 404
+        digest = generate_daily_digest()
     return digest
 
 
