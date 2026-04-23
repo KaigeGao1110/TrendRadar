@@ -295,11 +295,12 @@ class SupabaseClient:
             List of matching snapshot records.
         """
         if self._client:
-            # JSONB contains text search via ->> operator
+            # Escape special LIKE characters in keyword to prevent pattern injection
+            escaped = keyword.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
             result = (
                 self._client.table("snapshots")
                 .select("*")
-                .ilike("data", f"%{keyword}%")
+                .ilike("data", f"%{escaped}%")
                 .order("created_at", desc=True)
                 .limit(50)
                 .execute()

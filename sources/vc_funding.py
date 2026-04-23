@@ -1,16 +1,18 @@
 """VC Funding Tracker — finds recent funding rounds via web search."""
 
+import logging
+import re
+
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from typing import Optional
 
 # Common funding sources
 TC_FUNDING_URL = "https://techcrunch.com/category/funding/"
 
 # Sector keywords
 SECTOR_KEYWORDS = {
-    "AI/ML": ["artificial intelligence", "machine learning", "ai", "ml", "deep learning", "llm", "gpt", "nlp", "generative ai", "ai基础设施", "copilot", "chatbot"],
+    "AI/ML": ["artificial intelligence", "machine learning", "ai", "ml", "deep learning", "llm", "gpt", "nlp", "generative ai", "copilot", "chatbot"],
     "Fintech": ["fintech", "financial", "payment", "banking", "lending", "insurance", "wealth", "trading", "crypto", "defi"],
     "Healthcare": ["health", "healthcare", "medical", "biotech", "pharma", "telehealth", "wellness", "diagnostic", "digital health"],
     "Climate/Tech": ["climate", "energy", "sustainable", "solar", "battery", "ev", "electric vehicle", "carbon", "nuclear", "clean tech"],
@@ -18,22 +20,21 @@ SECTOR_KEYWORDS = {
     "Cybersecurity": ["security", "cybersecurity", "privacy", "encryption", "zero trust", "soc"],
     "Biotech": ["biotech", "biotechnology", "gene", "crispr", "drug discovery", "mrna", "clinical"],
     "Infrastructure/DevOps": ["infrastructure", "devops", "cloud", "kubernetes", "observability", "datadog"],
-    "E-commerce": ["ecommerce", "retail", "marketplace", "direct to consumer", " DTC "],
+    "E-commerce": ["ecommerce", "retail", "marketplace", "direct to consumer"],
     "Web3": ["web3", "blockchain", "crypto", "nft", "metaverse", "decentralized"],
 }
 
 
 def fetch_recent_funding(days: int = 7) -> list[dict]:
     """Find recent VC funding rounds via web scraping.
-    
+
     Sources: TechCrunch funding page, etc.
-    
+
     Returns:
         [{company, amount, round, investors[], date, sector, source_url}]
     """
     funding_rounds = []
-    cutoff = datetime.now() - timedelta(days=days)
-    
+
     try:
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
@@ -41,24 +42,24 @@ def fetch_recent_funding(days: int = 7) -> list[dict]:
         response = requests.get(TC_FUNDING_URL, headers=headers, timeout=15)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        
+
         articles = soup.select("article") or soup.select(".post") or soup.select(".loop-item")
-        
+
         for article in articles[:30]:
             try:
                 title_tag = article.select_one("h2, h3, a")
                 title = title_tag.get_text(strip=True) if title_tag else ""
-                
+
                 # Extract company name and funding info from title
                 # Typical format: "Company Name Raises $X Seed from Investor"
                 amount = _extract_amount(title)
                 round_type = _extract_round(title)
                 company = _extract_company_name(title)
-                
+
                 link = title_tag.get("href") if title_tag else ""
                 date_tag = article.select_one("time, .date, .timestamp")
                 date_str = date_tag.get_text(strip=True) if date_tag else str(datetime.now().date())
-                
+
                 funding_rounds.append({
                     "company": company,
                     "amount": amount,
@@ -70,24 +71,12 @@ def fetch_recent_funding(days: int = 7) -> list[dict]:
                 })
             except Exception:
                 continue
-        
-        if funding_rounds:
-            return funding_rounds
-    except Exception:
-        pass
-    
-    # Fallback sample data
-    return [
-        {
-            "company": "Sample AI Startup",
-            "amount": 15000000,
-            "round": "Series A",
-            "investors": ["Sequoia", "a16z"],
-            "date": str(datetime.now().date()),
-            "sector": "AI/ML",
-            "source_url": "https://techcrunch.com",
-        }
-    ]
+
+        return funding_rounds
+
+    except Exception as e:
+        logging.error(f"VC funding fetch error: {e}")
+        return []
 
 
 def categorize_funding(funding_rounds: list[dict]) -> dict:
@@ -155,12 +144,9 @@ def detect_funding_trends(funding_rounds: list[dict]) -> list[dict]:
             })
     
     if not trends:
-        trends = [{
-            "trend": "AI/ML continues to attract capital",
-            "evidence": "AI startups raising at record valuations",
-            "confidence": 0.8,
-        }]
-    
+        logging.info("No funding trends detected")
+        return []
+
     return trends
 
 

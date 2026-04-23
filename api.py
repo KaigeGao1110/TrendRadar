@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from sources import yc, producthunt, hackernews, vc_funding
 from analyzer.digest import generate_daily_digest, generate_weekly_digest, format_for_slack
-from storage.trends import get_all_latest, get_latest, get_history, get_latest_digest, save_digest
+from storage.trends import get_all_latest, get_latest, get_history, get_latest_digest, save_digest, save_snapshot
 
 app = FastAPI(
     title="TrendRadar API",
@@ -117,6 +117,41 @@ def fetch_hn():
 def fetch_vc():
     """Fetch recent VC funding."""
     return {"data": vc_funding.fetch_recent_funding()}
+
+
+@app.post("/fetch-all")
+def fetch_all_sources():
+    """Fetch from all sources and save snapshots to Supabase.
+
+    Called by Cloud Scheduler every hour to populate the database
+    so Slack commands can read from cache (Supabase) instead of
+    scraping in real-time.
+    """
+    results = {}
+
+    sources = [
+        ("ycombinator", yc.fetch_latest_batch),
+        ("producthunt", producthunt.fetch_today_trending),
+        ("hackernews", hackernews.fetch_top_stories),
+        ("vc_funding", vc_funding.fetch_recent_funding),
+    ]
+
+    for source_name, fetch_fn in sources:
+        try:
+            data = fetch_fn()
+            snapshot = save_snapshot(source_name, data)
+            results[source_name] = {
+                "status": "ok",
+                "items": len(data) if data else 0,
+                "timestamp": snapshot.get("timestamp"),
+            }
+        except Exception as e:
+            results[source_name] = {"status": "error", "error": str(e)}
+
+    return {
+        "fetched": len(results),
+        "results": results,
+    }
 
 
 if __name__ == "__main__":

@@ -1,12 +1,17 @@
 """Product Hunt Trend Fetcher — uses PH RSS feed (no auth needed)."""
 
 import re
-import requests
-from datetime import datetime, date, timedelta
+import xml.etree.ElementTree as ET
+from datetime import date, timedelta
 from html import unescape
+
+import requests
 
 
 PH_RSS_URL = "https://www.producthunt.com/feed"
+
+# Atom/RSS namespace map
+PH_NS = {}
 
 
 def fetch_today_trending(limit: int = 20) -> list[dict]:
@@ -23,31 +28,44 @@ def fetch_today_trending(limit: int = 20) -> list[dict]:
         )
         response.raise_for_status()
 
+        root = ET.fromstring(response.text)
         products = []
         today = str(date.today())
 
-        # Parse Atom XML manually (no lxml dependency needed)
-        entries = response.text.split("<entry>")[1:]  # skip feed header
+        # Handle both Atom (default) and RSS formats
+        entries = root.findall(".//entry") or root.findall(".//item")
 
         for entry in entries[:limit]:
-            name = _extract_tag(entry, "title")
-            content = _extract_tag(entry, "content")
+            name_el = entry.find("title")
+            name = name_el.text.strip() if name_el is not None and name_el.text else ""
 
-            # Extract URL from link tag
-            url_match = re.search(r'href="(https://www\.producthunt\.com/products/[^"]+)"', entry)
-            url = url_match.group(1) if url_match else ""
+            content_el = entry.find("content")
+            content = content_el.text if content_el is not None and content_el.text else ""
 
-            # Extract tagline from content (first <p> tag)
+            # Extract URL from link tag (handles href attribute)
+            url = ""
+            link_el = entry.find("link")
+            if link_el is not None:
+                url = link_el.get("href") or ""
+            else:
+                # Fallback: search for link with producthunt.com/products
+                for link in entry.findall("link"):
+                    href = link.get("href", "")
+                    if "producthunt.com/products" in href:
+                        url = href
+                        break
+
+            # Decode HTML entities and extract first <p> as tagline
             tagline = ""
             if content:
-                # Decode HTML entities first
                 content_decoded = unescape(content)
-                tagline_match = re.search(r'<p>\s*(.*?)\s*</p>', content_decoded, re.DOTALL)
-                if tagline_match:
-                    tagline = re.sub(r'<[^>]+>', '', tagline_match.group(1)).strip()
+                p_match = re.search(r"<p[^>]*>(.*?)</p>", content_decoded, re.DOTALL)
+                if p_match:
+                    tagline = re.sub(r"<[^>]+>", "", p_match.group(1)).strip()
 
             # Extract publish date
-            pub_date = _extract_tag(entry, "published")
+            pub_el = entry.find("published") or entry.find("pubDate") or entry.find("dc:date")
+            pub_date = pub_el.text if pub_el is not None and pub_el.text else ""
             featured = pub_date[:10] if pub_date else today
 
             if name:
@@ -60,7 +78,7 @@ def fetch_today_trending(limit: int = 20) -> list[dict]:
                     "featured_date": featured,
                 })
 
-        return products[:limit]
+        return products
 
     except Exception as e:
         print(f"PH fetch error: {e}")
@@ -81,12 +99,6 @@ def fetch_weekly_top(limit: int = 50) -> list[dict]:
     ]
 
     return weekly[:limit]
-
-
-def _extract_tag(xml: str, tag: str) -> str:
-    """Extract text content from an XML tag."""
-    match = re.search(rf'<{tag}[^>]*>(.*?)</{tag}>', xml, re.DOTALL)
-    return match.group(1).strip() if match else ""
 
 
 def categorize_products(products: list[dict]) -> dict:

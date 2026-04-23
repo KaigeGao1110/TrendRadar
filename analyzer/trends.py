@@ -75,7 +75,7 @@ Respond with JSON only:
 }}
 """
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model=os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )
