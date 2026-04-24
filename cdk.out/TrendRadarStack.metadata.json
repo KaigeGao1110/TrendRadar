@@ -1,0 +1,66 @@
+{
+  "/TrendRadarStack/TrendRadarEventsTable": [
+    {
+      "type": "aws:cdk:hasPhysicalName",
+      "data": {
+        "Ref": "TrendRadarEventsTableECF615F9"
+      }
+    }
+  ],
+  "/TrendRadarStack/TrendRadarEventSourcesTable": [
+    {
+      "type": "aws:cdk:hasPhysicalName",
+      "data": {
+        "Ref": "TrendRadarEventSourcesTable43008B2C"
+      }
+    }
+  ],
+  "/TrendRadarStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    }
+  ],
+  "/TrendRadarStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    }
+  ],
+  "/TrendRadarStack/TrendRadarRawBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TrendRadarRawBucket86129E5D"
+    }
+  ],
+  "/TrendRadarStack/TrendRadarEventsTable/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TrendRadarEventsTableECF615F9"
+    }
+  ],
+  "/TrendRadarStack/TrendRadarEventSourcesTable/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TrendRadarEventSourcesTable43008B2C"
+    }
+  ],
+  "/TrendRadarStack/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    }
+  ],
+  "/TrendRadarStack/CDKMetadata/Condition": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadataAvailable"
+    }
+  ],
+  "/TrendRadarStack/TrendRadarRawBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "TrendRadarRawBucketPolicy67340D12"
+    }
+  ]
+}

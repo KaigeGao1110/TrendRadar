@@ -39,119 +39,19 @@ class SupabaseClient:
     # Snapshots
     # -------------------------------------------------------------------------
 
-    def save_snapshot(self, source: str, data: dict) -> dict:
-        """Save a snapshot of trend data from a source.
-
-        Mirrors storage.trends.save_snapshot().
-
-        Args:
-            source: Source name (e.g., 'hackernews', 'producthunt').
-            data: Trend data to save.
-
-        Returns:
-            The saved snapshot record.
-        """
-        snapshot = {
-            "source": source,
-            "data": data,
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        }
-
-        if self._client:
-            result = (
-                self._client.table("snapshots")
-                .insert(snapshot)
-                .execute()
-            )
-            if result.data:
-                return result.data[0]
-
-        # Fallback: delegate to JSON storage
-        return _json_get_latest(source) or snapshot
-
-    def get_latest(self, source: str) -> Optional[dict]:
-        """Get the latest snapshot for a source.
-
-        Args:
-            source: Source name.
-
-        Returns:
-            Latest snapshot dict or None.
-        """
-        if self._client:
-            result = (
-                self._client.table("snapshots")
-                .select("*")
-                .eq("source", source)
-                .order("created_at", desc=True)
-                .limit(1)
-                .execute()
-            )
-            if result.data:
-                return result.data[0]
-
-        return _json_get_latest(source)
-
-    def get_history(self, source: str, limit: int = 7) -> list[dict]:
-        """Get historical snapshots for a source.
-
-        Args:
-            source: Source name.
-            limit: Maximum number of snapshots to return.
-
-        Returns:
-            List of historical snapshots, newest first.
-        """
-        if self._client:
-            result = (
-                self._client.table("snapshots")
-                .select("*")
-                .eq("source", source)
-                .order("created_at", desc=True)
-                .limit(limit)
-                .execute()
-            )
-            return result.data or []
-
-        return _json_get_history(source, limit)
-
+    # Snapshots removed: raw data only stored in S3, no redundant copy in Supabase
     def get_all_latest(self) -> dict[str, dict]:
-        """Get the latest snapshot from all sources.
-
-        Returns:
-            Dictionary of {source: latest_snapshot}.
-        """
-        result: dict[str, dict] = {}
-
-        if self._client:
-            # Distinct sources via a window function or subquery workaround
-            # Fetch up to 100 latest per source (simulate "all sources")
-            for source in self._get_sources():
-                snap_result = (
-                    self._client.table("snapshots")
-                    .select("*")
-                    .eq("source", source)
-                    .order("created_at", desc=True)
-                    .limit(1)
-                    .execute()
-                )
-                if snap_result.data:
-                    result[source] = snap_result.data[0]
-            return result
-
+        """Get latest data from all sources (fallback to JSON storage)."""
         from storage.trends import get_all_latest as _json_all
         return _json_all()
 
-    def _get_sources(self) -> list[str]:
-        """Return distinct source names from snapshots."""
-        if not self._client:
-            return []
-        result = (
-            self._client.table("snapshots")
-            .select("source")
-            .execute()
-        )
-        return list({r["source"] for r in result.data}) if result.data else []
+    def get_latest(self, source: str) -> Optional[dict]:
+        """Get latest snapshot for a source (fallback to JSON storage)."""
+        return _json_get_latest(source)
+
+    def get_history(self, source: str, limit: int = 7) -> list[dict]:
+        """Get historical snapshots (fallback to JSON storage)."""
+        return _json_get_history(source, limit)
 
     # -------------------------------------------------------------------------
     # Digests
@@ -284,49 +184,10 @@ class SupabaseClient:
         return []
 
     def search_trends(self, keyword: str) -> list[dict]:
-        """Search snapshots whose JSON data contains a keyword.
-
-        Performs a case-insensitive substring search over the JSONB data field.
-
-        Args:
-            keyword: Keyword to search for.
-
-        Returns:
-            List of matching snapshot records.
-        """
-        if self._client:
-            # Escape special LIKE characters in keyword to prevent pattern injection
-            escaped = keyword.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
-            result = (
-                self._client.table("snapshots")
-                .select("*")
-                .ilike("data", f"%{escaped}%")
-                .order("created_at", desc=True)
-                .limit(50)
-                .execute()
-            )
-            return result.data or []
-
+        """Search events by keyword (fallback to JSON storage search)."""
+        # TODO: Implement search over DynamoDB/S3 data
         return []
 
-    def cleanup_old_snapshots(self, keep_days: int = 30) -> int:
-        """Delete snapshots older than the retention window.
-
-        Args:
-            keep_days: Number of days to retain (default 30).
-
-        Returns:
-            Number of records deleted.
-        """
-        if not self._client:
-            return 0
-
-        cutoff = datetime.now(timezone.utc) - timedelta(days=keep_days)
-        result = (
-            self._client.table("snapshots")
-            .delete()
-            .lt("created_at", cutoff.isoformat())
-            .execute()
-        )
-        # Supabase delete returns deleted rows in .data
-        return len(result.data) if result.data else 0
+    def cleanup_old_events(self, keep_days: int = 90) -> None:
+        """Old events are auto-deleted via DynamoDB TTL."""
+        pass

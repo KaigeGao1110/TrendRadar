@@ -10,8 +10,8 @@ import requests
 
 PH_RSS_URL = "https://www.producthunt.com/feed"
 
-# Atom/RSS namespace map
-PH_NS = {}
+# Atom namespace — PH uses Atom 1.0 as default feed format
+PH_NS = {"atom": "http://www.w3.org/2005/Atom"}
 
 
 def fetch_today_trending(limit: int = 20) -> list[dict]:
@@ -32,24 +32,27 @@ def fetch_today_trending(limit: int = 20) -> list[dict]:
         products = []
         today = str(date.today())
 
-        # Handle both Atom (default) and RSS formats
-        entries = root.findall(".//entry") or root.findall(".//item")
+        # Handle both Atom (default) and RSS formats — register namespace to avoid empty results
+        ET.register_namespace("", "http://www.w3.org/2005/Atom")
+        entries = root.findall(".//{http://www.w3.org/2005/Atom}entry") or root.findall(".//item")
+
+        ATOM = "{http://www.w3.org/2005/Atom}"
 
         for entry in entries[:limit]:
-            name_el = entry.find("title")
+            name_el = entry.find(f"{ATOM}title")
             name = name_el.text.strip() if name_el is not None and name_el.text else ""
 
-            content_el = entry.find("content")
+            content_el = entry.find(f"{ATOM}content")
             content = content_el.text if content_el is not None and content_el.text else ""
 
             # Extract URL from link tag (handles href attribute)
             url = ""
-            link_el = entry.find("link")
+            link_el = entry.find(f"{ATOM}link")
             if link_el is not None:
                 url = link_el.get("href") or ""
             else:
                 # Fallback: search for link with producthunt.com/products
-                for link in entry.findall("link"):
+                for link in entry.findall(f"{ATOM}link"):
                     href = link.get("href", "")
                     if "producthunt.com/products" in href:
                         url = href
@@ -64,7 +67,8 @@ def fetch_today_trending(limit: int = 20) -> list[dict]:
                     tagline = re.sub(r"<[^>]+>", "", p_match.group(1)).strip()
 
             # Extract publish date
-            pub_el = entry.find("published") or entry.find("pubDate") or entry.find("dc:date")
+            pub_el = (entry.find(f"{ATOM}published") or entry.find(f"{ATOM}updated")
+                      or entry.find("pubDate") or entry.find("dc:date"))
             pub_date = pub_el.text if pub_el is not None and pub_el.text else ""
             featured = pub_date[:10] if pub_date else today
 

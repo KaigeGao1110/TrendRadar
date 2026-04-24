@@ -1,6 +1,6 @@
 """AWS CDK stack for TrendRadar v2 core infrastructure."""
 
-from aws_cdk import Duration, Stack, aws_dynamodb as dynamodb, aws_s3 as s3
+from aws_cdk import Stack, aws_dynamodb as dynamodb, aws_s3 as s3
 from constructs import Construct
 
 
@@ -16,17 +16,7 @@ class TrendRadarStack(Stack):
             bucket_name="trendradar-raw",
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             enforce_ssl=True,
-            lifecycle_rules=[
-                s3.LifecycleRule(
-                    transitions=[
-                        s3.Transition(
-                            storage_class=s3.StorageClass.GLACIER,
-                            transition_after=Duration.days(90),
-                        )
-                    ],
-                    expiration=Duration.days(365),
-                )
-            ],
+            versioned=True,  # Enable versioning for data safety
         )
 
         self.events_table = dynamodb.Table(
@@ -34,7 +24,7 @@ class TrendRadarStack(Stack):
             "TrendRadarEventsTable",
             table_name="trendradar-events",
             partition_key=dynamodb.Attribute(
-                name="event_type#first_seen_date",
+                name="first_seen_date#event_type",
                 type=dynamodb.AttributeType.STRING,
             ),
             sort_key=dynamodb.Attribute(
@@ -42,7 +32,10 @@ class TrendRadarStack(Stack):
                 type=dynamodb.AttributeType.STRING,
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            point_in_time_recovery=True,
+            point_in_time_recovery_specification=dynamodb.PointInTimeRecoverySpecification(
+                point_in_time_recovery_enabled=True
+            ),
+            time_to_live_attribute="ttl",
         )
 
         self.events_table.add_global_secondary_index(
@@ -64,18 +57,5 @@ class TrendRadarStack(Stack):
             projection_type=dynamodb.ProjectionType.ALL,
         )
 
-        self.event_sources_table = dynamodb.Table(
-            self,
-            "TrendRadarEventSourcesTable",
-            table_name="trendradar-event-sources",
-            partition_key=dynamodb.Attribute(
-                name="raw_signal_id",
-                type=dynamodb.AttributeType.STRING,
-            ),
-            sort_key=dynamodb.Attribute(
-                name="event_id",
-                type=dynamodb.AttributeType.STRING,
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            point_in_time_recovery=True,
-        )
+# Remove redundant event_sources table, use raw_signal_ids array in events table instead
+        pass

@@ -1,0 +1,20 @@
+{
+  "version": "53.0.0",
+  "files": {
+    "931b41363a166f974e258ac1eb56050cdd15924976add87567b30e084dc1470c": {
+      "displayName": "TrendRadarStack Template",
+      "source": {
+        "path": "TrendRadarStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region-85788d46": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "931b41363a166f974e258ac1eb56050cdd15924976add87567b30e084dc1470c.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
