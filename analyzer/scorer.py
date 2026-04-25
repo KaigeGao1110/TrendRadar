@@ -116,8 +116,8 @@ def score_event(client: OpenAI, event: dict) -> dict | None:
                 {"role": "system", "content": SCORING_SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
-            temperature=0.3,
-            max_tokens=1000,
+            temperature=0.1,
+            max_tokens=1500,
         )
         
         raw = response.choices[0].message.content.strip()
