@@ -80,10 +80,15 @@ def _build_user_prompt(event: dict) -> str:
         except (json.JSONDecodeError, TypeError):
             data = {}
     
-    description = data.get("description", "") or data.get("one_liner", "") or data.get("tagline", "") or ""
-    industry = data.get("industry", "")
+    # Extract key fields with fallbacks for different source schemas
+    description = (data.get("description", "") or data.get("one_liner", "") 
+                   or data.get("tagline", "") or data.get("summary", "") or "")
+    industry = data.get("industry", "") or data.get("category", "") or ""
     if isinstance(industry, list):
         industry = ", ".join(industry)
+    
+    # Include ALL source data as JSON for full context
+    data_json = json.dumps(data, ensure_ascii=False, indent=2) if data else "{}"
     
     prompt = f"""Event to score:
 Title: {title}
@@ -91,7 +96,10 @@ Source: {source}
 Type: {event_type}
 URL: {url}
 Description: {description}
-Industry: {industry}"""
+Industry: {industry}
+
+Full source data:
+{data_json}"""
     
     return prompt
 
