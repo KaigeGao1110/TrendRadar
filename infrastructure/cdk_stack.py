@@ -24,7 +24,7 @@ class TrendRadarStack(Stack):
             "TrendRadarEventsTable",
             table_name="trendradar-events",
             partition_key=dynamodb.Attribute(
-                name="first_seen_date#event_type",
+                name="event_type#first_seen_date",
                 type=dynamodb.AttributeType.STRING,
             ),
             sort_key=dynamodb.Attribute(
@@ -32,9 +32,7 @@ class TrendRadarStack(Stack):
                 type=dynamodb.AttributeType.STRING,
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            point_in_time_recovery_specification=dynamodb.PointInTimeRecoverySpecification(
-                point_in_time_recovery_enabled=True
-            ),
+            point_in_time_recovery=True,
             time_to_live_attribute="ttl",
         )
 

@@ -6,7 +6,7 @@ Stores failed tasks for later retries, triggers alerts after 3 failures.
 import json
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Optional, list, dict
+from typing import Optional
 
 DLQ_DIR = Path(__file__).parent.parent / "data" / "dlq"
 MAX_RETRIES = 3

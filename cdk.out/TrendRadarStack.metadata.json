@@ -7,14 +7,6 @@
       }
     }
   ],
-  "/TrendRadarStack/TrendRadarEventSourcesTable": [
-    {
-      "type": "aws:cdk:hasPhysicalName",
-      "data": {
-        "Ref": "TrendRadarEventSourcesTable43008B2C"
-      }
-    }
-  ],
   "/TrendRadarStack/BootstrapVersion": [
     {
       "type": "aws:cdk:logicalId",
@@ -37,12 +29,6 @@
     {
       "type": "aws:cdk:logicalId",
       "data": "TrendRadarEventsTableECF615F9"
-    }
-  ],
-  "/TrendRadarStack/TrendRadarEventSourcesTable/Resource": [
-    {
-      "type": "aws:cdk:logicalId",
-      "data": "TrendRadarEventSourcesTable43008B2C"
     }
   ],
   "/TrendRadarStack/CDKMetadata/Default": [

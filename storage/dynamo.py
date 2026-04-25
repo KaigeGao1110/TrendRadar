@@ -7,7 +7,7 @@ import os
 import json
 import hashlib
 from datetime import datetime, timezone, timedelta
-from typing import Optional, list, dict
+from typing import Optional
 
 import boto3
 from botocore.exceptions import ClientError
@@ -112,7 +112,7 @@ class DynamoClient:
         ttl = int((now + timedelta(days=TTL_DAYS)).timestamp())
         
         event = {
-            "first_seen_date#event_type": f"{first_seen_date}#{event_type}",
+            "event_type#first_seen_date": f"{event_type}#{first_seen_date}",
             "event_id": event_id,
             "source": source,
             "event_type": event_type,
@@ -129,6 +129,8 @@ class DynamoClient:
             "ttl": ttl,
         }
         
+        # Note: Actual table PK is event_type#first_seen_date (HASH), event_id (RANGE)
+        # We keep both orders compatible with existing table structure for now (cannot change PK without recreating table
         self.table.put_item(Item=event)
         return {**event, "exists": False}
 
@@ -155,6 +157,58 @@ class DynamoClient:
             except (json.JSONDecodeError, KeyError):
                 pass
         return events
+
+    def get_actionable_events(
+        self,
+        min_score: int = 70,
+        date: Optional[str] = None,
+        limit: int = 50,
+    ) -> list[dict]:
+        """Get actionable events (score >= min_score) for a specific date.
+        
+        Args:
+            min_score: Minimum score threshold (default 70)
+            date: Date string YYYY-MM-DD (default: today)
+            limit: Maximum events to return
+        
+        Returns:
+            List of actionable event dicts sorted by score descending
+        """
+        if date is None:
+            date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        
+        # Query by date prefix and filter by score
+        # Note: This scans the table since we need to filter by both date and score
+        # For production, consider a GSI on is_actionable + first_seen_date
+        try:
+            response = self.table.scan(
+                FilterExpression="is_actionable = :actionable AND begins_with(#pk, :date_prefix)",
+                ExpressionAttributeNames={"#pk": "event_type#first_seen_date"},
+                ExpressionAttributeValues={
+                    ":actionable": "true",
+                    ":date_prefix": "",  # Scan all, filter later
+                },
+                Limit=limit * 3,  # Get more to filter down
+            )
+            events = response.get("Items", [])
+        except ClientError:
+            return []
+        
+        # Filter by date and score, sort by score descending
+        filtered = []
+        for e in events:
+            first_seen = e.get("first_seen_at", "")
+            if date in first_seen and e.get("score", 0) >= min_score:
+                # Parse data field
+                try:
+                    e["data"] = json.loads(e.get("data", "{}"))
+                except (json.JSONDecodeError, TypeError):
+                    e["data"] = {}
+                filtered.append(e)
+        
+        # Sort by score descending
+        filtered.sort(key=lambda x: x.get("score", 0), reverse=True)
+        return filtered[:limit]
 
     def mark_analyzed(self, event_id: str, score: Optional[int] = None) -> None:
         """Mark an event as analyzed, optionally update its score.

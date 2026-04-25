@@ -197,10 +197,12 @@ def _display_companies(companies, title):
     table.add_column("Industry", style="green")
     
     for c in companies[:15]:
+        industries = c.get("industry", [])
+        industry_str = ", ".join(industries) if isinstance(industries, list) else str(industries)
         table.add_row(
             c.get("name", ""),
             c.get("one_liner", "")[:50],
-            c.get("industry", "")
+            industry_str
         )
     
     console.print(table)
@@ -302,6 +304,30 @@ def weekly():
     console.print("\n[bold]Hot Categories:[/bold]")
     for c in result.get("hot_categories", []):
         console.print(f"  • {c}")
+
+
+@cli.command()
+def analyze():
+    """Run AI scoring on unanalyzed events."""
+    from analyzer.scorer import run_scoring
+    
+    with console.status("[bold green]Running AI scoring..."):
+        result = run_scoring()
+    
+    console.print("\n[bold]📊 Scoring Results[/bold]")
+    console.print(f"  Total events: {result['total']}")
+    console.print(f"  Scored: {result['scored']}")
+    console.print(f"  Failed: {result['failed']}")
+    console.print(f"  Actionable (score ≥ 70): {result['actionable']}")
+
+
+@cli.command()
+def push():
+    """Generate daily push summary."""
+    from analyzer.push import generate_daily_push
+    
+    message = generate_daily_push()
+    console.print(message)
 
 
 @cli.command()

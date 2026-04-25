@@ -9,6 +9,9 @@
      "BlockPublicPolicy": true,
      "IgnorePublicAcls": true,
      "RestrictPublicBuckets": true
+    },
+    "VersioningConfiguration": {
+     "Status": "Enabled"
     }
    },
    "UpdateReplacePolicy": "Retain",
@@ -72,7 +75,7 @@
    "Properties": {
     "AttributeDefinitions": [
      {
-      "AttributeName": "event_type#first_seen_date",
+      "AttributeName": "first_seen_date#event_type",
       "AttributeType": "S"
      },
      {
@@ -113,7 +116,7 @@
     ],
     "KeySchema": [
      {
-      "AttributeName": "event_type#first_seen_date",
+      "AttributeName": "first_seen_date#event_type",
       "KeyType": "HASH"
      },
      {
@@ -124,7 +127,11 @@
     "PointInTimeRecoverySpecification": {
      "PointInTimeRecoveryEnabled": true
     },
-    "TableName": "trendradar-events"
+    "TableName": "trendradar-events",
+    "TimeToLiveSpecification": {
+     "AttributeName": "ttl",
+     "Enabled": true
+    }
    },
    "UpdateReplacePolicy": "Retain",
    "DeletionPolicy": "Retain",
@@ -132,45 +139,10 @@
     "aws:cdk:path": "TrendRadarStack/TrendRadarEventsTable/Resource"
    }
   },
-  "TrendRadarEventSourcesTable43008B2C": {
-   "Type": "AWS::DynamoDB::Table",
-   "Properties": {
-    "AttributeDefinitions": [
-     {
-      "AttributeName": "raw_signal_id",
-      "AttributeType": "S"
-     },
-     {
-      "AttributeName": "event_id",
-      "AttributeType": "S"
-     }
-    ],
-    "BillingMode": "PAY_PER_REQUEST",
-    "KeySchema": [
-     {
-      "AttributeName": "raw_signal_id",
-      "KeyType": "HASH"
-     },
-     {
-      "AttributeName": "event_id",
-      "KeyType": "RANGE"
-     }
-    ],
-    "PointInTimeRecoverySpecification": {
-     "PointInTimeRecoveryEnabled": true
-    },
-    "TableName": "trendradar-event-sources"
-   },
-   "UpdateReplacePolicy": "Retain",
-   "DeletionPolicy": "Retain",
-   "Metadata": {
-    "aws:cdk:path": "TrendRadarStack/TrendRadarEventSourcesTable/Resource"
-   }
-  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WKWwrDIBQF15J/vY0J2UC7gZD2v/gqtRqFXCWIuPeQWujXzBnOAMPUQ9/xHalUljojoNwjl5bwHZ8FRyjXJK2O5PbyP2uYgzMy/3Pblajs+RqUgPLgwunz8JVayaIxpE3qSuYc38FfRmAM2NR90Bi6JR/NqmFpPACH7VatmwAAAA=="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/0WKWw7CIBBF19J/GGuJG9ANNNV/MzyMCIWkA2kIYe9GMfHrnHtyJ5hOI4wD7sSVdtxbCfWaUDmGO90rCajnrJxJ7PIIP+uYo7eq/HPfjekScI1aQr2h9OZz+EprbDEU86ZMY3NJzxgOAo4CxPAia/mWQ7KrgaXzDZA7vFKaAAAA"
    },
    "Metadata": {
     "aws:cdk:path": "TrendRadarStack/CDKMetadata/Default"
