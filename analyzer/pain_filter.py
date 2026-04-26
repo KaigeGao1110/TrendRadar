@@ -45,8 +45,8 @@ Post: "{text}"
 Author followers: {followers}
 Engagement: {favorites} likes, {retweets} retweets, {views} views
 
-Respond in JSON only:
-{{"is_valid": true/false, "reason": "one sentence explanation"}}'''
+IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no explanation outside JSON:
+{{"is_valid": true, "reason": "one sentence"}} or {{"is_valid": false, "reason": "one sentence"}}'''
 
 
 class PainFilter:
@@ -94,21 +94,64 @@ class PainFilter:
         return content
 
     def _parse_response(self, raw: str) -> tuple[bool, str]:
-        """Parse JSON response from model output."""
+        """Parse JSON response from model output, with keyword fallback."""
         # Try to extract JSON from the response
         # Model may wrap in markdown code blocks or add extra text
         json_match = re.search(r'\{[^{}]*"is_valid"[^{}]*\}', raw, re.DOTALL)
-        if not json_match:
-            # Fallback: if we can't parse, reject conservatively
-            return False, "failed_to_parse_model_response"
+        if json_match:
+            try:
+                result = json.loads(json_match.group())
+                is_valid = result.get("is_valid", False)
+                reason = result.get("reason", "no reason provided")
+                return bool(is_valid), str(reason)
+            except json.JSONDecodeError:
+                pass
 
-        try:
-            result = json.loads(json_match.group())
-            is_valid = result.get("is_valid", False)
-            reason = result.get("reason", "no reason provided")
-            return bool(is_valid), str(reason)
-        except json.JSONDecodeError:
-            return False, "json_decode_error"
+        # Fallback 1: try looser JSON match (boolean literals without quotes)
+        json_match2 = re.search(r'\{[^{}]*is_valid[^{}]*\}', raw, re.DOTALL)
+        if json_match2:
+            try:
+                fixed = json_match2.group()
+                # Fix unquoted booleans: is_valid: true -> "is_valid": true
+                fixed = re.sub(r'(is_valid)\s*:\s*(true|false)', r'"\1": \2', fixed)
+                result = json.loads(fixed)
+                is_valid = result.get("is_valid", False)
+                reason = result.get("reason", "parsed_from_loose_json")
+                return bool(is_valid), str(reason)
+            except (json.JSONDecodeError, Exception):
+                pass
+
+        # Fallback 2: keyword-based classification when JSON parsing fails
+        raw_lower = raw.lower()
+        # Positive keywords: model is saying it's valid
+        positive_patterns = [
+            r'\bis_valid\s*(?:=|:)\s*true',
+            r'\bvalid\b.*\bpain\b',
+            r'\bvalid\b.*\bstartup\b',
+            r'\byes\b.*\bvalid\b',
+            r'\bthis (?:is|appears to be) (?:a )?valid\b',
+            r'\bgenuine (?:need|pain|signal)\b',
+        ]
+        # Negative keywords: model is saying it's invalid
+        negative_patterns = [
+            r'\bis_valid\s*(?:=|:)\s*false',
+            r'\bnot (?:a )?valid\b',
+            r'\binvalid\b',
+            r'\bnot (?:a )?(?:startup|pain|business)\b',
+            r'\bdoes not (?:express|indicate|show)\b',
+            r'\breject\b',
+        ]
+
+        pos_score = sum(1 for p in positive_patterns if re.search(p, raw_lower))
+        neg_score = sum(1 for p in negative_patterns if re.search(p, raw_lower))
+
+        if pos_score > neg_score:
+            return True, "keyword_fallback_positive"
+        elif neg_score > 0:
+            return False, "keyword_fallback_negative"
+        else:
+            # Last resort: conservatively pass through
+            return True, "unparseable_passed_through"
 
     def is_valid_pain(self, text: str, metadata: dict | None = None) -> tuple[bool, str]:
         """Determine if a tweet is a valid startup pain signal.
