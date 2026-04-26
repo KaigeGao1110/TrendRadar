@@ -24,12 +24,38 @@ class SupabaseV2Client:
 
     def __init__(self) -> None:
         self.url = os.environ.get("SUPABASE_URL")
-        self.key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
+        self._is_service_key = False
+
+        # Prefer service_role key for write operations
+        self.key = os.environ.get("SUPABASE_SERVICE_KEY")
+        if self.key:
+            self._is_service_key = True
+        else:
+            self.key = os.environ.get("SUPABASE_KEY")
+
         if not self.url or not self.key:
-            raise ValueError("SUPABASE_URL and SUPABASE_KEY must be set")
+            raise ValueError("SUPABASE_URL and (SUPABASE_SERVICE_KEY or SUPABASE_KEY) must be set")
         if create_client is None:
             raise ImportError("supabase package not installed")
+
+        if not self._is_service_key:
+            logger.warning(
+                "⚠️  Using anon key (SUPABASE_KEY). Write operations will likely fail with 401. "
+                "Please add SUPABASE_SERVICE_KEY=<your-service-role-key> to .env"
+            )
+
         self._client: Client = create_client(self.url, self.key)
+
+    def _handle_write_error(self, operation: str, error: Exception) -> None:
+        """Check if a write error is due to missing service_role key."""
+        error_str = str(error)
+        if "401" in error_str or "403" in error_str or "Unauthorized" in error_str or "Permission denied" in error_str:
+            if not self._is_service_key:
+                raise PermissionError(
+                    f"{operation} failed — you are using an anon key (SUPABASE_KEY) which lacks write permission. "
+                    "Please add SUPABASE_SERVICE_KEY=<your-service-role-key> to .env"
+                ) from error
+        raise error
 
     # ------------------------------------------------------------------
     # pain_signals
@@ -82,11 +108,14 @@ class SupabaseV2Client:
         if cluster_id is not None:
             record["cluster_id"] = cluster_id
 
-        result = (
-            self._client.table("pain_signals")
-            .insert(record)
-            .execute()
-        )
+        try:
+            result = (
+                self._client.table("pain_signals")
+                .insert(record)
+                .execute()
+            )
+        except Exception as e:
+            self._handle_write_error("save_pain_signal", e)
         if result.data:
             return result.data[0]
         return {}
@@ -199,11 +228,14 @@ class SupabaseV2Client:
             "embedding": embedding,
         }
 
-        result = (
-            self._client.table("opportunity_clusters")
-            .insert(record)
-            .execute()
-        )
+        try:
+            result = (
+                self._client.table("opportunity_clusters")
+                .insert(record)
+                .execute()
+            )
+        except Exception as e:
+            self._handle_write_error("save_opportunity_cluster", e)
         if result.data:
             return result.data[0]
         return {}
@@ -219,15 +251,18 @@ class SupabaseV2Client:
             The updated record.
         """
         now = datetime.now(timezone.utc).isoformat()
-        result = (
-            self._client.table("opportunity_clusters")
-            .update({
-                "user_rating": rating,
-                "updated_at": now,
-            })
-            .eq("id", cluster_id)
-            .execute()
-        )
+        try:
+            result = (
+                self._client.table("opportunity_clusters")
+                .update({
+                    "user_rating": rating,
+                    "updated_at": now,
+                })
+                .eq("id", cluster_id)
+                .execute()
+            )
+        except Exception as e:
+            self._handle_write_error("update_user_rating", e)
         if result.data:
             return result.data[0]
         return {}

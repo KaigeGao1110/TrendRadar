@@ -9,7 +9,9 @@ Events scoring >= 70 are marked as actionable.
 """
 
 import json
+import logging
 import os
+import re
 import time
 import traceback
 from datetime import datetime, timezone
@@ -18,6 +20,8 @@ from openai import OpenAI
 
 from storage.dynamo import DynamoClient
 from storage.dlq import DLQClient
+
+logger = logging.getLogger(__name__)
 
 # Scoring weights
 WEIGHTS = {
@@ -62,7 +66,7 @@ SCORING_SYSTEM_PROMPT = """You are an expert startup opportunity analyst. Score 
    - 40-59: Market exists but competitive or early-stage
    - 0-39: Too early (no demand signals) or too late (dominated by incumbents)
 
-Respond with ONLY valid JSON, no markdown fences:
+IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no explanation outside JSON. Do not wrap in code fences.
 {"pain_density": <int>, "tech_feasibility": <int>, "timing": <int>, "reasoning": "<2-3 sentence explanation>"}"""
 
 
@@ -104,6 +108,76 @@ Full source data:
     return prompt
 
 
+def _parse_scoring_json(raw: str) -> dict | None:
+    """Parse scoring JSON from model output with three-layer fallback.
+
+    Layer 1: strict JSON parse
+    Layer 2: regex extract JSON containing "pain_density"
+    Layer 3: keyword fallback (extract numbers from plain text)
+    """
+    if not raw:
+        return None
+
+    # Strip markdown fences if present
+    text = raw.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+    if text.endswith("```"):
+        text = text[:-3]
+    text = text.strip()
+
+    # Layer 1: strict JSON
+    try:
+        result = json.loads(text)
+        if isinstance(result, dict) and ("pain_density" in result or "tech_feasibility" in result):
+            return result
+    except (json.JSONDecodeError, ValueError):
+        pass
+
+    # Layer 2: regex extract JSON with pain_density
+    json_match = re.search(r'\{[^{}]*"pain_density"[^{}]*\}', text, re.DOTALL)
+    if json_match:
+        try:
+            result = json.loads(json_match.group())
+            if isinstance(result, dict):
+                return result
+        except (json.JSONDecodeError, ValueError):
+            pass
+
+    # Looser match: try any JSON object with scoring keys
+    json_match2 = re.search(r'\{[^{}]*\}', text, re.DOTALL)
+    if json_match2:
+        try:
+            result = json.loads(json_match2.group())
+            if isinstance(result, dict) and any(k in result for k in ("pain_density", "tech_feasibility", "timing")):
+                return result
+        except (json.JSONDecodeError, ValueError):
+            pass
+
+    # Layer 3: keyword fallback — extract numbers from plain text
+    scores = {}
+    for key in ("pain_density", "tech_feasibility", "timing"):
+        # Match patterns like "pain_density: 80", "pain_density:80", "pain density: 8/10"
+        m = re.search(
+            key.replace("_", r'[\s_]+') + r'\s*[:=]\s*(\d+)(?:\s*/\s*\d+)?',
+            text, re.IGNORECASE
+        )
+        if m:
+            scores[key] = int(m.group(1))
+
+    if scores:
+        # Fill missing keys with default
+        for key in ("pain_density", "tech_feasibility", "timing"):
+            scores.setdefault(key, 50)
+        # Try to extract reasoning from text
+        reasoning_match = re.search(r'reasoning\s*[:=]\s*["\']?(.+?)(?:["\']|$)', text, re.IGNORECASE)
+        scores["reasoning"] = reasoning_match.group(1).strip() if reasoning_match else "keyword_fallback"
+        logger.info("Used keyword fallback, extracted scores: %s", scores)
+        return scores
+
+    return None
+
+
 def score_event(client: OpenAI, event: dict) -> dict | None:
     """Score a single event using local Ollama model.
 
@@ -132,24 +206,14 @@ def score_event(client: OpenAI, event: dict) -> dict | None:
         
         # gemma4 thinking model may put all output in reasoning field
         if not raw:
-            reasoning = getattr(response.choices[0].message, 'reasoning', '') or ''
-            if reasoning:
-                # Try to extract JSON from reasoning text
-                import re
-                json_match = re.search(r'\{[^{}]*\}', reasoning)
-                if json_match:
-                    raw = json_match.group(0)
-                else:
-                    raw = reasoning
+            reasoning_field = getattr(response.choices[0].message, 'reasoning', '') or ''
+            if reasoning_field:
+                raw = reasoning_field
         
-        # Strip markdown fences if present
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-        if raw.endswith("```"):
-            raw = raw[:-3]
-        raw = raw.strip()
-        
-        result = json.loads(raw)
+        result = _parse_scoring_json(raw)
+        if result is None:
+            logger.warning("Failed to parse scoring response: %s", raw[:200])
+            return None
         
         # Validate scores and normalize 0-10 range to 0-100
         for key in ("pain_density", "tech_feasibility", "timing"):
@@ -170,9 +234,8 @@ def score_event(client: OpenAI, event: dict) -> dict | None:
         
         return result
         
-    except json.JSONDecodeError:
-        return None
-    except Exception:
+    except Exception as e:
+        logger.warning("Scoring failed with exception: %s", e)
         return None
 
 

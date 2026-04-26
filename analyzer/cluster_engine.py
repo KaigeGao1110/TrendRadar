@@ -6,6 +6,7 @@ Uses embedding similarity for cross-source semantic matching.
 
 import json
 import logging
+import re
 import time
 from datetime import datetime, timezone
 from typing import Optional
@@ -14,7 +15,7 @@ from storage.embedding import EmbeddingClient
 from storage.supabase_v2 import SupabaseV2Client
 from storage.dynamo import DynamoClient, FundingClient
 from analyzer.pain_verifier import PainVerifier, PAIN_SOURCES, cosine_similarity
-from analyzer.scorer import score_event, _get_client, SCORING_MODEL
+from analyzer.scorer import score_event, _get_client, SCORING_MODEL, _parse_scoring_json
 
 logger = logging.getLogger(__name__)
 
@@ -342,7 +343,7 @@ Score on three dimensions (0-100):
 2. tech_feasibility: Can it be built with current AI tools?
 3. timing: Is now the right time to enter?
 
-Respond with ONLY valid JSON:
+IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no explanation outside JSON. Do not wrap in code fences.
 {{"pain_density": <int>, "tech_feasibility": <int>, "timing": <int>, "reasoning": "<2-3 sentence explanation>"}}"""
 
         pain_score = 50
@@ -366,13 +367,17 @@ Respond with ONLY valid JSON:
             )
 
             raw = response.choices[0].message.content.strip()
-            if raw.startswith("```"):
-                raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            if raw.endswith("```"):
-                raw = raw[:-3]
-            raw = raw.strip()
 
-            result = json.loads(raw)
+            # gemma4 thinking model: if content empty, try reasoning field
+            if not raw:
+                reasoning_field = getattr(response.choices[0].message, 'reasoning', '') or ''
+                if reasoning_field:
+                    raw = reasoning_field
+
+            result = _parse_scoring_json(raw)
+            if result is None:
+                logger.warning("Failed to parse cluster scoring response: %s", raw[:200])
+                raise ValueError("Unparseable scoring response")
 
             for key in ("pain_density", "tech_feasibility", "timing"):
                 val = result.get(key, 50)
