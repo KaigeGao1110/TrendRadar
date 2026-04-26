@@ -13,7 +13,7 @@ from typing import Optional
 
 from storage.embedding import EmbeddingClient
 from storage.supabase_v2 import SupabaseV2Client
-from storage.dynamo import DynamoClient
+from storage.dynamo import DynamoClient, FundingClient
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
@@ -43,10 +43,12 @@ class PainVerifier:
         embedding_client: EmbeddingClient,
         supabase_v2: SupabaseV2Client,
         dynamo: DynamoClient,
+        funding_client: Optional[FundingClient] = None,
     ):
         self.embedding = embedding_client
         self.supabase = supabase_v2
         self.dynamo = dynamo
+        self.funding = funding_client or FundingClient()
 
     # ------------------------------------------------------------------
     # Layer 1: Volume Check
@@ -163,14 +165,13 @@ class PainVerifier:
     # ------------------------------------------------------------------
 
     def find_related_events(self, pain_embedding: list[float], pain_text: str) -> list[dict]:
-        """Search DynamoDB for related funding/GitHub/PH/market events.
+        """Search for related funding/GitHub/PH/market events.
 
-        Uses keyword extraction from pain_text to scan events, plus
-        embedding similarity where available.
+        Queries both the events table and the funding table.
         """
         related = []
 
-        # Extract keywords (simple approach: split on spaces, keep alpha tokens > 3 chars)
+        # Extract keywords
         keywords = [
             w.lower()
             for w in re.findall(r"[a-zA-Z]{4,}", pain_text)
@@ -186,10 +187,16 @@ class PainVerifier:
         if not keywords:
             return related
 
-        # Scan DynamoDB for relevant events (limited scan for performance)
+        # Search funding table (Layer 4 - market proof)
         try:
-            # Search across funding, github, producthunt sources
-            for event_type_prefix in ["funding", "github", "product"]:
+            funding_events = self.funding.search_related_funding(keywords)
+            related.extend(funding_events)
+        except Exception as e:
+            logger.warning("Funding table search failed: %s", e)
+
+        # Search events table for non-funding events (github, producthunt, etc.)
+        try:
+            for event_type_prefix in ["github", "product"]:
                 response = self.dynamo.table.scan(
                     FilterExpression="begins_with(#pk, :prefix)",
                     ExpressionAttributeNames={"#pk": "event_type#first_seen_date"},
@@ -198,7 +205,6 @@ class PainVerifier:
                 )
                 for item in response.get("Items", []):
                     title = item.get("title", "").lower()
-                    # Check keyword overlap
                     overlap = sum(1 for kw in keywords[:8] if kw in title)
                     if overlap >= 1:
                         try:
@@ -209,10 +215,13 @@ class PainVerifier:
         except Exception as e:
             logger.warning("DynamoDB scan for related events failed: %s", e)
 
-        return related[:30]  # Cap at 30 related events
+        return related[:30]
 
     def calculate_market_bonus(self, related_events: list[dict]) -> int:
-        """Calculate Layer 4 market proof bonus."""
+        """Calculate Layer 4 market proof bonus.
+
+        Now also considers events from the trendradar-funding table.
+        """
         bonus = 0
 
         for event in related_events:
@@ -226,8 +235,8 @@ class PainVerifier:
 
             event_type = event.get("event_type", "")
 
-            # FundBat funding
-            if source == "fundbat" or event_type == "funding_round":
+            # FundBat / VC funding (from either table)
+            if source in ("fundbat", "vc_funding") or event_type == "funding_round":
                 bonus += 15
                 continue
 

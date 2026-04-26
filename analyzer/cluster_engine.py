@@ -12,7 +12,7 @@ from typing import Optional
 
 from storage.embedding import EmbeddingClient
 from storage.supabase_v2 import SupabaseV2Client
-from storage.dynamo import DynamoClient
+from storage.dynamo import DynamoClient, FundingClient
 from analyzer.pain_verifier import PainVerifier, PAIN_SOURCES, cosine_similarity
 from analyzer.scorer import score_event, _get_client, SCORING_MODEL
 

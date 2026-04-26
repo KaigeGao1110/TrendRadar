@@ -13,6 +13,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 TABLE_NAME = "trendradar-events"
+FUNDING_TABLE_NAME = "trendradar-funding"
 TTL_DAYS = 90  # Events auto-expire after 90 days
 
 
@@ -29,6 +30,180 @@ def generate_event_id(source: str, url: str, title: str) -> str:
     """
     key = f"{source}:{url}:{title}".lower().strip()
     return hashlib.md5(key.encode("utf-8")).hexdigest()
+
+
+class FundingClient:
+    """Client for the trendradar-funding DynamoDB table."""
+
+    def __init__(self) -> None:
+        self.dynamodb = boto3.resource(
+            "dynamodb",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.environ.get("AWS_REGION", "us-east-1"),
+        )
+        self.table = self.dynamodb.Table(FUNDING_TABLE_NAME)
+
+    @property
+    def available(self) -> bool:
+        """Return True if DynamoDB table is accessible."""
+        try:
+            self.table.table_status
+            return True
+        except ClientError:
+            return False
+
+    def save_funding_event(
+        self,
+        source: str,
+        event_type: str,
+        title: str,
+        url: str,
+        data: dict,
+        raw_s3_key: str,
+        published_at: Optional[datetime] = None,
+    ) -> dict:
+        """Save a funding event to the trendradar-funding table.
+
+        Args:
+            source: Source name (fundbat, vc_funding)
+            event_type: Type of event (e.g., "funding_round")
+            title: Event title
+            url: Event URL
+            data: Normalized event data
+            raw_s3_key: S3 key of the raw snapshot
+            published_at: Optional publish date
+
+        Returns:
+            Saved event dict
+        """
+        event_id = generate_event_id(source, url, title)
+
+        now = datetime.now(timezone.utc)
+        first_seen_date = now.strftime("%Y-%m-%d")
+        ttl = int((now + timedelta(days=TTL_DAYS)).timestamp())
+
+        event = {
+            "funding_type#first_seen_date": f"{source}#{first_seen_date}",
+            "event_id": event_id,
+            "source": source,
+            "event_type": event_type,
+            "title": title,
+            "url": url,
+            "data": json.dumps(data),
+            "raw_s3_key": raw_s3_key,
+            "published_at": (published_at or now).isoformat() if isinstance(published_at, datetime) else now.isoformat(),
+            "first_seen_at": now.isoformat(),
+            "last_updated_at": now.isoformat(),
+            "ttl": ttl,
+        }
+
+        try:
+            self.table.put_item(
+                Item=event,
+                ConditionExpression="attribute_not_exists(event_id)",
+            )
+            return {**event, "exists": False}
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "ConditionalCheckFailedException":
+                return {"event_id": event_id, "exists": True}
+            raise
+
+    def search_related_funding(
+        self,
+        keywords: list[str],
+        industry: Optional[str] = None,
+    ) -> list[dict]:
+        """Search funding events by keywords and optionally industry.
+
+        Used by pain_verifier Layer 4 to find related market signals.
+
+        Args:
+            keywords: List of keywords to match against title
+            industry: Optional industry/category filter
+
+        Returns:
+            List of matching funding event dicts
+        """
+        if not keywords:
+            return []
+
+        # Build filter expression for keyword matching
+        conditions = []
+        expr_values = {}
+        expr_names = {}
+
+        for i, kw in enumerate(keywords[:8]):
+            placeholder = f":kw{i}"
+            conditions.append(f"contains(#title, {placeholder})")
+            expr_values[placeholder] = kw.lower()
+            expr_names["#title"] = "title"
+
+        filter_expr = " OR ".join(conditions)
+
+        if industry:
+            expr_names["#data"] = "data"
+            filter_expr += f" AND contains(#data, :industry)"
+            expr_values[":industry"] = industry.lower()
+
+        try:
+            response = self.table.scan(
+                FilterExpression=filter_expr,
+                ExpressionAttributeValues=expr_values,
+                ExpressionAttributeNames=expr_names,
+                Limit=50,
+            )
+            items = response.get("Items", [])
+            # Parse JSON data field
+            for item in items:
+                try:
+                    item["data"] = json.loads(item.get("data", "{}"))
+                except (json.JSONDecodeError, TypeError):
+                    item["data"] = {}
+            return items
+        except ClientError as e:
+            return []
+
+    def get_funding_by_date_range(
+        self,
+        start_date: str,
+        end_date: str,
+    ) -> list[dict]:
+        """Query funding events by date range.
+
+        Args:
+            start_date: Start date YYYY-MM-DD
+            end_date: End date YYYY-MM-DD
+
+        Returns:
+            List of funding events in the date range
+        """
+        results = []
+
+        # Query both fundbat and vc_funding source types
+        for source in ("fundbat", "vc_funding"):
+            try:
+                response = self.table.query(
+                    KeyConditionExpression=(
+                        "#pk = :pk_start OR (#pk BETWEEN :pk_start AND :pk_end)"
+                    ),
+                    ExpressionAttributeNames={"#pk": "funding_type#first_seen_date"},
+                    ExpressionAttributeValues={
+                        ":pk_start": f"{source}#{start_date}",
+                        ":pk_end": f"{source}#{end_date}",
+                    },
+                )
+                items = response.get("Items", [])
+                for item in items:
+                    try:
+                        item["data"] = json.loads(item.get("data", "{}"))
+                    except (json.JSONDecodeError, TypeError):
+                        item["data"] = {}
+                results.extend(items)
+            except ClientError:
+                continue
+
+        return results
 
 
 class DynamoClient:

@@ -13,7 +13,7 @@ from sources import twitter_pain
 from analyzer.digest import generate_daily_digest, generate_weekly_digest
 from storage.trends import get_all_latest, get_history, save_snapshot as save_json_snapshot
 from storage.s3 import S3Client
-from storage.dynamo import DynamoClient
+from storage.dynamo import DynamoClient, FundingClient
 from storage.dlq import DLQClient
 
 console = Console()
@@ -21,14 +21,18 @@ console = Console()
 # Initialize storage clients
 s3_client = S3Client()
 dynamo_client = DynamoClient()
+funding_client = FundingClient()
 dlq_client = DLQClient()
+
+# Funding sources that write to the separate funding table
+FUNDING_SOURCES = {"fundbat", "vc_funding"}
 
 
 def _process_source_data(source: str, event_type: str, data: list[dict], get_url_fn, get_title_fn, get_published_fn=None):
     """Process data from a source: save to S3, deduplicate, save to DynamoDB."""
     if not data:
         return
-    
+
     # Save raw snapshot to S3
     try:
         s3_key = s3_client.save_snapshot(source, data) if s3_client.available else None
@@ -41,18 +45,22 @@ def _process_source_data(source: str, event_type: str, data: list[dict], get_url
             traceback=traceback.format_exc(),
         )
         s3_key = None
-    
+
+    # Choose the right client: funding sources go to the funding table
+    is_funding = source in FUNDING_SOURCES
+    save_fn = funding_client.save_funding_event if is_funding else dynamo_client.save_event
+
     # Save each event to DynamoDB
     saved_count = 0
     duplicate_count = 0
-    
+
     for item in data:
         try:
             url = get_url_fn(item)
             title = get_title_fn(item)
             published_at = get_published_fn(item) if get_published_fn else None
-            
-            result = dynamo_client.save_event(
+
+            result = save_fn(
                 source=source,
                 event_type=event_type,
                 title=title,
@@ -61,7 +69,7 @@ def _process_source_data(source: str, event_type: str, data: list[dict], get_url
                 raw_s3_key=s3_key,
                 published_at=published_at,
             )
-            
+
             if result.get("exists"):
                 duplicate_count += 1
             else:
@@ -74,13 +82,13 @@ def _process_source_data(source: str, event_type: str, data: list[dict], get_url
                 error=str(e),
                 traceback=traceback.format_exc(),
             )
-    
+
     # Also save to local JSON for fallback
     try:
         save_json_snapshot(source, {"items": data})
     except Exception:
         pass
-    
+
     console.print(f"[green]✅ {source}: saved {saved_count} new events, skipped {duplicate_count} duplicates")
 
 
@@ -434,7 +442,8 @@ def analyze_v2():
             return
 
         dynamo = DynamoClient()
-        verifier = PainVerifier(embedding_client, supabase_v2, dynamo)
+        funding_client = FundingClient()
+        verifier = PainVerifier(embedding_client, supabase_v2, dynamo, funding_client)
         engine = ClusterEngine(embedding_client, supabase_v2, dynamo, verifier)
         writer = ObsidianWriter()
 
@@ -458,7 +467,8 @@ def analyze_v2():
     events = dynamo.get_unanalyzed_events(limit=200)
     from analyzer.pain_verifier import PAIN_SOURCES
     layer1 = sum(1 for e in events if e.get("source") in PAIN_SOURCES)
-    layer3_sources = {"fundbat", "vc_funding", "newsapi", "rss", "yc", "google_trends"}
+    # fundbat/vc_funding are now in separate table, so they won't appear here
+    layer3_sources = {"vc_funding", "newsapi", "rss", "yc", "google_trends"}
     layer3 = sum(1 for e in events if e.get("source") in layer3_sources)
     layer2 = len(events) - layer1 - layer3
 
