@@ -8,6 +8,8 @@ from rich import print as rprint
 from datetime import date
 
 from sources import yc, producthunt, hackernews, vc_funding, newsapi, rss, fundbat
+from sources import reddit, github_trending, hackernews_comments, producthunt_deep, google_trends
+from sources import twitter_pain
 from analyzer.digest import generate_daily_digest, generate_weekly_digest
 from storage.trends import get_all_latest, get_history, save_snapshot as save_json_snapshot
 from storage.s3 import S3Client
@@ -95,7 +97,7 @@ def trends():
 
 
 @trends.command()
-@click.option("--source", default="all", help="Source: yc, producthunt, hackernews, vc, newsapi, rss, fundbat, all")
+@click.option("--source", default="all", help="Source: yc, producthunt, hackernews, vc, newsapi, rss, fundbat, reddit, github_trending, hn_comments, ph_deep, google_trends, twitter_pain, all")
 def fetch(source):
     """Fetch trends from source(s)."""
     if source in ("all", "ycombinator", "yc"):
@@ -187,6 +189,85 @@ def fetch(source):
             data=data,
             get_url_fn=lambda x: x.get("url", ""),
             get_title_fn=lambda x: x.get("name", "") + f" ({x.get('funding_amount', '')} / {x.get('valuation', '')})",
+        )
+
+    if source in ("all", "reddit"):
+        with console.status("[bold green]Fetching Reddit posts..."):
+            data = reddit.fetch_latest()
+        _display_stories(data, "Reddit Posts")
+        _process_source_data(
+            source="reddit",
+            event_type="reddit_post",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
+        )
+
+    if source in ("all", "github_trending", "gh"):
+        with console.status("[bold green]Fetching GitHub Trending repos..."):
+            data = github_trending.fetch_latest()
+        _display_stories(data, "GitHub Trending")
+        _process_source_data(
+            source="github_trending",
+            event_type="github_trending",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
+        )
+
+    if source in ("all", "hn_comments"):
+        with console.status("[bold green]Fetching HN comments..."):
+            data = hackernews_comments.fetch_latest()
+        _display_stories(data, "HN Comments")
+        _process_source_data(
+            source="hackernews_comments",
+            event_type="hn_comment",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
+        )
+
+    if source in ("all", "ph_deep", "producthunt_deep"):
+        with console.status("[bold green]Fetching ProductHunt deep data..."):
+            data = producthunt_deep.fetch_latest()
+        _display_products(data, "ProductHunt Deep")
+        _process_source_data(
+            source="producthunt_deep",
+            event_type="product_launch",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
+        )
+
+    if source in ("all", "google_trends", "trends"):
+        with console.status("[bold green]Fetching Google Trends..."):
+            data = google_trends.fetch_latest()
+        _display_stories(data, "Google Trends")
+        _process_source_data(
+            source="google_trends",
+            event_type="trending_search",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
+        )
+
+
+    if source in ("all", "twitter_pain", "tp"):
+        with console.status("[bold green]Fetching Twitter pain signals..."):
+            data = twitter_pain.fetch_latest()
+        _display_stories(data, "Twitter Pain Signals")
+        _process_source_data(
+            source="twitter_pain",
+            event_type="pain_signal",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published_at"),
         )
 
 
@@ -319,6 +400,108 @@ def analyze():
     console.print(f"  Scored: {result['scored']}")
     console.print(f"  Failed: {result['failed']}")
     console.print(f"  Actionable (score ≥ 70): {result['actionable']}")
+
+
+from analyzer.obsidian_writer import ObsidianWriter
+from storage.embedding import EmbeddingClient
+from storage.supabase_v2 import SupabaseV2Client
+from analyzer.pain_verifier import PainVerifier
+from analyzer.cluster_engine import ClusterEngine
+
+
+@cli.command()
+def analyze_v2():
+    """Run v2.1 analysis: embedding + clustering + verification + Obsidian output."""
+    import json as _json
+    from datetime import datetime as _dt, timezone as _tz
+    from dotenv import load_dotenv
+    import os as _os
+    load_dotenv()
+    load_dotenv(_os.path.expanduser("~/.openclaw/.env"))
+
+    with console.status("[bold green]Initializing v2.1 analysis pipeline..."):
+        try:
+            embedding_client = EmbeddingClient()
+        except ValueError as e:
+            console.print(f"[red]❌ Embedding client init failed: {e}")
+            console.print("[yellow]Set ARK_API_KEY in .env")
+            return
+
+        try:
+            supabase_v2 = SupabaseV2Client()
+        except ValueError as e:
+            console.print(f"[red]❌ Supabase v2 client init failed: {e}")
+            return
+
+        dynamo = DynamoClient()
+        verifier = PainVerifier(embedding_client, supabase_v2, dynamo)
+        engine = ClusterEngine(embedding_client, supabase_v2, dynamo, verifier)
+        writer = ObsidianWriter()
+
+    today = _dt.now(_tz.utc).strftime("%Y-%m-%d")
+    console.print(f"[bold]📅 Processing signals for {today}[/bold]")
+
+    # Step 1: Process signals
+    with console.status("[bold green]Running clustering and verification..."):
+        clusters = engine.process_daily_signals(date=today)
+
+    if not clusters:
+        console.print("[yellow]⚠️ No opportunity clusters generated")
+        console.print("Try running 'trendradar trends fetch' first to collect data")
+        return
+
+    # Step 2: Compute stats
+    high_conf = sum(1 for c in clusters if c.get("confidence", 0) >= 70)
+    actionable = sum(1 for c in clusters if c.get("total_score", 0) >= 70)
+
+    # Count events by layer
+    events = dynamo.get_unanalyzed_events(limit=200)
+    from analyzer.pain_verifier import PAIN_SOURCES
+    layer1 = sum(1 for e in events if e.get("source") in PAIN_SOURCES)
+    layer3_sources = {"fundbat", "vc_funding", "newsapi", "rss", "yc", "google_trends"}
+    layer3 = sum(1 for e in events if e.get("source") in layer3_sources)
+    layer2 = len(events) - layer1 - layer3
+
+    stats = {
+        "total_events": len(events),
+        "pain_signals": layer1,
+        "high_confidence_pains": high_conf,
+        "actionable_clusters": actionable,
+        "layer1_count": layer1,
+        "layer2_count": layer2,
+        "layer3_count": layer3,
+    }
+
+    # Step 3: Write Obsidian report
+    with console.status("[bold green]Writing Obsidian report..."):
+        filepath = writer.write_daily_report(clusters, stats, date=today)
+
+    # Display summary
+    console.print(f"\n[bold]📊 v2.1 Analysis Results[/bold]")
+    console.print(f"  Clusters generated: {len(clusters)}")
+    console.print(f"  High confidence pains: {high_conf}")
+    console.print(f"  Actionable (score ≥ 70): {actionable}")
+    console.print(f"\n📝 Report written to: {filepath}")
+
+    # Show top clusters
+    if clusters:
+        table = Table(title="Top Opportunity Clusters")
+        table.add_column("#", style="dim", width=3)
+        table.add_column("Title", style="cyan", max_width=50)
+        table.add_column("Score", style="green", justify="right")
+        table.add_column("Confidence", style="yellow", justify="right")
+        table.add_column("Sources", style="dim", max_width=20)
+
+        for i, c in enumerate(clusters[:10], 1):
+            sources_str = ", ".join(c.get("sources", [])[:3])
+            table.add_row(
+                str(i),
+                c.get("title", "?")[:50],
+                str(c.get("total_score", 0)),
+                str(c.get("confidence", 0)),
+                sources_str,
+            )
+        console.print(table)
 
 
 @cli.command()

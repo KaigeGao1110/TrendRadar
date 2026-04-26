@@ -83,6 +83,7 @@ class DynamoClient:
         published_at: Optional[datetime] = None,
         raw_signal_ids: Optional[list[str]] = None,
         score: Optional[int] = None,
+        cluster_id: Optional[str] = None,
     ) -> dict:
         """Save a standardized event to DynamoDB.
         
@@ -96,6 +97,7 @@ class DynamoClient:
             published_at: Optional publish date of the event
             raw_signal_ids: Optional list of raw signal IDs from multiple sources
             score: Optional LLM generated score (0-100)
+            cluster_id: Optional UUID of the opportunity cluster this event belongs to
         
         Returns:
             Saved event dict
@@ -109,6 +111,11 @@ class DynamoClient:
         now = datetime.now(timezone.utc)
         first_seen_date = now.strftime("%Y-%m-%d")
         published_at = published_at or now
+        # Handle string published_at (e.g. from Twitter)
+        if isinstance(published_at, str):
+            published_at = now
+        elif not isinstance(published_at, datetime):
+            published_at = now
         ttl = int((now + timedelta(days=TTL_DAYS)).timestamp())
         
         event = {
@@ -126,6 +133,8 @@ class DynamoClient:
             "raw_signal_ids": raw_signal_ids or [],
             "is_analyzed": "false",
             "score": score,
+            "cluster_id": cluster_id,
+            "embedding_generated": "false",
             "ttl": ttl,
         }
         

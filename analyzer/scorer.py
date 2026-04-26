@@ -1,9 +1,9 @@
 """AI-powered scoring system for TrendRadar opportunities.
 
 Uses OpenAI gpt-4o-mini to evaluate events across three dimensions:
-- pain_density (50%): How painful is the problem?
-- tech_feasibility (20%): How feasible to replicate with current AI toolchain?
-- timing (30%): Is now the right time to enter?
+- pain_density (55%): How painful is the problem?
+- tech_feasibility (30%): How feasible to replicate with current AI toolchain?
+- timing (15%): Is now the right time to enter?
 
 Events scoring >= 70 are marked as actionable.
 """
@@ -21,9 +21,9 @@ from storage.dlq import DLQClient
 
 # Scoring weights
 WEIGHTS = {
-    "pain_density": 0.5,
-    "tech_feasibility": 0.2,
-    "timing": 0.3,
+    "pain_density": 0.55,
+    "tech_feasibility": 0.30,
+    "timing": 0.15,
 }
 
 ACTIONABLE_THRESHOLD = 70
