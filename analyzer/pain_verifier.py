@@ -316,10 +316,10 @@ class PainVerifier:
             int(volume_score * quality_mult * cross_source_mult) + market_bonus,
         )
 
-        # Label
+        # Label (threshold lowered to 10 for broad early collection)
         if confidence >= 70:
             label = "高置信"
-        elif confidence >= 50:
+        elif confidence >= 10:
             label = "待验证"
         else:
             label = "丢弃"
