@@ -436,8 +436,9 @@ def analyze_v2():
     from datetime import datetime as _dt, timezone as _tz
     from dotenv import load_dotenv
     import os as _os
-    load_dotenv()
+    # Global first, then project .env overrides (project takes priority)
     load_dotenv(_os.path.expanduser("~/.openclaw/.env"))
+    load_dotenv(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".env"), override=True)
 
     with console.status("[bold green]Initializing v2.1 analysis pipeline..."):
         try:
