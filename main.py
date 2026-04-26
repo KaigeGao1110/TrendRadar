@@ -2,6 +2,10 @@
 
 import click
 import traceback
+import csv
+import sys
+import json as _json
+from collections import Counter
 from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
@@ -512,6 +516,119 @@ def analyze_v2():
                 sources_str,
             )
         console.print(table)
+
+
+@cli.command()
+@click.option("--table", required=True, type=click.Choice(["events", "funding"]), help="Table to export")
+@click.option("--source", default=None, help="Filter by source")
+@click.option("--output", default=None, help="Output file path (default: stdout)")
+def export(table, source, output):
+    """Export DynamoDB data to CSV."""
+    from pathlib import Path
+
+    if table == "events":
+        dyn_table = dynamo_client.table
+    else:
+        dyn_table = funding_client.table
+
+    # Scan with optional source filter
+    scan_kwargs = {}
+    if source:
+        scan_kwargs["FilterExpression"] = "#s = :source"
+        scan_kwargs["ExpressionAttributeNames"] = {"#s": "source"}
+        scan_kwargs["ExpressionAttributeValues"] = {":source": source}
+
+    items = []
+    response = dyn_table.scan(**scan_kwargs)
+    items.extend(response.get("Items", []))
+    while "LastEvaluatedKey" in response:
+        scan_kwargs["ExclusiveStartKey"] = response["LastEvaluatedKey"]
+        response = dyn_table.scan(**scan_kwargs)
+        items.extend(response.get("Items", []))
+
+    if not items:
+        console.print("[yellow]⚠️ No items found")
+        return
+
+    # Determine output path
+    if output:
+        filepath = Path(output)
+    else:
+        today_str = date.today().isoformat()
+        src_suffix = f"_{source}" if source else ""
+        filepath = Path(f"output/{table}{src_suffix}_{today_str}.csv")
+
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+
+    # Build CSV
+    source_counts = Counter()
+
+    if table == "events":
+        fieldnames = ["source", "event_type", "title", "url", "is_analyzed", "first_seen_at", "data"]
+    else:
+        fieldnames = ["source", "title", "funding_amount", "valuation", "category", "investors", "url", "first_seen_at"]
+
+    should_close = False
+    if output:
+        fh = open(filepath, "w", newline="", encoding="utf-8")
+        should_close = True
+    else:
+        fh = sys.stdout
+        filepath = None  # stdout mode
+
+    try:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for item in items:
+            src = item.get("source", "")
+            source_counts[src] += 1
+
+            if table == "events":
+                data_val = item.get("data", {})
+                if isinstance(data_val, dict):
+                    data_val = _json.dumps(data_val, ensure_ascii=False)
+                row = {
+                    "source": src,
+                    "event_type": item.get("event_type", ""),
+                    "title": item.get("title", ""),
+                    "url": item.get("url", ""),
+                    "is_analyzed": item.get("is_analyzed", False),
+                    "first_seen_at": item.get("first_seen_at", ""),
+                    "data": data_val,
+                }
+            else:
+                data = item.get("data", {})
+                if isinstance(data, str):
+                    try:
+                        data = _json.loads(data)
+                    except _json.JSONDecodeError:
+                        data = {}
+                row = {
+                    "source": src,
+                    "title": item.get("title", ""),
+                    "funding_amount": data.get("funding_amount", ""),
+                    "valuation": data.get("valuation", ""),
+                    "category": data.get("category", ""),
+                    "investors": data.get("investors", ""),
+                    "url": item.get("url", ""),
+                    "first_seen_at": item.get("first_seen_at", ""),
+                }
+            writer.writerow(row)
+    finally:
+        if should_close:
+            fh.close()
+
+    # Print stats
+    console.print(f"\n[bold]📊 Export Complete[/bold]")
+    console.print(f"  Total items: {len(items)}")
+    if filepath:
+        console.print(f"  Output: {filepath}")
+    else:
+        console.print("  Output: stdout")
+    console.print("\n  By source:")
+    for src, count in source_counts.most_common():
+        console.print(f"    {src}: {count}")
 
 
 @cli.command()
