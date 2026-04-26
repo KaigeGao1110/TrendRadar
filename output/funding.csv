@@ -1,0 +1,810 @@
+source,title,funding_amount,valuation,category,investors,url,first_seen_at
+fundbat,Jump ($105M / -),$105M,-,Artificial Intelligence  Fintech  +1,,https://fundbat.com/company/jump,2026-04-24T21:45:46.204788+00:00
+fundbat,BlocPower ($248M / -),$248M,-,Climate Tech  SaaS,,https://fundbat.com/company/blocpower,2026-04-24T21:45:37.749780+00:00
+fundbat,GrubMarket ($858M / $4.5B),$858M,$4.5B,E-Commerce  Artificial Intelligence,,https://fundbat.com/company/grubmarket,2026-04-24T21:45:28.323901+00:00
+fundbat,Fly.io ($111M / $467M),$111M,$467M,Cloud Computing  Developer Tools,,https://fundbat.com/company/fly-io,2026-04-24T21:45:45.549889+00:00
+fundbat,Momentus ($34M / NASDAQ: MNTS),$34M,NASDAQ: MNTS,Aerospace  Transportation,,https://fundbat.com/company/momentus,2026-04-24T21:45:54.265968+00:00
+fundbat,Hermeus ($319M / $1.0B),$319M,$1.0B,Aerospace  Artificial Intelligence  +1,,https://fundbat.com/company/hermeus,2026-04-24T21:45:35.957415+00:00
+fundbat,Bird ($1.1B / $3.8B),$1.1B,$3.8B,SaaS  Developer Tools  +2,,https://fundbat.com/company/bird,2026-04-24T21:45:26.682201+00:00
+fundbat,Box ($552M / NYSE: BOX),$552M,NYSE: BOX,SaaS  Cloud Computing,,https://fundbat.com/company/box,2026-04-24T21:45:31.490361+00:00
+fundbat,Valar Atomics ($489M / $2.0B),$489M,$2.0B,Climate Tech  Hardware  +1,,https://fundbat.com/company/valar-atomics,2026-04-24T21:45:32.624793+00:00
+fundbat,Prefect ($47M / -),$47M,-,Developer Tools  Data & Analytics  +2,,https://fundbat.com/company/prefect,2026-04-24T21:45:52.176868+00:00
+fundbat,Freshworks ($493M / NASDAQ: FRSH),$493M,NASDAQ: FRSH,SaaS  Enterprise Software  +1,,https://fundbat.com/company/freshworks,2026-04-24T21:45:32.472686+00:00
+fundbat,Cognichip ($93M / -),$93M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/cognichip,2026-04-24T21:45:47.100063+00:00
+fundbat,Nscale ($3.7B / $14.6B),$3.7B,$14.6B,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/nscale,2026-04-24T21:45:22.749345+00:00
+fundbat,n8n ($254M / -),$254M,-,Developer Tools  Enterprise Software  +1,,https://fundbat.com/company/n8n,2026-04-24T21:45:37.600712+00:00
+fundbat,Discord ($995M / $15.0B),$995M,$15.0B,Social Media  Consumer Tech  +1,,https://fundbat.com/company/discord,2026-04-24T21:45:27.195619+00:00
+fundbat,Oculus VR ($93M / -),$93M,-,Hardware,,https://fundbat.com/company/oculus-vr,2026-04-24T21:45:47.048480+00:00
+fundbat,MongoDB ($311M / NASDAQ: MDB),$311M,NASDAQ: MDB,Developer Tools  Cloud Computing  +2,,https://fundbat.com/company/mongodb,2026-04-24T21:45:36.355143+00:00
+fundbat,Whatnot ($974M / $11.5B),$974M,$11.5B,E-Commerce  Consumer Tech,,https://fundbat.com/company/whatnot,2026-04-24T21:45:27.402744+00:00
+fundbat,Medium ($163M / $600M),$163M,$600M,SaaS,,https://fundbat.com/company/medium,2026-04-24T21:45:41.723942+00:00
+fundbat,EquipmentShare ($838M / NASDAQ: EQPT),$838M,NASDAQ: EQPT,SaaS  Hardware  +1,,https://fundbat.com/company/equipmentshare,2026-04-24T21:45:28.428350+00:00
+fundbat,Anki ($201M / -),$201M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/anki,2026-04-24T21:45:39.364315+00:00
+fundbat,Pinnacle Medicines ($134M / -),$134M,-,Biotech  Artificial Intelligence,,https://fundbat.com/company/pinnacle-medicines,2026-04-24T21:45:43.717171+00:00
+fundbat,ServiceTitan ($1.2B / NASDAQ: TTAN),$1.2B,NASDAQ: TTAN,SaaS  Enterprise Software,,https://fundbat.com/company/servicetitan,2026-04-24T21:45:26.436608+00:00
+fundbat,IQM Quantum Computers ($244M / $1.8B),$244M,$1.8B,Hardware  Cloud Computing,,https://fundbat.com/company/iqm-quantum,2026-04-24T21:45:37.852742+00:00
+fundbat,John Deere (- / NYSE: DE),-,NYSE: DE,,,https://fundbat.com/company/john-deere,2026-04-24T21:46:01.781013+00:00
+fundbat,Starfish Space ($138M / -),$138M,-,Aerospace,,https://fundbat.com/company/starfish-space,2026-04-24T21:45:43.317293+00:00
+fundbat,GridBeyond ($85M / -),$85M,-,Climate Tech  Artificial Intelligence,,https://fundbat.com/company/gridbeyond,2026-04-24T21:45:47.700134+00:00
+fundbat,Glimpse ($52M / -),$52M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/glimpse,2026-04-24T21:45:51.459372+00:00
+fundbat,WePay ($74M / -),$74M,-,Fintech  Payments,,https://fundbat.com/company/wepay,2026-04-24T21:45:48.611769+00:00
+fundbat,Crusoe ($2.5B / $10.0B),$2.5B,$10.0B,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/crusoe,2026-04-24T21:45:23.588463+00:00
+fundbat,North ($176M / -),$176M,-,Hardware  Consumer Tech,,https://fundbat.com/company/north,2026-04-24T21:45:40.849703+00:00
+fundbat,Block ($590M / NYSE: XYZ),$590M,NYSE: XYZ,Fintech  Payments,,https://fundbat.com/company/block,2026-04-24T21:45:30.814757+00:00
+fundbat,Xflow ($33M / $85M),$33M,$85M,Fintech  Payments,,https://fundbat.com/company/xflow,2026-04-24T21:45:54.517970+00:00
+fundbat,Klarna ($4.2B / NYSE: KLAR),$4.2B,NYSE: KLAR,Fintech  Payments  +1,,https://fundbat.com/company/klarna,2026-04-24T21:45:22.544548+00:00
+fundbat,Meta ($2.4B / NASDAQ: META),$2.4B,NASDAQ: META,Social Media  Artificial Intelligence  +1,,https://fundbat.com/company/meta,2026-04-24T21:45:23.700752+00:00
+fundbat,ThinkLabs AI ($38M / -),$38M,-,Artificial Intelligence  Climate Tech  +1,,https://fundbat.com/company/thinklabs-ai,2026-04-24T21:45:53.724236+00:00
+fundbat,ThoughtSpot ($664M / $4.2B),$664M,$4.2B,Data & Analytics  Artificial Intelligence  +2,,https://fundbat.com/company/thoughtspot,2026-04-24T21:45:29.841920+00:00
+fundbat,depthfirst ($120M / -),$120M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/depthfirst,2026-04-24T21:45:44.983808+00:00
+fundbat,Nvidia (- / NASDAQ: NVDA),-,NASDAQ: NVDA,Hardware  Artificial Intelligence,,https://fundbat.com/company/nvidia,2026-04-24T21:46:02.685653+00:00
+fundbat,Tesla (- / NASDAQ: TSLA),-,NASDAQ: TSLA,Transportation  Climate Tech,,https://fundbat.com/company/tesla,2026-04-24T21:46:02.735992+00:00
+fundbat,Inflection AI ($1.5B / $4.0B),$1.5B,$4.0B,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/inflection-ai,2026-04-24T21:45:25.273764+00:00
+fundbat,Amber Group ($628M / $3.0B),$628M,$3.0B,Blockchain & Crypto  Fintech,,https://fundbat.com/company/amber-group,2026-04-24T21:45:30.148846+00:00
+fundbat,GlobalComix ($13M / -),$13M,-,Entertainment  Consumer Tech,,https://fundbat.com/company/globalcomix,2026-04-24T21:45:58.104220+00:00
+fundbat,FutureAdvisor ($22M / -),$22M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/futureadvisor,2026-04-24T21:45:56.239714+00:00
+fundbat,Mistral AI ($3.2B / $13.8B),$3.2B,$13.8B,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/mistral-ai,2026-04-24T21:45:23.111898+00:00
+fundbat,MuleSoft ($259M / $1.5B),$259M,$1.5B,Enterprise Software  Cloud Computing  +1,,https://fundbat.com/company/mulesoft,2026-04-24T21:45:37.340745+00:00
+fundbat,Hugging Face ($395M / -),$395M,-,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/hugging-face,2026-04-24T21:45:34.191745+00:00
+fundbat,Faire ($1.6B / $5.2B),$1.6B,$5.2B,E-Commerce,,https://fundbat.com/company/faire,2026-04-24T21:45:25.062624+00:00
+fundbat,Clipboard Health ($94M / $1.3B),$94M,$1.3B,SaaS,,https://fundbat.com/company/clipboard-health,2026-04-24T21:45:46.993811+00:00
+fundbat,Cogent Security ($53M / -),$53M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/cogent-security,2026-04-24T21:45:51.355873+00:00
+fundbat,Vestwell ($623M / -),$623M,-,Fintech  SaaS,,https://fundbat.com/company/vestwell,2026-04-24T21:45:30.297737+00:00
+fundbat,Vast ($500M / -),$500M,-,Aerospace  Hardware,,https://fundbat.com/company/vast,2026-04-24T21:45:32.309003+00:00
+fundbat,Silverflow ($76M / -),$76M,-,Fintech  Payments,,https://fundbat.com/company/silverflow,2026-04-24T21:45:48.562319+00:00
+fundbat,Spade ($61M / -),$61M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/spade,2026-04-24T21:45:50.053879+00:00
+fundbat,Toast ($900M / NYSE: TOST),$900M,NYSE: TOST,SaaS  Payments  +1,,https://fundbat.com/company/toast,2026-04-24T21:45:27.804318+00:00
+fundbat,Headway ($327M / $2.3B),$327M,$2.3B,Biotech,,https://fundbat.com/company/headway,2026-04-24T21:45:35.855686+00:00
+fundbat,Halter ($468M / $2.0B),$468M,$2.0B,Hardware  Artificial Intelligence,,https://fundbat.com/company/halter,2026-04-24T21:45:33.051833+00:00
+fundbat,Neysa ($1.3B / -),$1.3B,-,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/neysa,2026-04-24T21:45:26.131688+00:00
+fundbat,Rivian ($10.5B / NASDAQ: RIVN),$10.5B,NASDAQ: RIVN,Transportation  Hardware  +1,,https://fundbat.com/company/rivian,2026-04-24T21:45:22.080765+00:00
+fundbat,7Rivers ($11M / -),$11M,-,Artificial Intelligence  Data & Analytics,,https://fundbat.com/company/7rivers,2026-04-24T21:45:59.030912+00:00
+fundbat,Whoop ($981M / $10.1B),$981M,$10.1B,Healthtech  Consumer Tech  +1,,https://fundbat.com/company/whoop,2026-04-24T21:45:27.301107+00:00
+fundbat,Replit ($852M / $9.0B),$852M,$9.0B,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/replit,2026-04-24T21:45:28.375630+00:00
+fundbat,BeReal ($90M / -),$90M,-,,,https://fundbat.com/company/bereal,2026-04-24T21:45:47.401886+00:00
+fundbat,Trayd ($15M / -),$15M,-,SaaS  Fintech,,https://fundbat.com/company/trayd,2026-04-24T21:45:57.647914+00:00
+fundbat,Voomi Supply ($11M / -),$11M,-,SaaS,,https://fundbat.com/company/voomi-supply,2026-04-24T21:45:58.983873+00:00
+fundbat,Apptronik ($964M / $5.5B),$964M,$5.5B,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/apptronik,2026-04-24T21:45:27.451655+00:00
+fundbat,Bluesky ($123M / -),$123M,-,Social Media  Consumer Tech,,https://fundbat.com/company/bluesky,2026-04-24T21:45:44.666976+00:00
+fundbat,Apeel Sciences ($715M / -),$715M,-,Climate Tech  Biotech,,https://fundbat.com/company/apeel-sciences,2026-04-24T21:45:29.544838+00:00
+fundbat,Hex ($172M / $400M),$172M,$400M,Data & Analytics  Artificial Intelligence  +2,,https://fundbat.com/company/hex,2026-04-24T21:45:41.216300+00:00
+fundbat,Joby Aviation ($795M / NYSE: JOBY),$795M,NYSE: JOBY,Transportation  Aerospace  +1,,https://fundbat.com/company/joby-aviation,2026-04-24T21:45:28.769929+00:00
+fundbat,Mux ($174M / $1.0B),$174M,$1.0B,Developer Tools  SaaS  +1,,https://fundbat.com/company/mux,2026-04-24T21:45:40.947910+00:00
+fundbat,Eridu ($230M / -),$230M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/eridu,2026-04-24T21:45:38.244174+00:00
+fundbat,Midas ($59M / -),$59M,-,Blockchain & Crypto  Fintech,,https://fundbat.com/company/midas,2026-04-24T21:45:50.421833+00:00
+fundbat,eMed ($200M / -),$200M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/emed,2026-04-24T21:45:39.535932+00:00
+fundbat,Whole Foods Market (- / -),-,-,E-Commerce,,https://fundbat.com/company/whole-foods,2026-04-24T21:46:02.426997+00:00
+fundbat,Eight Sleep ($292M / $1.5B),$292M,$1.5B,Hardware  Artificial Intelligence,,https://fundbat.com/company/eight-sleep,2026-04-24T21:45:36.560681+00:00
+fundbat,HashiCorp ($349M / -),$349M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/hashicorp,2026-04-24T21:45:34.838677+00:00
+fundbat,Smack Technologies ($32M / -),$32M,-,Artificial Intelligence  Cybersecurity,,https://fundbat.com/company/smack-technologies,2026-04-24T21:45:54.724248+00:00
+fundbat,Canva ($1.1B / $42.0B),$1.1B,$42.0B,Design Tools  SaaS  +1,,https://fundbat.com/company/canva,2026-04-24T21:45:26.632744+00:00
+fundbat,Aclarion ($17M / NASDAQ: ACON),$17M,NASDAQ: ACON,Healthtech  Artificial Intelligence,,https://fundbat.com/company/aclarion,2026-04-24T21:45:56.946899+00:00
+fundbat,Zilliz ($113M / -),$113M,-,Artificial Intelligence  Data & Analytics  +2,,https://fundbat.com/company/zilliz,2026-04-24T21:45:45.450883+00:00
+fundbat,Coactive AI ($44M / $200M),$44M,$200M,Artificial Intelligence  Data & Analytics  +1,,https://fundbat.com/company/coactive-ai,2026-04-24T21:45:52.692923+00:00
+fundbat,Everpure ($470M / -),$470M,-,Cloud Computing  Enterprise Software,,https://fundbat.com/company/everpure,2026-04-24T21:45:33.002747+00:00
+fundbat,Databricks ($20.0B / $134.0B),$20.0B,$134.0B,Data & Analytics  Artificial Intelligence  +2,,https://fundbat.com/company/databricks,2026-04-24T21:45:21.826760+00:00
+fundbat,Mirage ($163M / -),$163M,-,Artificial Intelligence  Entertainment,,https://fundbat.com/company/mirage,2026-04-24T21:45:41.672845+00:00
+fundbat,Flexport ($2.4B / $8.0B),$2.4B,$8.0B,SaaS  Transportation,,https://fundbat.com/company/flexport,2026-04-24T21:45:23.804578+00:00
+fundbat,Applied Compute ($160M / $1.3B),$160M,$1.3B,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/applied-compute,2026-04-24T21:45:42.030945+00:00
+fundbat,Outreach ($488M / $4.4B),$488M,$4.4B,SaaS  Enterprise Software  +1,,https://fundbat.com/company/outreach,2026-04-24T21:45:32.677203+00:00
+fundbat,RAVEN.IO ($20M / -),$20M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/raven-io,2026-04-24T21:45:56.541965+00:00
+fundbat,Firmus Technologies ($1.4B / $5.5B),$1.4B,$5.5B,Cloud Computing  Artificial Intelligence  +1,,https://fundbat.com/company/firmus,2026-04-24T21:45:25.780908+00:00
+fundbat,Figure AI ($1.8B / $39.0B),$1.8B,$39.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/figure-ai,2026-04-24T21:45:24.562676+00:00
+fundbat,Rebellions ($549M / $2.3B),$549M,$2.3B,Artificial Intelligence  Hardware,,https://fundbat.com/company/rebellions,2026-04-24T21:45:31.560031+00:00
+fundbat,Rubrik ($553M / NYSE: RBRK),$553M,NYSE: RBRK,Cybersecurity  Cloud Computing  +3,,https://fundbat.com/company/rubrik,2026-04-24T21:45:31.321411+00:00
+fundbat,Notch ($45M / -),$45M,-,Artificial Intelligence  Fintech  +1,,https://fundbat.com/company/notch-ai,2026-04-24T21:45:52.387251+00:00
+fundbat,Nebius Group ($3.7B / NASDAQ: NBIS),$3.7B,NASDAQ: NBIS,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/nebius-group,2026-04-24T21:45:22.800051+00:00
+fundbat,Skyryse ($518M / $1.1B),$518M,$1.1B,Aerospace,,https://fundbat.com/company/skyryse,2026-04-24T21:45:32.139682+00:00
+fundbat,Substack ($82M / $650M),$82M,$650M,SaaS,,https://fundbat.com/company/substack,2026-04-24T21:45:48.004662+00:00
+fundbat,Lime ($947M / $510M),$947M,$510M,Transportation,,https://fundbat.com/company/lime,2026-04-24T21:45:27.550940+00:00
+fundbat,Mandiant (- / -),-,-,Cybersecurity,,https://fundbat.com/company/mandiant,2026-04-24T21:46:02.530991+00:00
+fundbat,Verkada ($744M / -),$744M,-,Cybersecurity  Hardware  +1,,https://fundbat.com/company/verkada,2026-04-24T21:45:29.221917+00:00
+fundbat,Nurx ($116M / -),$116M,-,Biotech,,https://fundbat.com/company/nurx,2026-04-24T21:45:45.343783+00:00
+fundbat,Alcatraz AI ($80M / -),$80M,-,Cybersecurity  Artificial Intelligence  +1,,https://fundbat.com/company/alcatraz-ai,2026-04-24T21:45:48.212183+00:00
+fundbat,Magic Leap ($4.4B / $2.0B),$4.4B,$2.0B,Hardware  Artificial Intelligence,,https://fundbat.com/company/magic-leap,2026-04-24T21:45:22.495922+00:00
+fundbat,Chime ($2.2B / NASDAQ: CHYM),$2.2B,NASDAQ: CHYM,Fintech  Consumer Tech,,https://fundbat.com/company/chime,2026-04-24T21:45:24.167594+00:00
+fundbat,LangChain ($160M / -),$160M,-,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/langchain,2026-04-24T21:45:42.085461+00:00
+fundbat,360 View (- / -),-,-,Fintech  SaaS,,https://fundbat.com/company/360-view,2026-04-24T21:46:01.423984+00:00
+fundbat,Fivestars ($145M / -),$145M,-,Fintech  Payments  +1,,https://fundbat.com/company/fivestars,2026-04-24T21:45:43.000183+00:00
+fundbat,Groq ($1.8B / -),$1.8B,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/groq,2026-04-24T21:45:24.864160+00:00
+fundbat,Ideogram ($97M / $1.0B),$97M,$1.0B,Artificial Intelligence,,https://fundbat.com/company/ideogram,2026-04-24T21:45:46.778794+00:00
+fundbat,Descript ($100M / -),$100M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/descript,2026-04-24T21:45:46.612858+00:00
+fundbat,Danaher (- / -),-,-,Biotech,,https://fundbat.com/company/danaher,2026-04-24T21:46:02.229082+00:00
+fundbat,Doctronic ($65M / -),$65M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/doctronic,2026-04-24T21:45:49.869873+00:00
+fundbat,Comma.ai ($18M / -),$18M,-,Artificial Intelligence  Transportation,,https://fundbat.com/company/comma-ai,2026-04-24T21:45:56.839444+00:00
+fundbat,RudderStack ($82M / -),$82M,-,Data & Analytics  Developer Tools  +2,,https://fundbat.com/company/rudderstack,2026-04-24T21:45:48.055862+00:00
+fundbat,Accelsius ($89M / -),$89M,-,Hardware  Climate Tech,,https://fundbat.com/company/accelsius,2026-04-24T21:45:47.499965+00:00
+fundbat,Peloton Interactive ($994M / NASDAQ: PTON),$994M,NASDAQ: PTON,Hardware  Consumer Tech,,https://fundbat.com/company/peloton-interactive,2026-04-24T21:45:27.246166+00:00
+fundbat,Mercury ($346M / $3.5B),$346M,$3.5B,Fintech  SaaS  +1,,https://fundbat.com/company/mercury,2026-04-24T21:45:34.887720+00:00
+fundbat,Catalyst Clinical Research (- / -),-,-,Biotech,,https://fundbat.com/company/catalyst-clinical-research,2026-04-24T21:46:02.130021+00:00
+fundbat,Posh ($59M / -),$59M,-,Consumer Tech  SaaS,,https://fundbat.com/company/posh,2026-04-24T21:45:50.372680+00:00
+fundbat,XFX ($17M / -),$17M,-,Fintech  Blockchain & Crypto  +1,,https://fundbat.com/company/xfx,2026-04-24T21:45:57.096958+00:00
+fundbat,Chainguard ($892M / -),$892M,-,Cybersecurity  Cloud Computing  +1,,https://fundbat.com/company/chainguard,2026-04-24T21:45:27.912731+00:00
+fundbat,Pomelo Care ($171M / $1.7B),$171M,$1.7B,Artificial Intelligence  SaaS,,https://fundbat.com/company/pomelo-care,2026-04-24T21:45:41.268103+00:00
+fundbat,Halcyon ($21M / -),$21M,-,Artificial Intelligence  Climate Tech  +1,,https://fundbat.com/company/halcyon,2026-04-24T21:45:56.338029+00:00
+fundbat,Fireworks AI ($327M / $4.0B),$327M,$4.0B,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/fireworks-ai,2026-04-24T21:45:35.803914+00:00
+fundbat,MotherDuck ($100M / $400M),$100M,$400M,Data & Analytics  Cloud Computing  +2,,https://fundbat.com/company/motherduck,2026-04-24T21:45:46.562838+00:00
+fundbat,Slate Auto ($1.4B / $1.2B),$1.4B,$1.2B,Transportation  Hardware  +2,,https://fundbat.com/company/slate-auto,2026-04-24T21:45:25.732647+00:00
+fundbat,Interloom ($17M / -),$17M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/interloom,2026-04-24T21:45:57.349597+00:00
+fundbat,Deccan AI ($25M / -),$25M,-,Artificial Intelligence  Data & Analytics,,https://fundbat.com/company/deccan-ai,2026-04-24T21:45:55.584243+00:00
+fundbat,Linear ($134M / -),$134M,-,Developer Tools  Productivity  +1,,https://fundbat.com/company/linear,2026-04-24T21:45:43.667079+00:00
+fundbat,Candid Therapeutics ($875M / -),$875M,-,Biotech  Healthtech,,https://fundbat.com/company/candid-therapeutics,2026-04-24T21:45:28.115923+00:00
+fundbat,Freenome ($1.3B / $2.2B),$1.3B,$2.2B,Biotech  Artificial Intelligence  +2,,https://fundbat.com/company/freenome,2026-04-24T21:45:25.932824+00:00
+fundbat,Podium ($422M / $3.0B),$422M,$3.0B,SaaS  Artificial Intelligence,,https://fundbat.com/company/podium,2026-04-24T21:45:33.554645+00:00
+fundbat,Optimizely ($251M / -),$251M,-,SaaS  Data & Analytics,,https://fundbat.com/company/optimizely,2026-04-24T21:45:37.650750+00:00
+fundbat,Critical Loop ($49M / -),$49M,-,Climate Tech  Hardware  +1,,https://fundbat.com/company/critical-loop,2026-04-24T21:45:51.821911+00:00
+fundbat,dbt Labs ($416M / $4.2B),$416M,$4.2B,Data & Analytics  Developer Tools  +2,,https://fundbat.com/company/dbt-labs,2026-04-24T21:45:33.723123+00:00
+fundbat,Weave ($146M / NYSE: WEAV),$146M,NYSE: WEAV,SaaS  Healthtech,,https://fundbat.com/company/weave,2026-04-24T21:45:42.898832+00:00
+fundbat,Modern Fertility ($22M / -),$22M,-,Biotech,,https://fundbat.com/company/modern-fertility,2026-04-24T21:45:56.185113+00:00
+fundbat,Cryptio ($71M / -),$71M,-,Blockchain & Crypto  Fintech  +1,,https://fundbat.com/company/cryptio,2026-04-24T21:45:48.759780+00:00
+fundbat,Physical Intelligence ($1.1B / -),$1.1B,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/physical-intelligence,2026-04-24T21:45:26.735652+00:00
+fundbat,Tomorrow.io ($422M / -),$422M,-,Climate Tech  Data & Analytics,,https://fundbat.com/company/tomorrow-io,2026-04-24T21:45:33.622934+00:00
+fundbat,Performance Drone Works ($135M / -),$135M,-,Aerospace  Hardware,,https://fundbat.com/company/performance-drone-works,2026-04-24T21:45:43.567936+00:00
+fundbat,IT Solutions (- / -),-,-,Cybersecurity,,https://fundbat.com/company/it-solutions,2026-04-24T21:46:01.883019+00:00
+fundbat,Grab ($7.9B / NASDAQ: GRAB),$7.9B,NASDAQ: GRAB,Transportation  Food & Delivery  +2,,https://fundbat.com/company/grab,2026-04-24T21:45:22.185452+00:00
+fundbat,GOAT Group ($493M / $3.7B),$493M,$3.7B,E-Commerce,,https://fundbat.com/company/goat-group,2026-04-24T21:45:32.523917+00:00
+fundbat,Machine Zone ($263M / -),$263M,-,Design Tools,,https://fundbat.com/company/machine-zone,2026-04-24T21:45:37.231747+00:00
+fundbat,Vercel ($863M / $9.3B),$863M,$9.3B,Developer Tools  Cloud Computing,,https://fundbat.com/company/vercel,2026-04-24T21:45:28.217653+00:00
+fundbat,Cyngn ($110M / NASDAQ: CYN),$110M,NASDAQ: CYN,Transportation  Artificial Intelligence,,https://fundbat.com/company/cyngn,2026-04-24T21:45:45.650831+00:00
+fundbat,Newfront ($312M / -),$312M,-,Fintech  SaaS,,https://fundbat.com/company/newfront,2026-04-24T21:45:36.255923+00:00
+fundbat,Surf AI ($57M / -),$57M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/surf-ai,2026-04-24T21:45:50.778064+00:00
+fundbat,Mega ($12M / -),$12M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/mega,2026-04-24T21:45:58.684152+00:00
+fundbat,Netlify ($202M / $2.0B),$202M,$2.0B,Developer Tools  Cloud Computing,,https://fundbat.com/company/netlify,2026-04-24T21:45:39.259453+00:00
+fundbat,Phantom ($268M / $3.0B),$268M,$3.0B,Fintech  Blockchain & Crypto,,https://fundbat.com/company/phantom,2026-04-24T21:45:37.125228+00:00
+fundbat,Chroma ($20M / $75M),$20M,$75M,Developer Tools  Artificial Intelligence  +1,,https://fundbat.com/company/chroma,2026-04-24T21:45:56.440931+00:00
+fundbat,Sqreen ($16M / -),$16M,-,Cybersecurity,,https://fundbat.com/company/sqreen,2026-04-24T21:45:57.448953+00:00
+fundbat,SpaceX ($11.9B / $350.0B),$11.9B,$350.0B,Aerospace  Hardware  +1,,https://fundbat.com/company/spacex,2026-04-24T21:45:21.981619+00:00
+fundbat,MGM Holdings (- / -),-,-,Entertainment,,https://fundbat.com/company/mgm-holdings,2026-04-24T21:46:02.378056+00:00
+fundbat,Glydways ($246M / $1.0B),$246M,$1.0B,Transportation  Artificial Intelligence  +2,,https://fundbat.com/company/glydways,2026-04-24T21:45:37.800754+00:00
+fundbat,Kahoot (- / -),-,-,,,https://fundbat.com/company/kahoot,2026-04-24T21:46:01.730105+00:00
+fundbat,Evervault ($46M / -),$46M,-,Cybersecurity  Fintech,,https://fundbat.com/company/evervault,2026-04-24T21:45:52.287166+00:00
+fundbat,Kindred ($79M / -),$79M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/kindred,2026-04-24T21:45:48.411374+00:00
+fundbat,Chowbus ($209M / -),$209M,-,Artificial Intelligence  Food & Delivery  +1,,https://fundbat.com/company/chowbus,2026-04-24T21:45:38.944825+00:00
+fundbat,Talos ($190M / $1.5B),$190M,$1.5B,Fintech  Blockchain & Crypto,,https://fundbat.com/company/talos,2026-04-24T21:45:39.970704+00:00
+fundbat,Rivr ($22M / -),$22M,-,Hardware,,https://fundbat.com/company/rivr,2026-04-24T21:45:56.135220+00:00
+fundbat,Parsable ($128M / -),$128M,-,SaaS,,https://fundbat.com/company/parsable,2026-04-24T21:45:43.948486+00:00
+fundbat,Eragon ($12M / $100M),$12M,$100M,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/eragon,2026-04-24T21:45:58.472040+00:00
+fundbat,Worldwide Clinical Trials (- / -),-,-,Biotech,,https://fundbat.com/company/worldwide-clinical-trials,2026-04-24T21:46:02.179397+00:00
+fundbat,Thesis Care ($60M / -),$60M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/thesis-care,2026-04-24T21:45:50.163975+00:00
+fundbat,HelloSign ($16M / -),$16M,-,SaaS,,https://fundbat.com/company/hellosign,2026-04-24T21:45:57.548051+00:00
+fundbat,World Labs ($1.2B / $5.0B),$1.2B,$5.0B,Artificial Intelligence,,https://fundbat.com/company/world-labs,2026-04-24T21:45:26.235622+00:00
+fundbat,Shopify ($122M / NYSE: SHOP),$122M,NYSE: SHOP,E-Commerce  SaaS,,https://fundbat.com/company/shopify,2026-04-24T21:45:44.770435+00:00
+fundbat,Bumble ($10M / NASDAQ: BMBL),$10M,NASDAQ: BMBL,Social Media  Consumer Tech,,https://fundbat.com/company/bumble,2026-04-24T21:45:59.177949+00:00
+fundbat,Grammarly ($545M / -),$545M,-,Artificial Intelligence  Productivity  +1,,https://fundbat.com/company/grammarly,2026-04-24T21:45:31.622304+00:00
+fundbat,Slash ($160M / $1.4B),$160M,$1.4B,Fintech  Payments  +2,,https://fundbat.com/company/slash,2026-04-24T21:45:41.976893+00:00
+fundbat,NationGraph ($23M / -),$23M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/nationgraph,2026-04-24T21:45:56.035988+00:00
+fundbat,Orbital Lasers ($20M / -),$20M,-,Aerospace,,https://fundbat.com/company/orbital-lasers,2026-04-24T21:45:56.493695+00:00
+fundbat,Airbnb ($3.3B / NASDAQ: ABNB),$3.3B,NASDAQ: ABNB,Consumer Tech,,https://fundbat.com/company/airbnb,2026-04-24T21:45:23.003805+00:00
+fundbat,Checkr ($679M / $5.8B),$679M,$5.8B,SaaS  Artificial Intelligence,,https://fundbat.com/company/checkr,2026-04-24T21:45:29.792849+00:00
+fundbat,HockeyStack ($50M / -),$50M,-,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/hockeystack,2026-04-24T21:45:51.563597+00:00
+fundbat,Procode AI ($4M / -),$4M,-,Artificial Intelligence  Healthtech  +1,,https://fundbat.com/company/procode-ai,2026-04-24T21:46:00.537910+00:00
+fundbat,Apple (- / NASDAQ: AAPL),-,NASDAQ: AAPL,Hardware  Consumer Tech,,https://fundbat.com/company/apple,2026-04-24T21:46:02.992430+00:00
+fundbat,RoboForce ($67M / -),$67M,-,Hardware  Artificial Intelligence,,https://fundbat.com/company/roboforce,2026-04-24T21:45:49.320792+00:00
+fundbat,Stake ($58M / -),$58M,-,Fintech,,https://fundbat.com/company/stake,2026-04-24T21:45:50.574866+00:00
+fundbat,Kalshi ($2.5B / $22.0B),$2.5B,$22.0B,Fintech,,https://fundbat.com/company/kalshi,2026-04-24T21:45:23.532913+00:00
+fundbat,Railway ($124M / -),$124M,-,Developer Tools  Cloud Computing,,https://fundbat.com/company/railway,2026-04-24T21:45:44.406919+00:00
+fundbat,Gusto ($706M / $9.5B),$706M,$9.5B,SaaS  Fintech,,https://fundbat.com/company/gusto,2026-04-24T21:45:29.596785+00:00
+fundbat,Flexion ($57M / -),$57M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/flexion,2026-04-24T21:45:50.680511+00:00
+fundbat,Saronic ($2.6B / $9.3B),$2.6B,$9.3B,Artificial Intelligence  Aerospace  +1,,https://fundbat.com/company/saronic,2026-04-24T21:45:23.483753+00:00
+fundbat,Affirm ($1.5B / NASDAQ: AFRM),$1.5B,NASDAQ: AFRM,Fintech  Payments,,https://fundbat.com/company/affirm,2026-04-24T21:45:25.322625+00:00
+fundbat,Algolia ($334M / $2.3B),$334M,$2.3B,SaaS  Developer Tools  +1,,https://fundbat.com/company/algolia,2026-04-24T21:45:35.392719+00:00
+fundbat,Ginkgo Bioworks ($720M / NYSE: DNA),$720M,NYSE: DNA,Biotech  Artificial Intelligence,,https://fundbat.com/company/ginkgo-bioworks,2026-04-24T21:45:29.444634+00:00
+fundbat,Datadog ($148M / NASDAQ: DDOG),$148M,NASDAQ: DDOG,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/datadog,2026-04-24T21:45:42.750014+00:00
+fundbat,Tipalti ($919M / $8.3B),$919M,$8.3B,Fintech  Enterprise Software  +2,,https://fundbat.com/company/tipalti,2026-04-24T21:45:27.752618+00:00
+fundbat,Armadin ($190M / -),$190M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/armadin,2026-04-24T21:45:40.019701+00:00
+fundbat,Cloudflare ($182M / NYSE: NET),$182M,NYSE: NET,Cloud Computing  Cybersecurity  +1,,https://fundbat.com/company/cloudflare,2026-04-24T21:45:40.491083+00:00
+fundbat,ODC ($45M / -),$45M,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/odc,2026-04-24T21:45:52.439370+00:00
+fundbat,Immutrin ($87M / -),$87M,-,Biotech,,https://fundbat.com/company/immutrin,2026-04-24T21:45:47.597913+00:00
+fundbat,Nexthop AI ($610M / $4.2B),$610M,$4.2B,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/nexthop-ai,2026-04-24T21:45:30.502815+00:00
+fundbat,Origa ($1M / -),$1M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/origa,2026-04-24T21:46:01.274977+00:00
+fundbat,Tailscale ($275M / $1.5B),$275M,$1.5B,Cybersecurity  Developer Tools  +2,,https://fundbat.com/company/tailscale,2026-04-24T21:45:36.974759+00:00
+fundbat,Axoni ($110M / -),$110M,-,Fintech  Blockchain & Crypto,,https://fundbat.com/company/axoni,2026-04-24T21:45:45.838896+00:00
+fundbat,Wave ($441M / $1.7B),$441M,$1.7B,Fintech  Payments,,https://fundbat.com/company/wave,2026-04-24T21:45:33.353689+00:00
+fundbat,Greenlight Financial Technology ($553M / $2.3B),$553M,$2.3B,Fintech  Payments,,https://fundbat.com/company/greenlight,2026-04-24T21:45:31.433918+00:00
+fundbat,Acurion ($4M / -),$4M,-,Healthtech  Biotech  +1,,https://fundbat.com/company/acurion,2026-04-24T21:46:00.380904+00:00
+fundbat,Roku ($168M / NASDAQ: ROKU),$168M,NASDAQ: ROKU,Entertainment  Consumer Tech  +1,,https://fundbat.com/company/roku,2026-04-24T21:45:41.417889+00:00
+fundbat,MatX ($605M / -),$605M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/matx,2026-04-24T21:45:30.661670+00:00
+fundbat,100 Thieves ($120M / $460M),$120M,$460M,Entertainment  Consumer Tech  +1,,https://fundbat.com/company/100-thieves,2026-04-24T21:45:44.934777+00:00
+fundbat,Inhouse ($5M / -),$5M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/inhouse,2026-04-24T21:46:00.227863+00:00
+fundbat,Nadia Care ($27M / -),$27M,-,Healthtech,,https://fundbat.com/company/nadia-care,2026-04-24T21:45:55.377603+00:00
+fundbat,Fauna Robotics ($12M / -),$12M,-,Hardware  Artificial Intelligence,,https://fundbat.com/company/fauna-robotics,2026-04-24T21:45:58.369045+00:00
+fundbat,Beautiful.ai ($45M / -),$45M,-,Artificial Intelligence  Productivity,,https://fundbat.com/company/beautiful-ai,2026-04-24T21:45:52.489982+00:00
+fundbat,Deel ($979M / $17.3B),$979M,$17.3B,SaaS  Fintech,,https://fundbat.com/company/deel,2026-04-24T21:45:27.349754+00:00
+fundbat,Sierra Space ($2.2B / $8.0B),$2.2B,$8.0B,Aerospace  Hardware,,https://fundbat.com/company/sierra-space,2026-04-24T21:45:24.217386+00:00
+fundbat,Together AI ($534M / -),$534M,-,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/together-ai,2026-04-24T21:45:31.991297+00:00
+fundbat,Sycamore ($65M / -),$65M,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/sycamore,2026-04-24T21:45:49.768842+00:00
+fundbat,Airtable ($1.4B / $11.7B),$1.4B,$11.7B,Productivity  SaaS,,https://fundbat.com/company/airtable,2026-04-24T21:45:25.628217+00:00
+fundbat,Beats Electronics ($869M / $1.6B),$869M,$1.6B,Hardware  Consumer Tech  +1,,https://fundbat.com/company/beats-electronics,2026-04-24T21:45:28.168079+00:00
+fundbat,Celo ($57M / -),$57M,-,Fintech,,https://fundbat.com/company/celo,2026-04-24T21:45:50.875888+00:00
+fundbat,Kong ($344M / $2.0B),$344M,$2.0B,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/kong,2026-04-24T21:45:34.937931+00:00
+fundbat,Presto ($102M / -),$102M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/presto,2026-04-24T21:45:46.302975+00:00
+fundbat,SPARK Microsystems ($12M / -),$12M,-,Hardware,,https://fundbat.com/company/spark-microsystems,2026-04-24T21:45:58.419032+00:00
+fundbat,Character.AI ($193M / $1.0B),$193M,$1.0B,Artificial Intelligence  SaaS,,https://fundbat.com/company/character-ai,2026-04-24T21:45:39.759763+00:00
+fundbat,Miro ($475M / $17.5B),$475M,$17.5B,Productivity  SaaS  +1,,https://fundbat.com/company/miro,2026-04-24T21:45:32.902027+00:00
+fundbat,Vega Security ($185M / -),$185M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/vega-security,2026-04-24T21:45:40.224018+00:00
+fundbat,Lace ($40M / -),$40M,-,Hardware,,https://fundbat.com/company/lace,2026-04-24T21:45:53.259389+00:00
+fundbat,Big Network ($2M / -),$2M,-,Cloud Computing,,https://fundbat.com/company/big-network,2026-04-24T21:46:00.947491+00:00
+fundbat,Frore Systems ($340M / $1.6B),$340M,$1.6B,Hardware  Cloud Computing,,https://fundbat.com/company/frore-systems,2026-04-24T21:45:34.988684+00:00
+fundbat,Amigo AI ($17M / -),$17M,-,Artificial Intelligence  Healthtech,,https://fundbat.com/company/amigo-ai,2026-04-24T21:45:56.997428+00:00
+fundbat,ChipAgents ($74M / -),$74M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/chipagents,2026-04-24T21:45:48.660862+00:00
+fundbat,Veeva Systems ($7M / NYSE: VEEV),$7M,NYSE: VEEV,SaaS  Enterprise Software  +2,,https://fundbat.com/company/veeva-systems,2026-04-24T21:45:59.874949+00:00
+fundbat,Segment ($282M / $1.5B),$282M,$1.5B,SaaS  Data & Analytics  +1,,https://fundbat.com/company/segment,2026-04-24T21:45:36.765439+00:00
+fundbat,Rigetti Computing ($155M / NASDAQ: RGTI),$155M,NASDAQ: RGTI,Hardware  Cloud Computing  +2,,https://fundbat.com/company/rigetti-computing,2026-04-24T21:45:42.394994+00:00
+fundbat,VEED ($35M / -),$35M,-,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/veed,2026-04-24T21:45:54.021294+00:00
+fundbat,Attio ($116M / -),$116M,-,SaaS  Enterprise Software  +2,,https://fundbat.com/company/attio,2026-04-24T21:45:45.185057+00:00
+fundbat,Endl ($2M / -),$2M,-,Fintech  Payments,,https://fundbat.com/company/endl,2026-04-24T21:46:01.176954+00:00
+fundbat,GeoWealth ($118M / -),$118M,-,Fintech  SaaS,,https://fundbat.com/company/geowealth,2026-04-24T21:45:45.136744+00:00
+fundbat,E-Pal ($40M / -),$40M,-,Blockchain & Crypto,,https://fundbat.com/company/e-pal,2026-04-24T21:45:53.472217+00:00
+fundbat,Modus ($85M / -),$85M,-,Fintech  Artificial Intelligence  +1,,https://fundbat.com/company/modus,2026-04-24T21:45:47.749892+00:00
+fundbat,xAI ($42.1B / $230.0B),$42.1B,$230.0B,Artificial Intelligence,,https://fundbat.com/company/xai,2026-04-24T21:45:21.721907+00:00
+fundbat,Automation Anywhere ($1.0B / $6.8B),$1.0B,$6.8B,Enterprise Software  Artificial Intelligence,,https://fundbat.com/company/automation-anywhere,2026-04-24T21:45:26.837288+00:00
+fundbat,Accolade ($235M / -),$235M,-,Biotech  SaaS,,https://fundbat.com/company/accolade,2026-04-24T21:45:37.959945+00:00
+fundbat,Littlebird ($11M / -),$11M,-,Artificial Intelligence  Productivity,,https://fundbat.com/company/littlebird,2026-04-24T21:45:58.935086+00:00
+fundbat,Advanced Navigation ($190M / $1.0B),$190M,$1.0B,Hardware  Aerospace,,https://fundbat.com/company/advanced-navigation,2026-04-24T21:45:39.921953+00:00
+fundbat,PagerDuty ($174M / NYSE: PD),$174M,NYSE: PD,SaaS  Developer Tools  +1,,https://fundbat.com/company/pagerduty,2026-04-24T21:45:41.004297+00:00
+fundbat,Doxel ($57M / -),$57M,-,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/doxel,2026-04-24T21:45:50.925844+00:00
+fundbat,Teleport ($169M / $1.1B),$169M,$1.1B,Developer Tools  Cybersecurity,,https://fundbat.com/company/teleport,2026-04-24T21:45:41.367401+00:00
+fundbat,ORO Labs ($159M / -),$159M,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/oro-labs,2026-04-24T21:45:42.134951+00:00
+fundbat,Validio ($47M / -),$47M,-,Data & Analytics  Artificial Intelligence,,https://fundbat.com/company/validio,2026-04-24T21:45:52.019848+00:00
+fundbat,Dapper Labs ($605M / $7.6B),$605M,$7.6B,Fintech,,https://fundbat.com/company/dapper-labs,2026-04-24T21:45:30.609713+00:00
+fundbat,Sourcegraph ($223M / $2.6B),$223M,$2.6B,Developer Tools  SaaS,,https://fundbat.com/company/sourcegraph,2026-04-24T21:45:38.563513+00:00
+fundbat,Meesho ($1.6B / OTHER: MEESHO),$1.6B,OTHER: MEESHO,E-Commerce,,https://fundbat.com/company/meesho,2026-04-24T21:45:25.117676+00:00
+fundbat,Runway ($860M / $5.3B),$860M,$5.3B,Artificial Intelligence,,https://fundbat.com/company/runway,2026-04-24T21:45:28.270924+00:00
+fundbat,Oasis Security ($165M / -),$165M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/oasis-security,2026-04-24T21:45:41.619888+00:00
+fundbat,Nimble Way ($47M / -),$47M,-,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/nimble-way,2026-04-24T21:45:52.126985+00:00
+fundbat,Gimlet Labs ($92M / -),$92M,-,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/gimlet-labs,2026-04-24T21:45:47.254938+00:00
+fundbat,Aetherflux ($60M / -),$60M,-,Aerospace  Climate Tech,,https://fundbat.com/company/aetherflux,2026-04-24T21:45:50.264821+00:00
+fundbat,LlamaIndex ($28M / -),$28M,-,Artificial Intelligence  Developer Tools  +2,,https://fundbat.com/company/llamaindex,2026-04-24T21:45:55.327967+00:00
+fundbat,Waymark ($7M / -),$7M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/waymark,2026-04-24T21:45:59.973587+00:00
+fundbat,Coupang ($3.4B / NYSE: CPNG),$3.4B,NYSE: CPNG,E-Commerce,,https://fundbat.com/company/coupang,2026-04-24T21:45:22.850588+00:00
+fundbat,Weaviate ($120M / -),$120M,-,Artificial Intelligence  Developer Tools  +2,,https://fundbat.com/company/weaviate,2026-04-24T21:45:44.883490+00:00
+fundbat,Midjourney (- / -),-,-,Artificial Intelligence  Design Tools  +1,,https://fundbat.com/company/midjourney,2026-04-24T21:46:01.373993+00:00
+fundbat,Expo ($56M / -),$56M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/expo,2026-04-24T21:45:51.028197+00:00
+fundbat,Waymo ($27.1B / $126.0B),$27.1B,$126.0B,Transportation  Artificial Intelligence,,https://fundbat.com/company/waymo,2026-04-24T21:45:21.773548+00:00
+fundbat,Stripe ($7.9B / $91.5B),$7.9B,$91.5B,Fintech  Payments  +1,,https://fundbat.com/company/stripe,2026-04-24T21:45:22.236839+00:00
+fundbat,uBiome ($110M / $600M),$110M,$600M,Biotech,,https://fundbat.com/company/ubiome,2026-04-24T21:45:45.893929+00:00
+fundbat,Nowports ($231M / $1.1B),$231M,$1.1B,Transportation,,https://fundbat.com/company/nowports,2026-04-24T21:45:38.194061+00:00
+fundbat,Procore Technologies ($471M / NYSE: PCOR),$471M,NYSE: PCOR,SaaS  Enterprise Software,,https://fundbat.com/company/procore-technologies,2026-04-24T21:45:32.951266+00:00
+fundbat,YouTube ($12M / -),$12M,-,Entertainment  Social Media,,https://fundbat.com/company/youtube,2026-04-24T21:45:58.734470+00:00
+fundbat,Rowspace ($50M / -),$50M,-,Artificial Intelligence  Fintech,,https://fundbat.com/company/rowspace,2026-04-24T21:45:51.723131+00:00
+fundbat,Adapt ($10M / -),$10M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/adapt,2026-04-24T21:45:59.306249+00:00
+fundbat,1touch.io ($32M / -),$32M,-,Cybersecurity  Data & Analytics,,https://fundbat.com/company/1touch,2026-04-24T21:45:54.826425+00:00
+fundbat,Augmedics ($143M / -),$143M,-,Hardware,,https://fundbat.com/company/augmedics,2026-04-24T21:45:43.104890+00:00
+fundbat,Parasail ($42M / -),$42M,-,Artificial Intelligence  Cloud Computing  +2,,https://fundbat.com/company/parasail,2026-04-24T21:45:52.846978+00:00
+fundbat,Anthropic ($48.4B / $380.0B),$48.4B,$380.0B,Artificial Intelligence,,https://fundbat.com/company/anthropic,2026-04-24T21:45:21.658766+00:00
+fundbat,Clerk ($105M / -),$105M,-,Developer Tools  SaaS,,https://fundbat.com/company/clerk,2026-04-24T21:45:46.052863+00:00
+fundbat,VB Spine (- / -),-,-,Hardware,,https://fundbat.com/company/vb-spine,2026-04-24T21:46:02.074921+00:00
+fundbat,Suno ($375M / $2.5B),$375M,$2.5B,Artificial Intelligence  Entertainment  +1,,https://fundbat.com/company/suno,2026-04-24T21:45:34.289975+00:00
+fundbat,Sentry ($217M / $3.0B),$217M,$3.0B,Developer Tools  Enterprise Software  +1,,https://fundbat.com/company/sentry,2026-04-24T21:45:38.844798+00:00
+fundbat,Brex ($1.2B / $12.3B),$1.2B,$12.3B,Fintech  SaaS  +1,,https://fundbat.com/company/brex,2026-04-24T21:45:26.533635+00:00
+fundbat,Dash0 ($155M / $1.0B),$155M,$1.0B,Developer Tools  Artificial Intelligence,,https://fundbat.com/company/dash0,2026-04-24T21:45:42.345957+00:00
+fundbat,inKind ($455M / -),$455M,-,Fintech,,https://fundbat.com/company/inkind,2026-04-24T21:45:33.154257+00:00
+fundbat,Worldcoin ($375M / $3.0B),$375M,$3.0B,Blockchain & Crypto  Hardware,,https://fundbat.com/company/worldcoin,2026-04-24T21:45:34.338983+00:00
+fundbat,Airware ($66M / -),$66M,-,Hardware  SaaS  +1,,https://fundbat.com/company/airware,2026-04-24T21:45:49.669928+00:00
+fundbat,Ripple ($794M / $40.0B),$794M,$40.0B,Blockchain & Crypto  Fintech  +1,,https://fundbat.com/company/ripple,2026-04-24T21:45:28.828508+00:00
+fundbat,Onit Security ($11M / -),$11M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/onit-security,2026-04-24T21:45:58.883758+00:00
+fundbat,UiPath ($2.0B / NYSE: PATH),$2.0B,NYSE: PATH,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/uipath,2026-04-24T21:45:24.366683+00:00
+fundbat,Avantos ($35M / -),$35M,-,Artificial Intelligence  Fintech  +1,,https://fundbat.com/company/avantos,2026-04-24T21:45:54.112197+00:00
+fundbat,Novig ($99M / -),$99M,-,Fintech,,https://fundbat.com/company/novig,2026-04-24T21:45:46.726914+00:00
+fundbat,Postman ($433M / -),$433M,-,Developer Tools  SaaS  +1,,https://fundbat.com/company/postman,2026-04-24T21:45:33.455681+00:00
+fundbat,AMP Robotics ($256M / -),$256M,-,Artificial Intelligence  Climate Tech  +1,,https://fundbat.com/company/amp-robotics,2026-04-24T21:45:37.441036+00:00
+fundbat,Safe Superintelligence ($3.0B / $32.0B),$3.0B,$32.0B,Artificial Intelligence,,https://fundbat.com/company/safe-superintelligence,2026-04-24T21:45:23.161795+00:00
+fundbat,AirGarage ($38M / -),$38M,-,SaaS  Transportation,,https://fundbat.com/company/airgarage,2026-04-24T21:45:53.780105+00:00
+fundbat,CoreOS ($48M / -),$48M,-,Developer Tools  Cloud Computing,,https://fundbat.com/company/coreos,2026-04-24T21:45:51.919207+00:00
+fundbat,Qualified Health ($125M / -),$125M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/qualified-health,2026-04-24T21:45:44.206977+00:00
+fundbat,Robinhood ($4.7B / NASDAQ: HOOD),$4.7B,NASDAQ: HOOD,Fintech,,https://fundbat.com/company/robinhood,2026-04-24T21:45:22.391765+00:00
+fundbat,Emerald AI ($68M / -),$68M,-,Artificial Intelligence  Climate Tech  +1,,https://fundbat.com/company/emerald-ai,2026-04-24T21:45:49.220050+00:00
+fundbat,CrowdStrike ($480M / NASDAQ: CRWD),$480M,NASDAQ: CRWD,Cybersecurity,,https://fundbat.com/company/crowdstrike,2026-04-24T21:45:32.852722+00:00
+fundbat,Nuro ($2.3B / -),$2.3B,-,Artificial Intelligence  Transportation,,https://fundbat.com/company/nuro,2026-04-24T21:45:23.958654+00:00
+fundbat,Urban SDK ($71M / -),$71M,-,Artificial Intelligence  Data & Analytics  +1,,https://fundbat.com/company/urban-sdk,2026-04-24T21:45:48.910894+00:00
+fundbat,EnerVenue ($620M / -),$620M,-,Climate Tech  Hardware,,https://fundbat.com/company/enervenue,2026-04-24T21:45:30.399763+00:00
+fundbat,Epic Games ($7.5B / -),$7.5B,-,Entertainment  Developer Tools,,https://fundbat.com/company/epic-games,2026-04-24T21:45:22.285594+00:00
+fundbat,Upstash ($12M / -),$12M,-,Cloud Computing  Developer Tools  +1,,https://fundbat.com/company/upstash,2026-04-24T21:45:58.524562+00:00
+fundbat,Parallel ($24M / -),$24M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/parallel-health,2026-04-24T21:45:55.937953+00:00
+fundbat,Coursera ($443M / NYSE: COUR),$443M,NYSE: COUR,Edtech,,https://fundbat.com/company/coursera,2026-04-24T21:45:33.303773+00:00
+fundbat,Actifio ($312M / $1.3B),$312M,$1.3B,Cloud Computing  Data & Analytics  +1,,https://fundbat.com/company/actifio,2026-04-24T21:45:36.304699+00:00
+fundbat,Oasis Labs ($48M / $200M),$48M,$200M,Artificial Intelligence  Cybersecurity,,https://fundbat.com/company/oasis-labs,2026-04-24T21:45:51.969602+00:00
+fundbat,Mal ($230M / -),$230M,-,Fintech,,https://fundbat.com/company/mal,2026-04-24T21:45:38.304025+00:00
+fundbat,Base Power Company ($1.3B / $4.0B),$1.3B,$4.0B,Climate Tech  Hardware,,https://fundbat.com/company/base-power-company,2026-04-24T21:45:26.082681+00:00
+fundbat,Propel ($67M / -),$67M,-,Fintech,,https://fundbat.com/company/propel,2026-04-24T21:45:49.422798+00:00
+fundbat,BlueFlag Security ($17M / -),$17M,-,Cybersecurity  Developer Tools,,https://fundbat.com/company/blueflag-security,2026-04-24T21:45:57.297590+00:00
+fundbat,Versa Networks ($283M / -),$283M,-,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/versa-networks,2026-04-24T21:45:36.714960+00:00
+fundbat,Illumio ($558M / $2.8B),$558M,$2.8B,Cybersecurity  Cloud Computing,,https://fundbat.com/company/illumio,2026-04-24T21:45:31.201699+00:00
+fundbat,WorkOS ($199M / $2.0B),$199M,$2.0B,Developer Tools  Enterprise Software  +2,,https://fundbat.com/company/workos,2026-04-24T21:45:39.636891+00:00
+fundbat,Modal ($110M / $1.1B),$110M,$1.1B,Cloud Computing  Artificial Intelligence  +1,,https://fundbat.com/company/modal,2026-04-24T21:45:45.599838+00:00
+fundbat,OpenAI ($167.9B / $840.0B),$167.9B,$840.0B,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/openai,2026-04-24T21:45:21.608584+00:00
+fundbat,Waiv ($33M / -),$33M,-,Artificial Intelligence  Healthtech  +1,,https://fundbat.com/company/waiv,2026-04-24T21:45:54.369057+00:00
+fundbat,RLWRLD ($41M / -),$41M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/rlwrld,2026-04-24T21:45:53.051673+00:00
+fundbat,Cohere ($1.5B / -),$1.5B,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/cohere,2026-04-24T21:45:25.222703+00:00
+fundbat,Flapping Airplanes ($180M / $1.5B),$180M,$1.5B,Artificial Intelligence,,https://fundbat.com/company/flapping-airplanes,2026-04-24T21:45:40.644566+00:00
+fundbat,Coral Care ($20M / -),$20M,-,Healthtech,,https://fundbat.com/company/coral-care,2026-04-24T21:45:56.688849+00:00
+fundbat,Cedar ($351M / $3.2B),$351M,$3.2B,Fintech  Biotech,,https://fundbat.com/company/cedar,2026-04-24T21:45:34.586839+00:00
+fundbat,Odeko ($352M / -),$352M,-,SaaS  E-Commerce  +1,,https://fundbat.com/company/odeko,2026-04-24T21:45:34.537675+00:00
+fundbat,ClickUp ($535M / $4.0B),$535M,$4.0B,SaaS  Artificial Intelligence,,https://fundbat.com/company/clickup,2026-04-24T21:45:31.940208+00:00
+fundbat,Netflix (- / NASDAQ: NFLX),-,NASDAQ: NFLX,Entertainment,,https://fundbat.com/company/netflix,2026-04-24T21:46:02.789377+00:00
+fundbat,Claros ($30M / -),$30M,-,Cloud Computing  Hardware,,https://fundbat.com/company/claros,2026-04-24T21:45:54.927943+00:00
+fundbat,NoTraffic ($166M / -),$166M,-,Artificial Intelligence  Transportation,,https://fundbat.com/company/notraffic,2026-04-24T21:45:41.566338+00:00
+fundbat,Cerebras Systems ($2.8B / $23.0B),$2.8B,$23.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/cerebras-systems,2026-04-24T21:45:23.385775+00:00
+fundbat,Alien ($7M / -),$7M,-,Cybersecurity  Artificial Intelligence  +1,,https://fundbat.com/company/alien,2026-04-24T21:45:59.716349+00:00
+fundbat,Helix Earth ($18M / -),$18M,-,Climate Tech  Hardware,,https://fundbat.com/company/helix-earth,2026-04-24T21:45:56.896441+00:00
+fundbat,Nansen ($88M / $750M),$88M,$750M,Blockchain & Crypto  Data & Analytics  +1,,https://fundbat.com/company/nansen,2026-04-24T21:45:47.548851+00:00
+fundbat,Rocketlane ($105M / -),$105M,-,SaaS  Artificial Intelligence,,https://fundbat.com/company/rocketlane,2026-04-24T21:45:46.104785+00:00
+fundbat,Pylon ($51M / -),$51M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/pylon,2026-04-24T21:45:51.514642+00:00
+fundbat,Impossible Foods ($1.8B / -),$1.8B,-,Food & Delivery  Climate Tech,,https://fundbat.com/company/impossible-foods,2026-04-24T21:45:24.614642+00:00
+fundbat,C2i Semiconductors ($15M / -),$15M,-,Hardware  Artificial Intelligence,,https://fundbat.com/company/c2i-semiconductors,2026-04-24T21:45:57.802580+00:00
+fundbat,Braze ($174M / NASDAQ: BRZE),$174M,NASDAQ: BRZE,SaaS  Enterprise Software,,https://fundbat.com/company/braze,2026-04-24T21:45:40.898201+00:00
+fundbat,Render ($257M / $1.5B),$257M,$1.5B,Cloud Computing  Developer Tools,,https://fundbat.com/company/render,2026-04-24T21:45:37.392717+00:00
+fundbat,Warby Parker ($537M / NYSE: WRBY),$537M,NYSE: WRBY,E-Commerce  Consumer Tech,,https://fundbat.com/company/warby-parker,2026-04-24T21:45:31.743737+00:00
+fundbat,SpotOn ($895M / $3.6B),$895M,$3.6B,Fintech  SaaS  +1,,https://fundbat.com/company/spoton,2026-04-24T21:45:27.862601+00:00
+fundbat,Alphabet (- / NASDAQ: GOOGL),-,NASDAQ: GOOGL,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/alphabet,2026-04-24T21:46:02.890473+00:00
+fundbat,Prometheus Group ($1.0B / -),$1.0B,-,Enterprise Software  SaaS,,https://fundbat.com/company/prometheus-group,2026-04-24T21:45:27.143687+00:00
+fundbat,Multiply ($10M / -),$10M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/multiply,2026-04-24T21:45:59.355915+00:00
+fundbat,Tech Superpowers (- / -),-,-,Cybersecurity,,https://fundbat.com/company/tech-superpowers,2026-04-24T21:46:01.832196+00:00
+fundbat,DocuSign ($588M / NASDAQ: DOCU),$588M,NASDAQ: DOCU,SaaS  Enterprise Software  +1,,https://fundbat.com/company/docusign,2026-04-24T21:45:30.864662+00:00
+fundbat,Contrivian (- / -),-,-,Cloud Computing,,https://fundbat.com/company/contrivian,2026-04-24T21:46:01.621867+00:00
+fundbat,Turso ($33M / -),$33M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/turso,2026-04-24T21:45:54.319653+00:00
+fundbat,Snap ($2.6B / NYSE: SNAP),$2.6B,NYSE: SNAP,Social Media  Consumer Tech,,https://fundbat.com/company/snap,2026-04-24T21:45:23.434739+00:00
+fundbat,ClickHouse ($1.1B / $15.0B),$1.1B,$15.0B,Data & Analytics  Cloud Computing  +1,,https://fundbat.com/company/clickhouse,2026-04-24T21:45:26.785971+00:00
+fundbat,Contentful ($333M / $3.0B),$333M,$3.0B,SaaS  Enterprise Software  +1,,https://fundbat.com/company/contentful,2026-04-24T21:45:35.496481+00:00
+fundbat,Fanatics Holdings ($4.1B / $31.0B),$4.1B,$31.0B,E-Commerce,,https://fundbat.com/company/fanatics,2026-04-24T21:45:22.596550+00:00
+fundbat,Bold ($40M / -),$40M,-,Artificial Intelligence  Cybersecurity,,https://fundbat.com/company/bold-security,2026-04-24T21:45:53.415904+00:00
+fundbat,UpGuard ($120M / -),$120M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/upguard,2026-04-24T21:45:45.035380+00:00
+fundbat,Gong ($581M / -),$581M,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/gong,2026-04-24T21:45:31.021473+00:00
+fundbat,Grotto AI ($10M / -),$10M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/grotto-ai,2026-04-24T21:45:59.256027+00:00
+fundbat,Dropbox ($607M / NASDAQ: DBX),$607M,NASDAQ: DBX,Cloud Computing  SaaS  +1,,https://fundbat.com/company/dropbox,2026-04-24T21:45:30.555858+00:00
+fundbat,ElevenLabs ($781M / $11.0B),$781M,$11.0B,Artificial Intelligence,,https://fundbat.com/company/elevenlabs,2026-04-24T21:45:28.880904+00:00
+fundbat,Science Corp ($490M / $1.3B),$490M,$1.3B,Biotech  Hardware,,https://fundbat.com/company/science-corp,2026-04-24T21:45:32.572720+00:00
+fundbat,Mellanox Technologies (- / -),-,-,Hardware,,https://fundbat.com/company/mellanox,2026-04-24T21:46:02.328223+00:00
+fundbat,Boku ($87M / -),$87M,-,Fintech  Payments,,https://fundbat.com/company/boku,2026-04-24T21:45:47.648769+00:00
+fundbat,Amplitude ($336M / NASDAQ: AMPL),$336M,NASDAQ: AMPL,SaaS  Data & Analytics,,https://fundbat.com/company/amplitude,2026-04-24T21:45:35.193037+00:00
+fundbat,Heron Power ($183M / -),$183M,-,Hardware  Productivity  +1,,https://fundbat.com/company/heron-power,2026-04-24T21:45:40.377777+00:00
+fundbat,ANEUVO ($40M / -),$40M,-,Healthtech  Hardware,,https://fundbat.com/company/aneuvo,2026-04-24T21:45:53.103898+00:00
+fundbat,Cockroach Labs ($633M / -),$633M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/cockroach-labs,2026-04-24T21:45:30.097827+00:00
+fundbat,11x ($76M / $350M),$76M,$350M,Artificial Intelligence  SaaS,,https://fundbat.com/company/11x,2026-04-24T21:45:48.512749+00:00
+fundbat,Tanium ($1.0B / $9.0B),$1.0B,$9.0B,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/tanium,2026-04-24T21:45:26.887855+00:00
+fundbat,Yubico ($92M / OTHER: YUBICO),$92M,OTHER: YUBICO,Cybersecurity  Hardware,,https://fundbat.com/company/yubico,2026-04-24T21:45:47.303896+00:00
+fundbat,DigitalOcean ($224M / NYSE: DOCN),$224M,NYSE: DOCN,Cloud Computing  Developer Tools,,https://fundbat.com/company/digitalocean,2026-04-24T21:45:38.462334+00:00
+fundbat,Altera ($44M / -),$44M,-,Artificial Intelligence,,https://fundbat.com/company/altera,2026-04-24T21:45:52.641639+00:00
+fundbat,Flock Safety ($658M / $7.5B),$658M,$7.5B,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/flock-safety,2026-04-24T21:45:29.892426+00:00
+fundbat,Bear Flag Robotics ($13M / -),$13M,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/bear-flag-robotics,2026-04-24T21:45:58.266962+00:00
+fundbat,Scribd ($106M / $450M),$106M,$450M,SaaS  E-Commerce,,https://fundbat.com/company/scribd,2026-04-24T21:45:46.004043+00:00
+fundbat,Relativity Space ($1.4B / $4.2B),$1.4B,$4.2B,Aerospace  Hardware,,https://fundbat.com/company/relativity-space,2026-04-24T21:45:25.680289+00:00
+fundbat,Asana ($213M / NYSE: ASAN),$213M,NYSE: ASAN,SaaS,,https://fundbat.com/company/asana,2026-04-24T21:45:38.895750+00:00
+fundbat,Twilio ($233M / NYSE: TWLO),$233M,NYSE: TWLO,SaaS  Cloud Computing  +1,,https://fundbat.com/company/twilio,2026-04-24T21:45:38.078156+00:00
+fundbat,Squarespace ($579M / $10.0B),$579M,$10.0B,SaaS  Design Tools  +1,,https://fundbat.com/company/squarespace,2026-04-24T21:45:31.145520+00:00
+fundbat,Stipple Bio ($100M / -),$100M,-,Biotech  Healthtech  +1,,https://fundbat.com/company/stipple-bio,2026-04-24T21:45:46.512898+00:00
+fundbat,Writer ($326M / $1.9B),$326M,$1.9B,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/writer,2026-04-24T21:45:35.905696+00:00
+fundbat,Apptio ($136M / -),$136M,-,SaaS  Data & Analytics,,https://fundbat.com/company/apptio,2026-04-24T21:45:43.516849+00:00
+fundbat,Astral ($17M / -),$17M,-,Developer Tools,,https://fundbat.com/company/astral,2026-04-24T21:45:57.399906+00:00
+fundbat,Go1 ($415M / -),$415M,-,SaaS  Artificial Intelligence,,https://fundbat.com/company/go1,2026-04-24T21:45:33.773680+00:00
+fundbat,Legora ($816M / $5.5B),$816M,$5.5B,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/legora,2026-04-24T21:45:28.484066+00:00
+fundbat,Pipe ($316M / $2.0B),$316M,$2.0B,Fintech  SaaS,,https://fundbat.com/company/pipe,2026-04-24T21:45:36.005744+00:00
+fundbat,SmartAsset ($158M / $1.0B),$158M,$1.0B,Fintech  SaaS,,https://fundbat.com/company/smartasset,2026-04-24T21:45:42.240845+00:00
+fundbat,Aptos Labs ($350M / $4.0B),$350M,$4.0B,Fintech  Developer Tools,,https://fundbat.com/company/aptos,2026-04-24T21:45:34.692691+00:00
+fundbat,HubSpot ($101M / NYSE: HUBS),$101M,NYSE: HUBS,SaaS  Enterprise Software,,https://fundbat.com/company/hubspot,2026-04-24T21:45:46.464832+00:00
+fundbat,The Artment ($1M / -),$1M,-,,,https://fundbat.com/company/the-artment,2026-04-24T21:46:01.226174+00:00
+fundbat,Cartography Biosciences ($124M / -),$124M,-,Biotech,,https://fundbat.com/company/cartography-biosciences,2026-04-24T21:45:44.559951+00:00
+fundbat,Cadre ($133M / $800M),$133M,$800M,Fintech,,https://fundbat.com/company/cadre,2026-04-24T21:45:43.764844+00:00
+fundbat,Crossbow Therapeutics ($107M / -),$107M,-,Biotech,,https://fundbat.com/company/crossbow-therapeutics,2026-04-24T21:45:45.952938+00:00
+fundbat,UnitedMasters ($170M / $550M),$170M,$550M,SaaS,,https://fundbat.com/company/unitedmasters,2026-04-24T21:45:41.318198+00:00
+fundbat,Retool ($141M / $3.2B),$141M,$3.2B,Developer Tools  Enterprise Software  +1,,https://fundbat.com/company/retool,2026-04-24T21:45:43.156782+00:00
+fundbat,NanoTech Materials ($34M / -),$34M,-,Climate Tech  Hardware,,https://fundbat.com/company/nanotech-materials,2026-04-24T21:45:54.164520+00:00
+fundbat,Air Space Intelligence ($56M / -),$56M,-,Artificial Intelligence  Aerospace,,https://fundbat.com/company/air-space-intelligence,2026-04-24T21:45:51.079283+00:00
+fundbat,Activision Blizzard (- / -),-,-,Entertainment,,https://fundbat.com/company/activision-blizzard,2026-04-24T21:46:02.482124+00:00
+fundbat,AKASA ($205M / -),$205M,-,Artificial Intelligence  Healthtech  +1,,https://fundbat.com/company/akasa,2026-04-24T21:45:39.047998+00:00
+fundbat,Gitpod ($41M / -),$41M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/gitpod,2026-04-24T21:45:52.995939+00:00
+fundbat,Instabase ($277M / $1.2B),$277M,$1.2B,Artificial Intelligence  SaaS,,https://fundbat.com/company/instabase,2026-04-24T21:45:36.923130+00:00
+fundbat,Anyscale ($260M / -),$260M,-,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/anyscale,2026-04-24T21:45:37.290592+00:00
+fundbat,Factory ($220M / $1.5B),$220M,$1.5B,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/factory,2026-04-24T21:45:38.621908+00:00
+fundbat,Chronosphere ($277M / $1.6B),$277M,$1.6B,Cloud Computing  Developer Tools,,https://fundbat.com/company/chronosphere,2026-04-24T21:45:36.868744+00:00
+fundbat,Scentbird ($24M / -),$24M,-,,,https://fundbat.com/company/scentbird,2026-04-24T21:45:55.885979+00:00
+fundbat,Stytch ($126M / $1.0B),$126M,$1.0B,Developer Tools  Cybersecurity  +1,,https://fundbat.com/company/stytch,2026-04-24T21:45:44.049822+00:00
+fundbat,Cloaked ($404M / -),$404M,-,Cybersecurity  Consumer Tech,,https://fundbat.com/company/cloaked,2026-04-24T21:45:34.029791+00:00
+fundbat,Latent Health ($80M / $600M),$80M,$600M,Healthtech  Artificial Intelligence,,https://fundbat.com/company/latent-health,2026-04-24T21:45:48.311854+00:00
+fundbat,Gorilla Technology ($15M / NASDAQ: GRRR),$15M,NASDAQ: GRRR,Artificial Intelligence  Cybersecurity  +2,,https://fundbat.com/company/gorilla-technology,2026-04-24T21:45:57.699214+00:00
+fundbat,Mogul ($7M / -),$7M,-,SaaS,,https://fundbat.com/company/mogul,2026-04-24T21:45:59.924045+00:00
+fundbat,Mojo AI ($21M / -),$21M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/mojo-ai,2026-04-24T21:45:56.389621+00:00
+fundbat,Caper AI ($12M / -),$12M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/caper,2026-04-24T21:45:58.317882+00:00
+fundbat,Earn.com ($116M / -),$116M,-,Blockchain & Crypto,,https://fundbat.com/company/earncom,2026-04-24T21:45:45.296889+00:00
+fundbat,Tomorrow Health ($93M / -),$93M,-,Biotech,,https://fundbat.com/company/tomorrow-health,2026-04-24T21:45:47.153026+00:00
+fundbat,Unnatural Products ($62M / -),$62M,-,Biotech,,https://fundbat.com/company/unnatural-products,2026-04-24T21:45:50.001919+00:00
+fundbat,DoorDash ($2.5B / NYSE: DASH),$2.5B,NYSE: DASH,Food & Delivery  Transportation,,https://fundbat.com/company/doordash,2026-04-24T21:45:23.643122+00:00
+fundbat,Onyx Security ($40M / -),$40M,-,Artificial Intelligence  Cybersecurity  +1,,https://fundbat.com/company/onyx-security,2026-04-24T21:45:53.366944+00:00
+fundbat,Deno ($26M / -),$26M,-,Developer Tools  Cloud Computing,,https://fundbat.com/company/deno,2026-04-24T21:45:55.482068+00:00
+fundbat,Clay ($202M / $3.1B),$202M,$3.1B,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/clay,2026-04-24T21:45:39.313444+00:00
+fundbat,Zendesk ($89M / -),$89M,-,SaaS  Enterprise Software,,https://fundbat.com/company/zendesk,2026-04-24T21:45:47.450992+00:00
+fundbat,JetScale AI ($5M / -),$5M,-,Artificial Intelligence  Cloud Computing  +1,,https://fundbat.com/company/jetscale-ai,2026-04-24T21:46:00.125366+00:00
+fundbat,Signifyd ($409M / $1.3B),$409M,$1.3B,Fintech  Cybersecurity  +1,,https://fundbat.com/company/signifyd,2026-04-24T21:45:33.926233+00:00
+fundbat,Arc ($181M / -),$181M,-,Fintech  SaaS,,https://fundbat.com/company/arc,2026-04-24T21:45:40.593788+00:00
+fundbat,SHINE Technologies ($1.0B / -),$1.0B,-,Climate Tech  Hardware  +1,,https://fundbat.com/company/shine-technologies,2026-04-24T21:45:27.039042+00:00
+fundbat,Brink's (- / -),-,-,Fintech  Payments,,https://fundbat.com/company/brinks,2026-04-24T21:46:01.571017+00:00
+fundbat,PlanGrid ($59M / -),$59M,-,SaaS  Enterprise Software,,https://fundbat.com/company/plangrid,2026-04-24T21:45:50.314160+00:00
+fundbat,Steno ($150M / -),$150M,-,SaaS  Enterprise Software  +1,,https://fundbat.com/company/steno,2026-04-24T21:45:42.696890+00:00
+fundbat,Island ($800M / -),$800M,-,Cybersecurity  Enterprise Software,,https://fundbat.com/company/island,2026-04-24T21:45:28.712139+00:00
+fundbat,DayOne ($3.8B / $10.0B),$3.8B,$10.0B,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/dayone,2026-04-24T21:45:22.697832+00:00
+fundbat,Everlaw ($299M / $2.0B),$299M,$2.0B,SaaS,,https://fundbat.com/company/everlaw,2026-04-24T21:45:36.462682+00:00
+fundbat,NODA AI ($28M / -),$28M,-,Artificial Intelligence,,https://fundbat.com/company/noda-ai,2026-04-24T21:45:55.274300+00:00
+fundbat,CesiumAstro ($407M / -),$407M,-,Aerospace,,https://fundbat.com/company/cesiumastro,2026-04-24T21:45:33.979946+00:00
+fundbat,Euler Motors ($143M / -),$143M,-,Transportation  Climate Tech,,https://fundbat.com/company/euler-motors,2026-04-24T21:45:43.051914+00:00
+fundbat,Doppel ($124M / $600M),$124M,$600M,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/doppel,2026-04-24T21:45:44.507776+00:00
+fundbat,JFrog ($226M / NASDAQ: FROG),$226M,NASDAQ: FROG,Developer Tools  Enterprise Software  +2,,https://fundbat.com/company/jfrog,2026-04-24T21:45:38.408431+00:00
+fundbat,Upvest ($208M / -),$208M,-,Fintech  SaaS,,https://fundbat.com/company/upvest,2026-04-24T21:45:38.997757+00:00
+fundbat,Aliro Quantum ($23M / -),$23M,-,Cybersecurity  Hardware,,https://fundbat.com/company/aliro-quantum,2026-04-24T21:45:55.987010+00:00
+fundbat,Storyblok ($138M / -),$138M,-,SaaS  Developer Tools  +1,,https://fundbat.com/company/storyblok,2026-04-24T21:45:43.366983+00:00
+fundbat,Mysten Labs ($336M / $2.0B),$336M,$2.0B,Fintech,,https://fundbat.com/company/mysten-labs,2026-04-24T21:45:35.243683+00:00
+fundbat,Axelera AI ($420M / -),$420M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/axelera-ai,2026-04-24T21:45:33.671833+00:00
+fundbat,Atlys ($36M / -),$36M,-,SaaS,,https://fundbat.com/company/atlys,2026-04-24T21:45:53.967655+00:00
+fundbat,Quince ($962M / $10.1B),$962M,$10.1B,E-Commerce  Consumer Tech,,https://fundbat.com/company/quince,2026-04-24T21:45:27.501969+00:00
+fundbat,Harvey ($1.2B / $11.0B),$1.2B,$11.0B,Artificial Intelligence  SaaS,,https://fundbat.com/company/harvey,2026-04-24T21:45:26.286675+00:00
+fundbat,PlanetScale ($105M / -),$105M,-,Developer Tools  Cloud Computing,,https://fundbat.com/company/planetscale,2026-04-24T21:45:46.156059+00:00
+fundbat,Terra Industries ($34M / -),$34M,-,Artificial Intelligence,,https://fundbat.com/company/terra-industries,2026-04-24T21:45:54.215622+00:00
+fundbat,Convex ($54M / -),$54M,-,Developer Tools  Cloud Computing,,https://fundbat.com/company/convex,2026-04-24T21:45:51.253137+00:00
+fundbat,Maite.ai (- / -),-,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/maite-ai,2026-04-24T21:46:02.277075+00:00
+fundbat,Twitch ($43M / $100M),$43M,$100M,Entertainment  Social Media,,https://fundbat.com/company/twitch,2026-04-24T21:45:52.799073+00:00
+fundbat,Resend ($21M / -),$21M,-,Developer Tools  SaaS  +1,,https://fundbat.com/company/resend,2026-04-24T21:45:56.289096+00:00
+fundbat,Doctrine ($14M / -),$14M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/doctrine,2026-04-24T21:45:57.852416+00:00
+fundbat,Calendly ($350M / $3.0B),$350M,$3.0B,SaaS  Productivity  +1,,https://fundbat.com/company/calendly,2026-04-24T21:45:34.638823+00:00
+fundbat,ZyG ($58M / -),$58M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/zyg,2026-04-24T21:45:50.523800+00:00
+fundbat,Okta ($229M / NASDAQ: OKTA),$229M,NASDAQ: OKTA,SaaS  Cybersecurity  +1,,https://fundbat.com/company/okta,2026-04-24T21:45:38.356363+00:00
+fundbat,IQM Quantum Computers ($600M / $1.8B),$600M,$1.8B,Hardware,,https://fundbat.com/company/iqm-quantum-computers,2026-04-24T21:45:30.709644+00:00
+fundbat,Pinterest ($1.5B / NYSE: PINS),$1.5B,NYSE: PINS,Social Media  Consumer Tech,,https://fundbat.com/company/pinterest,2026-04-24T21:45:25.427888+00:00
+fundbat,Notable Labs ($66M / -),$66M,-,Biotech  Artificial Intelligence,,https://fundbat.com/company/notable-labs,2026-04-24T21:45:49.519737+00:00
+fundbat,Nominal ($183M / $1.0B),$183M,$1.0B,Developer Tools  SaaS  +2,,https://fundbat.com/company/nominal,2026-04-24T21:45:40.426307+00:00
+fundbat,Instacart ($2.9B / NASDAQ: CART),$2.9B,NASDAQ: CART,Food & Delivery  E-Commerce  +1,,https://fundbat.com/company/instacart,2026-04-24T21:45:23.212751+00:00
+fundbat,BuzzFeed ($497M / NASDAQ: BZFD),$497M,NASDAQ: BZFD,Social Media,,https://fundbat.com/company/buzzfeed,2026-04-24T21:45:32.362327+00:00
+fundbat,Elastic ($162M / NYSE: ESTC),$162M,NYSE: ESTC,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/elastic,2026-04-24T21:45:41.774496+00:00
+fundbat,Heroku ($13M / -),$13M,-,Cloud Computing  Developer Tools  +1,,https://fundbat.com/company/heroku,2026-04-24T21:45:58.210740+00:00
+fundbat,Spotify ($2.1B / NYSE: SPOT),$2.1B,NYSE: SPOT,Entertainment  Consumer Tech,,https://fundbat.com/company/spotify,2026-04-24T21:45:24.316589+00:00
+fundbat,Envoy ($201M / $1.4B),$201M,$1.4B,SaaS,,https://fundbat.com/company/envoy,2026-04-24T21:45:39.419425+00:00
+fundbat,nEye.ai ($153M / -),$153M,-,Hardware  Artificial Intelligence  +1,,https://fundbat.com/company/neye-ai,2026-04-24T21:45:42.543285+00:00
+fundbat,Arc Boat Company ($124M / -),$124M,-,Climate Tech  Hardware,,https://fundbat.com/company/arc-boat-company,2026-04-24T21:45:44.307076+00:00
+fundbat,Granola ($192M / $1.5B),$192M,$1.5B,Artificial Intelligence  Productivity,,https://fundbat.com/company/granola,2026-04-24T21:45:39.810919+00:00
+fundbat,Cribl ($715M / -),$715M,-,Cybersecurity  Data & Analytics  +1,,https://fundbat.com/company/cribl,2026-04-24T21:45:29.493706+00:00
+fundbat,Lever ($123M / -),$123M,-,SaaS,,https://fundbat.com/company/lever,2026-04-24T21:45:44.718538+00:00
+fundbat,ScaleOps ($217M / $800M),$217M,$800M,Cloud Computing  Artificial Intelligence  +1,,https://fundbat.com/company/scaleops,2026-04-24T21:45:38.795848+00:00
+fundbat,Starburst ($414M / $3.4B),$414M,$3.4B,Data & Analytics  Cloud Computing  +2,,https://fundbat.com/company/starburst,2026-04-24T21:45:33.823849+00:00
+fundbat,XTEND ($242M / -),$242M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/xtend,2026-04-24T21:45:37.910487+00:00
+fundbat,Liveblocks ($11M / -),$11M,-,Developer Tools  SaaS,,https://fundbat.com/company/liveblocks,2026-04-24T21:45:58.783089+00:00
+fundbat,Bellabeat ($19M / -),$19M,-,Hardware  Healthtech,,https://fundbat.com/company/bellabeat,2026-04-24T21:45:56.738892+00:00
+fundbat,Aztec Network ($119M / -),$119M,-,Blockchain & Crypto,,https://fundbat.com/company/aztec-network,2026-04-24T21:45:45.087006+00:00
+fundbat,Abrigo (- / -),-,-,Fintech  SaaS,,https://fundbat.com/company/abrigo,2026-04-24T21:46:01.473085+00:00
+fundbat,Groww ($593M / OTHER: GROWW),$593M,OTHER: GROWW,Fintech  Payments,,https://fundbat.com/company/groww,2026-04-24T21:45:30.763965+00:00
+fundbat,Revolut ($1.7B / $45.0B),$1.7B,$45.0B,Fintech  Payments,,https://fundbat.com/company/revolut,2026-04-24T21:45:24.962037+00:00
+fundbat,Fluent Commerce ($67M / -),$67M,-,SaaS  Healthtech  +1,,https://fundbat.com/company/fluent-commerce,2026-04-24T21:45:49.372908+00:00
+fundbat,SiFive ($775M / $3.6B),$775M,$3.6B,Hardware  Cloud Computing  +1,,https://fundbat.com/company/sifive,2026-04-24T21:45:28.931855+00:00
+fundbat,Salesforce (- / NYSE: CRM),-,NYSE: CRM,SaaS  Enterprise Software,,https://fundbat.com/company/salesforce,2026-04-24T21:46:02.633015+00:00
+fundbat,XBOW ($195M / $1.0B),$195M,$1.0B,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/xbow,2026-04-24T21:45:39.687872+00:00
+fundbat,Coder ($168M / $200M),$168M,$200M,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/coder,2026-04-24T21:45:41.466772+00:00
+fundbat,Code Metal ($178M / -),$178M,-,Artificial Intelligence  Cybersecurity  +1,,https://fundbat.com/company/code-metal,2026-04-24T21:45:40.692821+00:00
+fundbat,Nutanix ($313M / NASDAQ: NTNX),$313M,NASDAQ: NTNX,Cloud Computing  Enterprise Software,,https://fundbat.com/company/nutanix,2026-04-24T21:45:36.105604+00:00
+fundbat,Wrapbook ($151M / $750M),$151M,$750M,Fintech  Entertainment  +1,,https://fundbat.com/company/wrapbook,2026-04-24T21:45:42.592973+00:00
+fundbat,ArmorCode ($81M / -),$81M,-,Cybersecurity  SaaS,,https://fundbat.com/company/armorcode,2026-04-24T21:45:48.163879+00:00
+fundbat,Cape ($191M / $900M),$191M,$900M,Cybersecurity  Consumer Tech,,https://fundbat.com/company/cape,2026-04-24T21:45:39.870131+00:00
+fundbat,Zepto ($2.4B / $7.0B),$2.4B,$7.0B,E-Commerce  Transportation,,https://fundbat.com/company/zepto,2026-04-24T21:45:23.854830+00:00
+fundbat,Ambient.ai ($146M / -),$146M,-,Artificial Intelligence  Cybersecurity  +1,,https://fundbat.com/company/ambient-ai,2026-04-24T21:45:42.850387+00:00
+fundbat,Callosum ($10M / -),$10M,-,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/callosum,2026-04-24T21:45:59.128698+00:00
+fundbat,Fitbit ($67M / $344M),$67M,$344M,Hardware  Healthtech  +1,,https://fundbat.com/company/fitbit,2026-04-24T21:45:49.471805+00:00
+fundbat,CoreWeave ($4.0B / NASDAQ: CRWV),$4.0B,NASDAQ: CRWV,Cloud Computing  Artificial Intelligence,,https://fundbat.com/company/coreweave,2026-04-24T21:45:22.646379+00:00
+fundbat,Allset ($17M / -),$17M,-,Food & Delivery  SaaS  +1,,https://fundbat.com/company/allset,2026-04-24T21:45:57.047883+00:00
+fundbat,Babylon Health ($642M / -),$642M,-,Artificial Intelligence  Biotech,,https://fundbat.com/company/babylon-health,2026-04-24T21:45:29.995763+00:00
+fundbat,Pinecone ($138M / $750M),$138M,$750M,Artificial Intelligence  SaaS  +3,,https://fundbat.com/company/pinecone,2026-04-24T21:45:43.418251+00:00
+fundbat,Inngest ($30M / -),$30M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/inngest,2026-04-24T21:45:54.875930+00:00
+fundbat,Ava Labs ($890M / $5.3B),$890M,$5.3B,Blockchain & Crypto,,https://fundbat.com/company/ava-labs,2026-04-24T21:45:27.960623+00:00
+fundbat,Rootly ($15M / -),$15M,-,Enterprise Software  SaaS  +2,,https://fundbat.com/company/rootly,2026-04-24T21:45:57.599798+00:00
+fundbat,RPMGlobal (- / -),-,-,SaaS,,https://fundbat.com/company/rpmglobal,2026-04-24T21:46:02.026061+00:00
+fundbat,Solana Labs ($360M / -),$360M,-,Fintech  Developer Tools  +1,,https://fundbat.com/company/solana-labs,2026-04-24T21:45:34.437705+00:00
+fundbat,Oricell Therapeutics ($270M / -),$270M,-,Biotech  Healthtech,,https://fundbat.com/company/oricell-therapeutics,2026-04-24T21:45:37.026581+00:00
+fundbat,Cyera ($1.7B / -),$1.7B,-,Cybersecurity  Artificial Intelligence  +1,,https://fundbat.com/company/cyera,2026-04-24T21:45:25.012638+00:00
+fundbat,Mixpanel ($277M / $1.1B),$277M,$1.1B,SaaS  Data & Analytics,,https://fundbat.com/company/mixpanel,2026-04-24T21:45:36.816966+00:00
+fundbat,DFINITY Foundation ($167M / $2.0B),$167M,$2.0B,Cloud Computing  Developer Tools,,https://fundbat.com/company/dfinity,2026-04-24T21:45:41.516055+00:00
+fundbat,Duolingo ($183M / NASDAQ: DUOL),$183M,NASDAQ: DUOL,Edtech  Artificial Intelligence  +1,,https://fundbat.com/company/duolingo,2026-04-24T21:45:40.327715+00:00
+fundbat,Reddit ($1.3B / NYSE: RDDT),$1.3B,NYSE: RDDT,Social Media,,https://fundbat.com/company/reddit,2026-04-24T21:45:25.981739+00:00
+fundbat,Palantir Technologies ($2.9B / NYSE: PLTR),$2.9B,NYSE: PLTR,Data & Analytics  Enterprise Software  +2,,https://fundbat.com/company/palantir,2026-04-24T21:45:23.261322+00:00
+fundbat,GitPrime ($12M / -),$12M,-,Developer Tools  SaaS,,https://fundbat.com/company/gitprime,2026-04-24T21:45:58.635861+00:00
+fundbat,Fastly ($219M / NYSE: FSLY),$219M,NYSE: FSLY,Cloud Computing  Developer Tools  +1,,https://fundbat.com/company/fastly,2026-04-24T21:45:38.676777+00:00
+fundbat,Warp ($73M / -),$73M,-,Developer Tools  Artificial Intelligence  +1,,https://fundbat.com/company/warp,2026-04-24T21:45:48.711113+00:00
+fundbat,Hedra ($42M / -),$42M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/hedra,2026-04-24T21:45:52.896786+00:00
+fundbat,Turquoise Health ($95M / -),$95M,-,Healthtech  SaaS,,https://fundbat.com/company/turquoise-health,2026-04-24T21:45:46.832585+00:00
+fundbat,Beacon Biosignals ($132M / -),$132M,-,Healthtech  Artificial Intelligence  +1,,https://fundbat.com/company/beacon-biosignals,2026-04-24T21:45:43.814894+00:00
+fundbat,Cruise ($11.6B / $30.0B),$11.6B,$30.0B,Artificial Intelligence  Transportation,,https://fundbat.com/company/cruise,2026-04-24T21:45:22.032358+00:00
+fundbat,incident.io ($101M / $400M),$101M,$400M,SaaS  Developer Tools  +1,,https://fundbat.com/company/incident-io,2026-04-24T21:45:46.352402+00:00
+fundbat,ActionIQ ($145M / -),$145M,-,SaaS  Data & Analytics,,https://fundbat.com/company/actioniq,2026-04-24T21:45:42.950974+00:00
+fundbat,Coefficient Bio ($5M / -),$5M,-,Biotech  Artificial Intelligence  +1,,https://fundbat.com/company/coefficient-bio,2026-04-24T21:46:00.177165+00:00
+fundbat,Blossom Health ($38M / -),$38M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/blossom-health,2026-04-24T21:45:53.674002+00:00
+fundbat,Zscaler ($150M / NASDAQ: ZS),$150M,NASDAQ: ZS,Cybersecurity  Cloud Computing  +1,,https://fundbat.com/company/zscaler,2026-04-24T21:45:42.647942+00:00
+fundbat,Snyk ($1.5B / -),$1.5B,-,Cybersecurity  Developer Tools,,https://fundbat.com/company/snyk,2026-04-24T21:45:25.377599+00:00
+fundbat,Juicebox ($116M / $850M),$116M,$850M,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/juicebox,2026-04-24T21:45:45.234349+00:00
+fundbat,OpenInvest ($24M / -),$24M,-,Fintech,,https://fundbat.com/company/openinvest,2026-04-24T21:45:55.785126+00:00
+fundbat,Addi ($256M / $700M),$256M,$700M,Fintech  Payments,,https://fundbat.com/company/addi,2026-04-24T21:45:37.548467+00:00
+fundbat,Lambda ($2.4B / $1.5B),$2.4B,$1.5B,Cloud Computing  Artificial Intelligence  +1,,https://fundbat.com/company/lambda,2026-04-24T21:45:23.750811+00:00
+fundbat,Pepper ($100M / -),$100M,-,SaaS,,https://fundbat.com/company/pepper,2026-04-24T21:45:46.674993+00:00
+fundbat,Gather AI ($71M / -),$71M,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/gather-ai,2026-04-24T21:45:48.861652+00:00
+fundbat,Sunday ($200M / $1.1B),$200M,$1.1B,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/sunday,2026-04-24T21:45:39.584784+00:00
+fundbat,OpenSea ($427M / $13.3B),$427M,$13.3B,Fintech,,https://fundbat.com/company/opensea,2026-04-24T21:45:33.505783+00:00
+fundbat,Foursquare ($379M / -),$379M,-,Data & Analytics  SaaS  +1,,https://fundbat.com/company/foursquare,2026-04-24T21:45:34.240696+00:00
+fundbat,Bedrock Robotics ($350M / $1.8B),$350M,$1.8B,Artificial Intelligence  Hardware,,https://fundbat.com/company/bedrock-robotics,2026-04-24T21:45:34.789726+00:00
+fundbat,Aleo ($298M / $1.4B),$298M,$1.4B,Fintech  Cybersecurity  +1,,https://fundbat.com/company/aleo,2026-04-24T21:45:36.513304+00:00
+fundbat,Marqeta ($375M / NASDAQ: MQ),$375M,NASDAQ: MQ,Fintech  Payments  +1,,https://fundbat.com/company/marqeta,2026-04-24T21:45:34.388663+00:00
+fundbat,Decagon ($481M / $4.5B),$481M,$4.5B,Artificial Intelligence  SaaS,,https://fundbat.com/company/decagon,2026-04-24T21:45:32.728140+00:00
+fundbat,SoFi ($2.4B / NASDAQ: SOFI),$2.4B,NASDAQ: SOFI,Fintech  Consumer Tech,,https://fundbat.com/company/sofi,2026-04-24T21:45:23.906870+00:00
+fundbat,Lacework ($1.9B / $8.3B),$1.9B,$8.3B,Cybersecurity  Cloud Computing  +1,,https://fundbat.com/company/lacework,2026-04-24T21:45:24.465492+00:00
+fundbat,Confluent ($456M / -),$456M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/confluent,2026-04-24T21:45:33.104703+00:00
+fundbat,Prisma ($57M / -),$57M,-,Developer Tools  SaaS  +1,,https://fundbat.com/company/prisma,2026-04-24T21:45:50.826892+00:00
+fundbat,Slack ($1.4B / $7.1B),$1.4B,$7.1B,SaaS  Productivity,,https://fundbat.com/company/slack,2026-04-24T21:45:25.525855+00:00
+fundbat,Manifold ($8M / -),$8M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/manifold,2026-04-24T21:45:59.560891+00:00
+fundbat,Coinbase ($506M / NASDAQ: COIN),$506M,NASDAQ: COIN,Blockchain & Crypto  Fintech,,https://fundbat.com/company/coinbase,2026-04-24T21:45:32.188970+00:00
+fundbat,DrChrono ($39M / -),$39M,-,Healthtech  SaaS,,https://fundbat.com/company/drchrono,2026-04-24T21:45:53.571910+00:00
+fundbat,Edra ($30M / -),$30M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/edra,2026-04-24T21:45:54.980025+00:00
+fundbat,Honeylove ($13M / -),$13M,-,,,https://fundbat.com/company/honeylove,2026-04-24T21:45:58.155266+00:00
+fundbat,Rizon ($2M / -),$2M,-,Fintech  Payments,,https://fundbat.com/company/rizon,2026-04-24T21:46:01.068051+00:00
+fundbat,XCath ($46M / -),$46M,-,Healthtech  Hardware,,https://fundbat.com/company/xcath,2026-04-24T21:45:52.235979+00:00
+fundbat,Razorpay ($742M / $7.5B),$742M,$7.5B,Fintech  Payments,,https://fundbat.com/company/razorpay,2026-04-24T21:45:29.278451+00:00
+fundbat,Celonis ($1.8B / -),$1.8B,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/celonis,2026-04-24T21:45:24.760602+00:00
+fundbat,Gumloop ($70M / -),$70M,-,Artificial Intelligence  Enterprise Software  +2,,https://fundbat.com/company/gumloop,2026-04-24T21:45:48.989443+00:00
+fundbat,BusRight ($30M / -),$30M,-,SaaS  Transportation,,https://fundbat.com/company/busright,2026-04-24T21:45:55.033103+00:00
+fundbat,Numos ($4M / -),$4M,-,Fintech  Artificial Intelligence  +1,,https://fundbat.com/company/numos,2026-04-24T21:46:00.433360+00:00
+fundbat,Maazah ($2M / -),$2M,-,Food & Delivery,,https://fundbat.com/company/maazah,2026-04-24T21:46:01.009440+00:00
+fundbat,LinkedIn ($103M / $1.0B),$103M,$1.0B,Social Media  Enterprise Software  +1,,https://fundbat.com/company/linkedin,2026-04-24T21:45:46.254767+00:00
+fundbat,Masimo ($203M / -),$203M,-,Biotech,,https://fundbat.com/company/masimo,2026-04-24T21:45:39.201834+00:00
+fundbat,Harper ($47M / -),$47M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/harper,2026-04-24T21:45:52.072309+00:00
+fundbat,Fal ($337M / $4.5B),$337M,$4.5B,Artificial Intelligence  Cloud Computing,,https://fundbat.com/company/fal,2026-04-24T21:45:35.087500+00:00
+fundbat,Cents ($217M / -),$217M,-,SaaS  Fintech,,https://fundbat.com/company/cents,2026-04-24T21:45:38.746038+00:00
+fundbat,Rippling ($1.8B / $16.8B),$1.8B,$16.8B,SaaS  Enterprise Software,,https://fundbat.com/company/rippling,2026-04-24T21:45:24.514592+00:00
+fundbat,Bird Rides ($1.4B / $2.5B),$1.4B,$2.5B,Transportation  Climate Tech,,https://fundbat.com/company/bird-rides,2026-04-24T21:45:25.477662+00:00
+fundbat,Certiv ($4M / -),$4M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/certiv,2026-04-24T21:46:00.488282+00:00
+fundbat,Grafana Labs ($804M / -),$804M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/grafana-labs,2026-04-24T21:45:28.651080+00:00
+fundbat,Black Forest Labs ($331M / -),$331M,-,Artificial Intelligence  Developer Tools,,https://fundbat.com/company/black-forest-labs,2026-04-24T21:45:35.597642+00:00
+fundbat,Alloy Automation ($25M / -),$25M,-,E-Commerce  SaaS  +1,,https://fundbat.com/company/alloy-automation,2026-04-24T21:45:55.734978+00:00
+fundbat,Beacons ($29M / -),$29M,-,SaaS,,https://fundbat.com/company/beaconsai,2026-04-24T21:45:55.115985+00:00
+fundbat,Rain ($339M / $1.9B),$339M,$1.9B,Fintech  Payments  +1,,https://fundbat.com/company/rain-payments,2026-04-24T21:45:35.037691+00:00
+fundbat,Spintly ($14M / -),$14M,-,Hardware  SaaS,,https://fundbat.com/company/spintly,2026-04-24T21:45:57.952170+00:00
+fundbat,Panorama Education ($92M / -),$92M,-,Data & Analytics  SaaS,,https://fundbat.com/company/panorama-education,2026-04-24T21:45:47.203846+00:00
+fundbat,Lemonade ($480M / NYSE: LMND),$480M,NYSE: LMND,Fintech  Artificial Intelligence,,https://fundbat.com/company/lemonade,2026-04-24T21:45:32.795330+00:00
+fundbat,Profitmind ($9M / -),$9M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/profitmind,2026-04-24T21:45:59.463254+00:00
+fundbat,Bromium ($116M / -),$116M,-,Cybersecurity,,https://fundbat.com/company/bromium,2026-04-24T21:45:45.401648+00:00
+fundbat,Moxion Power Co. ($123M / -),$123M,-,Climate Tech  Hardware,,https://fundbat.com/company/moxion-power-co,2026-04-24T21:45:44.612429+00:00
+fundbat,Clasp ($50M / -),$50M,-,Healthtech  SaaS,,https://fundbat.com/company/clasp,2026-04-24T21:45:51.617350+00:00
+fundbat,0x ($110M / -),$110M,-,Blockchain & Crypto  Fintech  +1,,https://fundbat.com/company/0x,2026-04-24T21:45:45.788820+00:00
+fundbat,Lattice ($330M / $3.0B),$330M,$3.0B,SaaS  Enterprise Software  +1,,https://fundbat.com/company/lattice,2026-04-24T21:45:35.702963+00:00
+fundbat,Shackleton Finance (- / -),-,-,Fintech,,https://fundbat.com/company/shackleton-finance,2026-04-24T21:46:01.975357+00:00
+fundbat,PAVE Space ($40M / -),$40M,-,Aerospace,,https://fundbat.com/company/pave-space,2026-04-24T21:45:53.157609+00:00
+fundbat,Temple ($54M / $190M),$54M,$190M,Hardware,,https://fundbat.com/company/temple,2026-04-24T21:45:51.204076+00:00
+fundbat,OMGPop ($17M / -),$17M,-,Entertainment  Social Media,,https://fundbat.com/company/omgpop,2026-04-24T21:45:57.246864+00:00
+fundbat,Comp ($20M / -),$20M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/comp-hr,2026-04-24T21:45:56.590973+00:00
+fundbat,Artemis ($70M / -),$70M,-,Cybersecurity  Artificial Intelligence  +1,,https://fundbat.com/company/artemis,2026-04-24T21:45:49.066454+00:00
+fundbat,Codecademy ($83M / -),$83M,-,SaaS,,https://fundbat.com/company/codecademy,2026-04-24T21:45:47.954943+00:00
+fundbat,Paraform ($65M / -),$65M,-,SaaS  Artificial Intelligence,,https://fundbat.com/company/paraform,2026-04-24T21:45:49.818925+00:00
+fundbat,Langfuse ($5M / -),$5M,-,Developer Tools  Artificial Intelligence  +1,,https://fundbat.com/company/langfuse,2026-04-24T21:46:00.328372+00:00
+fundbat,Zipline ($1.8B / $7.6B),$1.8B,$7.6B,Aerospace  Hardware,,https://fundbat.com/company/zipline,2026-04-24T21:45:24.812838+00:00
+fundbat,1Password ($920M / $6.8B),$920M,$6.8B,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/1password,2026-04-24T21:45:27.655447+00:00
+fundbat,Gambit Security ($61M / -),$61M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/gambit-security,2026-04-24T21:45:50.105888+00:00
+fundbat,Zed Industries ($45M / -),$45M,-,Developer Tools  Artificial Intelligence  +1,,https://fundbat.com/company/zed-industries,2026-04-24T21:45:52.591899+00:00
+fundbat,Synthesia ($536M / $4.0B),$536M,$4.0B,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/synthesia,2026-04-24T21:45:31.883137+00:00
+fundbat,Slang AI ($52M / -),$52M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/slang-ai,2026-04-24T21:45:51.406984+00:00
+fundbat,Jasper ($131M / $1.5B),$131M,$1.5B,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/jasper-ai,2026-04-24T21:45:43.891870+00:00
+fundbat,Adobe (- / NASDAQ: ADBE),-,NASDAQ: ADBE,Design Tools  SaaS,,https://fundbat.com/company/adobe,2026-04-24T21:46:02.584030+00:00
+fundbat,Wise ($396M / LSE: WISE),$396M,LSE: WISE,Fintech  Payments,,https://fundbat.com/company/wise,2026-04-24T21:45:34.141998+00:00
+fundbat,Webflow ($335M / $4.0B),$335M,$4.0B,SaaS  Design Tools  +1,,https://fundbat.com/company/webflow,2026-04-24T21:45:35.343890+00:00
+fundbat,Linx Security ($83M / -),$83M,-,Cybersecurity  Artificial Intelligence  +1,,https://fundbat.com/company/linx-security,2026-04-24T21:45:47.905027+00:00
+fundbat,Airbyte ($181M / $1.5B),$181M,$1.5B,Developer Tools  Data & Analytics  +1,,https://fundbat.com/company/airbyte,2026-04-24T21:45:40.542813+00:00
+fundbat,Trigger.dev ($20M / -),$20M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/trigger-dev,2026-04-24T21:45:56.640875+00:00
+fundbat,Alchemy ($545M / -),$545M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/alchemy,2026-04-24T21:45:31.674174+00:00
+fundbat,Replicate ($58M / $350M),$58M,$350M,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/replicate,2026-04-24T21:45:50.628888+00:00
+fundbat,Highlight AI ($40M / -),$40M,-,Artificial Intelligence  Productivity,,https://fundbat.com/company/highlight-ai,2026-04-24T21:45:53.208367+00:00
+fundbat,AltSchool ($176M / -),$176M,-,Edtech  SaaS,,https://fundbat.com/company/altschool,2026-04-24T21:45:40.798559+00:00
+fundbat,Corridor ($25M / $200M),$25M,$200M,Cybersecurity  Developer Tools,,https://fundbat.com/company/corridor,2026-04-24T21:45:55.683348+00:00
+fundbat,Hadrian ($626M / $1.6B),$626M,$1.6B,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/hadrian,2026-04-24T21:45:30.200651+00:00
+fundbat,Zenefits ($584M / $4.5B),$584M,$4.5B,SaaS,,https://fundbat.com/company/zenefits,2026-04-24T21:45:30.969940+00:00
+fundbat,Condor Software ($24M / -),$24M,-,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/condor-software,2026-04-24T21:45:55.836361+00:00
+fundbat,Synchronoss Technologies ($57M / -),$57M,-,Cloud Computing  SaaS,,https://fundbat.com/company/synchronoss,2026-04-24T21:45:50.975947+00:00
+fundbat,Knox Systems ($32M / -),$32M,-,Cybersecurity  Cloud Computing  +1,,https://fundbat.com/company/knox-systems,2026-04-24T21:45:54.773966+00:00
+fundbat,Dagster Labs ($49M / -),$49M,-,Developer Tools  Data & Analytics  +2,,https://fundbat.com/company/dagster-labs,2026-04-24T21:45:51.869595+00:00
+fundbat,Supabase ($496M / -),$496M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/supabase,2026-04-24T21:45:32.419096+00:00
+fundbat,Haiqu ($11M / -),$11M,-,Artificial Intelligence,,https://fundbat.com/company/haiqu,2026-04-24T21:45:59.079115+00:00
+fundbat,Alluxio ($82M / -),$82M,-,Data & Analytics  Cloud Computing,,https://fundbat.com/company/alluxio,2026-04-24T21:45:48.112154+00:00
+fundbat,OpenPhone ($161M / -),$161M,-,SaaS  Enterprise Software  +2,,https://fundbat.com/company/openphone,2026-04-24T21:45:41.875523+00:00
+fundbat,Titan ($173M / $1.0B),$173M,$1.0B,Fintech,,https://fundbat.com/company/titan,2026-04-24T21:45:41.056352+00:00
+fundbat,AnyRoad ($66M / -),$66M,-,SaaS  Data & Analytics  +1,,https://fundbat.com/company/anyroad,2026-04-24T21:45:49.569358+00:00
+fundbat,ShipBob ($331M / $1.0B),$331M,$1.0B,E-Commerce  SaaS  +1,,https://fundbat.com/company/shipbob,2026-04-24T21:45:35.648855+00:00
+fundbat,Understood Care ($8M / -),$8M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/understood-care,2026-04-24T21:45:59.511984+00:00
+fundbat,Tiptap ($3M / -),$3M,-,Developer Tools  Enterprise Software  +1,,https://fundbat.com/company/tiptap,2026-04-24T21:46:00.695209+00:00
+fundbat,Neon ($126M / -),$126M,-,Developer Tools  Cloud Computing  +1,,https://fundbat.com/company/neon,2026-04-24T21:45:44.103176+00:00
+fundbat,Xona Space Systems ($289M / -),$289M,-,Aerospace,,https://fundbat.com/company/xona-space-systems,2026-04-24T21:45:36.612728+00:00
+fundbat,Gency AI ($32M / -),$32M,-,Artificial Intelligence  Blockchain & Crypto,,https://fundbat.com/company/gency-ai,2026-04-24T21:45:54.674212+00:00
+fundbat,RunSybil ($40M / -),$40M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/runsybil,2026-04-24T21:45:53.309944+00:00
+fundbat,Oklo ($6M / NYSE: OKLO),$6M,NYSE: OKLO,Climate Tech  Hardware,,https://fundbat.com/company/oklo,2026-04-24T21:46:00.026396+00:00
+fundbat,Arweave ($13M / -),$13M,-,Cloud Computing  Developer Tools,,https://fundbat.com/company/arweave,2026-04-24T21:45:58.053132+00:00
+fundbat,Nubank ($2.3B / NYSE: NU),$2.3B,NYSE: NU,Fintech  Payments  +1,,https://fundbat.com/company/nubank,2026-04-24T21:45:24.113829+00:00
+fundbat,BVNK ($95M / -),$95M,-,Fintech  Blockchain & Crypto  +1,,https://fundbat.com/company/bvnk,2026-04-24T21:45:46.939068+00:00
+fundbat,Prolium Bioscience ($50M / -),$50M,-,Biotech  Healthtech,,https://fundbat.com/company/prolium-bioscience,2026-04-24T21:45:51.670828+00:00
+fundbat,Drata ($328M / $2.0B),$328M,$2.0B,Cybersecurity  SaaS  +1,,https://fundbat.com/company/drata,2026-04-24T21:45:35.753656+00:00
+fundbat,Applied Intuition ($1.2B / -),$1.2B,-,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/applied-intuition,2026-04-24T21:45:26.386119+00:00
+fundbat,Roblox ($920M / NYSE: RBLX),$920M,NYSE: RBLX,SaaS,,https://fundbat.com/company/roblox,2026-04-24T21:45:27.703658+00:00
+fundbat,Domo ($693M / NASDAQ: DOMO),$693M,NASDAQ: DOMO,SaaS  Data & Analytics,,https://fundbat.com/company/domo,2026-04-24T21:45:29.645683+00:00
+fundbat,Rappi ($2.3B / $5.3B),$2.3B,$5.3B,Fintech  Transportation,,https://fundbat.com/company/rappi,2026-04-24T21:45:24.064154+00:00
+fundbat,Benchling ($412M / $6.1B),$412M,$6.1B,SaaS  Biotech  +3,,https://fundbat.com/company/benchling,2026-04-24T21:45:33.874681+00:00
+fundbat,Proxy ($57M / -),$57M,-,Hardware  Cybersecurity,,https://fundbat.com/company/proxy,2026-04-24T21:45:50.728785+00:00
+fundbat,Beyond Meat ($124M / NASDAQ: BYND),$124M,NASDAQ: BYND,Food & Delivery  Climate Tech  +1,,https://fundbat.com/company/beyond-meat,2026-04-24T21:45:44.457061+00:00
+fundbat,Function Health ($354M / $2.5B),$354M,$2.5B,Artificial Intelligence,,https://fundbat.com/company/function-health,2026-04-24T21:45:34.487714+00:00
+fundbat,Alpaca ($333M / $1.1B),$333M,$1.1B,Fintech  Developer Tools,,https://fundbat.com/company/alpaca,2026-04-24T21:45:35.548745+00:00
+fundbat,Synera ($58M / -),$58M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/synera,2026-04-24T21:45:50.472353+00:00
+fundbat,Hightouch ($172M / $1.2B),$172M,$1.2B,Data & Analytics  Artificial Intelligence  +2,,https://fundbat.com/company/hightouch,2026-04-24T21:45:41.106621+00:00
+fundbat,Trade Republic ($1.2B / $5.0B),$1.2B,$5.0B,Fintech  Payments,,https://fundbat.com/company/trade-republic,2026-04-24T21:45:26.183089+00:00
+fundbat,Radiant Industries ($519M / $1.8B),$519M,$1.8B,Climate Tech  Hardware,,https://fundbat.com/company/radiant-nuclear,2026-04-24T21:45:32.073142+00:00
+fundbat,Apptimize ($19M / -),$19M,-,SaaS  Developer Tools,,https://fundbat.com/company/apptimize,2026-04-24T21:45:56.788844+00:00
+fundbat,Zapier ($3M / $5.0B),$3M,$5.0B,SaaS  Developer Tools,,https://fundbat.com/company/zapier,2026-04-24T21:46:00.843000+00:00
+fundbat,Axiom ($41M / -),$41M,-,Data & Analytics  Developer Tools  +1,,https://fundbat.com/company/axiom,2026-04-24T21:45:52.946062+00:00
+fundbat,Matterport ($159M / $2.9B),$159M,$2.9B,Hardware  Artificial Intelligence  +1,,https://fundbat.com/company/matterport,2026-04-24T21:45:42.183831+00:00
+fundbat,Meridian ($17M / -),$17M,-,Artificial Intelligence  Fintech,,https://fundbat.com/company/meridian-ai,2026-04-24T21:45:57.198322+00:00
+fundbat,VAST Data ($1.4B / $30.0B),$1.4B,$30.0B,Artificial Intelligence  Cloud Computing  +2,,https://fundbat.com/company/vast-data,2026-04-24T21:45:25.577040+00:00
+fundbat,Labelbox ($189M / $1.0B),$189M,$1.0B,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/labelbox,2026-04-24T21:45:40.067814+00:00
+fundbat,Skydio ($740M / $2.2B),$740M,$2.2B,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/skydio,2026-04-24T21:45:29.328932+00:00
+fundbat,Cal.com ($32M / -),$32M,-,SaaS  Developer Tools  +1,,https://fundbat.com/company/cal-com,2026-04-24T21:45:54.622189+00:00
+fundbat,Basis ($138M / $1.1B),$138M,$1.1B,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/basis,2026-04-24T21:45:43.468975+00:00
+fundbat,Better Stack ($29M / -),$29M,-,Developer Tools  Cloud Computing  +2,,https://fundbat.com/company/better-stack,2026-04-24T21:45:55.166137+00:00
+fundbat,Tangible ($8M / -),$8M,-,Fintech  Climate Tech,,https://fundbat.com/company/tangible,2026-04-24T21:45:59.614541+00:00
+fundbat,Ricursive Intelligence ($335M / $4.0B),$335M,$4.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/ricursive-intelligence,2026-04-24T21:45:35.293211+00:00
+fundbat,NCR Atleos (- / -),-,-,Fintech  Payments  +1,,https://fundbat.com/company/ncr-atleos,2026-04-24T21:46:01.521173+00:00
+fundbat,Yuga Labs ($450M / $4.0B),$450M,$4.0B,Blockchain & Crypto  Entertainment,,https://fundbat.com/company/yuga-labs,2026-04-24T21:45:33.202857+00:00
+fundbat,Truebill ($84M / -),$84M,-,Fintech  SaaS,,https://fundbat.com/company/truebill,2026-04-24T21:45:47.850918+00:00
+fundbat,Val Town ($7M / -),$7M,-,Developer Tools  SaaS  +1,,https://fundbat.com/company/val-town,2026-04-24T21:45:59.821620+00:00
+fundbat,Rhoda AI ($450M / $1.7B),$450M,$1.7B,Artificial Intelligence  Hardware,,https://fundbat.com/company/rhoda-ai,2026-04-24T21:45:33.252728+00:00
+fundbat,Webalo ($3M / -),$3M,-,Enterprise Software  SaaS,,https://fundbat.com/company/webalo,2026-04-24T21:46:00.795121+00:00
+fundbat,Snowflake ($1.6B / NYSE: SNOW),$1.6B,NYSE: SNOW,Cloud Computing  Data & Analytics  +1,,https://fundbat.com/company/snowflake,2026-04-24T21:45:25.172657+00:00
+fundbat,Qualtrics ($400M / $2.5B),$400M,$2.5B,SaaS  Enterprise Software  +1,,https://fundbat.com/company/qualtrics,2026-04-24T21:45:34.081895+00:00
+fundbat,Zynga ($1.0B / -),$1.0B,-,Artificial Intelligence,,https://fundbat.com/company/zynga,2026-04-24T21:45:27.095343+00:00
+fundbat,R1 Therapeutics ($78M / -),$78M,-,Biotech,,https://fundbat.com/company/r1-therapeutics,2026-04-24T21:45:48.459891+00:00
+fundbat,Pika ($135M / $470M),$135M,$470M,Artificial Intelligence  Consumer Tech  +1,,https://fundbat.com/company/pika,2026-04-24T21:45:43.617065+00:00
+fundbat,Weights & Biases ($250M / $1.3B),$250M,$1.3B,Artificial Intelligence  Developer Tools  +2,,https://fundbat.com/company/weights-and-biases,2026-04-24T21:45:37.699773+00:00
+fundbat,Sweetgreen ($635M / NYSE: SG),$635M,NYSE: SG,Food & Delivery  Consumer Tech,,https://fundbat.com/company/sweetgreen,2026-04-24T21:45:30.046129+00:00
+fundbat,Plata ($815M / $5.0B),$815M,$5.0B,Fintech  Payments  +1,,https://fundbat.com/company/plata,2026-04-24T21:45:28.539046+00:00
+fundbat,Payy Network ($6M / -),$6M,-,Blockchain & Crypto  Payments,,https://fundbat.com/company/payy-network,2026-04-24T21:46:00.075074+00:00
+fundbat,Lio ($33M / -),$33M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/lio,2026-04-24T21:45:54.418844+00:00
+fundbat,Cylake ($45M / -),$45M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/cylake,2026-04-24T21:45:52.539702+00:00
+fundbat,Valinor ($25M / -),$25M,-,Blockchain & Crypto  Fintech,,https://fundbat.com/company/valinor,2026-04-24T21:45:55.532967+00:00
+fundbat,Guidde ($80M / -),$80M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/guidde,2026-04-24T21:45:48.362817+00:00
+fundbat,Replenit ($3M / -),$3M,-,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/replenit,2026-04-24T21:46:00.892262+00:00
+fundbat,Human API ($37M / -),$37M,-,Biotech,,https://fundbat.com/company/humanapi,2026-04-24T21:45:53.916831+00:00
+fundbat,Aria Networks ($125M / -),$125M,-,Hardware  Cloud Computing  +1,,https://fundbat.com/company/aria-networks,2026-04-24T21:45:44.156724+00:00
+fundbat,Mind Robotics ($615M / $2.0B),$615M,$2.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/mind-robotics,2026-04-24T21:45:30.453838+00:00
+fundbat,Paystack ($9M / -),$9M,-,Fintech  Payments  +2,,https://fundbat.com/company/paystack,2026-04-24T21:45:59.413174+00:00
+fundbat,Sherpas ($4M / -),$4M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/sherpas,2026-04-24T21:46:00.589949+00:00
+fundbat,Amazon (- / NASDAQ: AMZN),-,NASDAQ: AMZN,E-Commerce  Cloud Computing,,https://fundbat.com/company/amazon,2026-04-24T21:46:02.839133+00:00
+fundbat,Figma ($749M / NYSE: FIG),$749M,NYSE: FIG,Design Tools  Developer Tools  +1,,https://fundbat.com/company/figma,2026-04-24T21:45:29.116634+00:00
+fundbat,AMI Labs ($1.0B / $3.5B),$1.0B,$3.5B,Artificial Intelligence,,https://fundbat.com/company/ami-labs,2026-04-24T21:45:26.938737+00:00
+fundbat,Astranis ($758M / -),$758M,-,Aerospace  Hardware,,https://fundbat.com/company/astranis,2026-04-24T21:45:29.060698+00:00
+fundbat,Copy.ai ($14M / -),$14M,-,Artificial Intelligence  SaaS  +2,,https://fundbat.com/company/copy-ai,2026-04-24T21:45:57.903233+00:00
+fundbat,Clubhouse ($312M / $4.0B),$312M,$4.0B,SaaS,,https://fundbat.com/company/clubhouse,2026-04-24T21:45:36.157408+00:00
+fundbat,Payra ($15M / -),$15M,-,Fintech  Payments  +1,,https://fundbat.com/company/payra,2026-04-24T21:45:57.750236+00:00
+fundbat,Flowcarbon ($70M / -),$70M,-,Climate Tech,,https://fundbat.com/company/flowcarbon,2026-04-24T21:45:49.117806+00:00
+fundbat,Alkira ($184M / -),$184M,-,Cloud Computing  Enterprise Software,,https://fundbat.com/company/alkira,2026-04-24T21:45:40.274765+00:00
+fundbat,Form Energy ($1.2B / $3.5B),$1.2B,$3.5B,Climate Tech  Hardware,,https://fundbat.com/company/form-energy,2026-04-24T21:45:26.337978+00:00
+fundbat,Orchestra BioMed ($185M / NASDAQ: OBIO),$185M,NASDAQ: OBIO,Biotech,,https://fundbat.com/company/orchestra-biomed,2026-04-24T21:45:40.172383+00:00
+fundbat,Cask ($33M / -),$33M,-,Data & Analytics,,https://fundbat.com/company/cask,2026-04-24T21:45:54.571397+00:00
+fundbat,Perplexity AI ($1.7B / -),$1.7B,-,Artificial Intelligence  Consumer Tech,,https://fundbat.com/company/perplexity-ai,2026-04-24T21:45:24.913689+00:00
+fundbat,GitLab ($434M / NASDAQ: GTLB),$434M,NASDAQ: GTLB,Developer Tools  SaaS  +1,,https://fundbat.com/company/gitlab,2026-04-24T21:45:33.403685+00:00
+fundbat,Fivetran ($725M / $5.6B),$725M,$5.6B,SaaS  Data & Analytics  +1,,https://fundbat.com/company/fivetran,2026-04-24T21:45:29.393156+00:00
+fundbat,Navan ($1.3B / $9.2B),$1.3B,$9.2B,SaaS  Fintech,,https://fundbat.com/company/navan,2026-04-24T21:45:25.831394+00:00
+fundbat,Heap ($205M / $960M),$205M,$960M,SaaS  Data & Analytics,,https://fundbat.com/company/heap,2026-04-24T21:45:39.099996+00:00
+fundbat,9fin ($232M / $1.3B),$232M,$1.3B,Fintech  Artificial Intelligence  +1,,https://fundbat.com/company/9fin,2026-04-24T21:45:38.138980+00:00
+fundbat,Palo Alto Networks ($65M / NYSE: PANW),$65M,NYSE: PANW,Cybersecurity  Cloud Computing  +1,,https://fundbat.com/company/palo-alto-networks,2026-04-24T21:45:49.718791+00:00
+fundbat,Stack Overflow ($153M / -),$153M,-,Developer Tools,,https://fundbat.com/company/stack-overflow,2026-04-24T21:45:42.491962+00:00
+fundbat,Ironclad ($334M / $3.2B),$334M,$3.2B,Enterprise Software  Artificial Intelligence  +1,,https://fundbat.com/company/ironclad,2026-04-24T21:45:35.446725+00:00
+fundbat,Manus ($85M / $500M),$85M,$500M,Artificial Intelligence  SaaS,,https://fundbat.com/company/manus,2026-04-24T21:45:47.798831+00:00
+fundbat,Crossover Markets ($49M / $200M),$49M,$200M,Fintech,,https://fundbat.com/company/crossover-markets,2026-04-24T21:45:51.771863+00:00
+fundbat,Quantum Elements (- / -),-,-,Artificial Intelligence,,https://fundbat.com/company/quantum-elements,2026-04-24T21:46:01.677962+00:00
+fundbat,Aerodome ($28M / -),$28M,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/aerodome,2026-04-24T21:45:55.219030+00:00
+fundbat,Axiom ($264M / $1.6B),$264M,$1.6B,Artificial Intelligence  Developer Tools,,https://fundbat.com/company/axiom-ai,2026-04-24T21:45:37.178056+00:00
+fundbat,Verily ($300M / -),$300M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/verily,2026-04-24T21:45:36.410870+00:00
+fundbat,Encord ($110M / $550M),$110M,$550M,Artificial Intelligence  Developer Tools,,https://fundbat.com/company/encord,2026-04-24T21:45:45.734218+00:00
+fundbat,monday.com ($234M / NASDAQ: MNDY),$234M,NASDAQ: MNDY,SaaS  Productivity,,https://fundbat.com/company/monday-com,2026-04-24T21:45:38.009715+00:00
+fundbat,Uniswap Labs ($178M / $1.7B),$178M,$1.7B,Fintech,,https://fundbat.com/company/uniswap,2026-04-24T21:45:40.741864+00:00
+fundbat,Claroty ($882M / $3.0B),$882M,$3.0B,Cybersecurity  Enterprise Software,,https://fundbat.com/company/claroty,2026-04-24T21:45:28.059184+00:00
+fundbat,Ramp ($2.3B / $32.0B),$2.3B,$32.0B,Fintech  SaaS  +1,,https://fundbat.com/company/ramp,2026-04-24T21:45:24.012756+00:00
+fundbat,Loft ($888M / $2.9B),$888M,$2.9B,Fintech  SaaS,,https://fundbat.com/company/loft,2026-04-24T21:45:28.009901+00:00
+fundbat,SentinelOne ($692M / NYSE: S),$692M,NYSE: S,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/sentinelone,2026-04-24T21:45:29.694734+00:00
+fundbat,Samsara ($930M / $5.4B),$930M,$5.4B,SaaS  Artificial Intelligence  +3,,https://fundbat.com/company/samsara,2026-04-24T21:45:27.601758+00:00
+fundbat,The Athletic ($140M / $500M),$140M,$500M,SaaS,,https://fundbat.com/company/the-athletic,2026-04-24T21:45:43.208590+00:00
+fundbat,Hopin ($1.0B / $7.8B),$1.0B,$7.8B,SaaS,,https://fundbat.com/company/hopin,2026-04-24T21:45:26.990532+00:00
+fundbat,Loom ($204M / $1.5B),$204M,$1.5B,SaaS,,https://fundbat.com/company/loom,2026-04-24T21:45:39.149776+00:00
+fundbat,Temporal Technologies ($650M / -),$650M,-,Developer Tools  Artificial Intelligence,,https://fundbat.com/company/temporal,2026-04-24T21:45:29.944695+00:00
+fundbat,Wiz ($1.9B / $12.0B),$1.9B,$12.0B,Cybersecurity  Cloud Computing,,https://fundbat.com/company/wiz,2026-04-24T21:45:24.415563+00:00
+fundbat,Apcera ($7M / -),$7M,-,Cloud Computing  Developer Tools  +1,,https://fundbat.com/company/apcera,2026-04-24T21:45:59.666004+00:00
+fundbat,Memories.ai ($16M / -),$16M,-,Artificial Intelligence,,https://fundbat.com/company/memories-ai,2026-04-24T21:45:57.497947+00:00
+fundbat,Imperative Care ($270M / -),$270M,-,Healthtech  Hardware,,https://fundbat.com/company/imperative-care,2026-04-24T21:45:37.075757+00:00
+fundbat,Alation ($315M / -),$315M,-,SaaS  Data & Analytics  +1,,https://fundbat.com/company/alation,2026-04-24T21:45:36.056373+00:00
+fundbat,Doctor on Demand ($223M / -),$223M,-,Biotech,,https://fundbat.com/company/doctor-on-demand,2026-04-24T21:45:38.512828+00:00
+fundbat,Monarch Quantum ($55M / -),$55M,-,Hardware  Cloud Computing,,https://fundbat.com/company/monarch-quantum,2026-04-24T21:45:51.128896+00:00
+fundbat,Letter AI ($53M / -),$53M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/letter-ai,2026-04-24T21:45:51.304203+00:00
+fundbat,t54 Labs ($5M / -),$5M,-,Artificial Intelligence  Fintech,,https://fundbat.com/company/t54-labs,2026-04-24T21:46:00.278083+00:00
+fundbat,Profound ($155M / $1.0B),$155M,$1.0B,Artificial Intelligence  SaaS  +1,,https://fundbat.com/company/profound,2026-04-24T21:45:42.443921+00:00
+fundbat,Foresight ($25M / -),$25M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/foresight-infra,2026-04-24T21:45:55.633994+00:00
+fundbat,Matternet ($71M / $220M),$71M,$220M,Transportation  Hardware,,https://fundbat.com/company/matternet,2026-04-24T21:45:48.809688+00:00
+fundbat,Doss ($80M / -),$80M,-,Artificial Intelligence  Enterprise Software,,https://fundbat.com/company/doss,2026-04-24T21:45:48.261968+00:00
+fundbat,Checkout.com ($1.8B / $40.0B),$1.8B,$40.0B,Fintech  Payments,,https://fundbat.com/company/checkout-com,2026-04-24T21:45:24.662615+00:00
+fundbat,Scalvy ($17M / -),$17M,-,Hardware  Climate Tech,,https://fundbat.com/company/scalvy,2026-04-24T21:45:57.147872+00:00
+fundbat,Uber ($13.2B / NYSE: UBER),$13.2B,NYSE: UBER,Transportation  Food & Delivery,,https://fundbat.com/company/uber,2026-04-24T21:45:21.929863+00:00
+fundbat,Braintrust ($124M / -),$124M,-,Artificial Intelligence  Developer Tools  +2,,https://fundbat.com/company/braintrust,2026-04-24T21:45:44.355772+00:00
+fundbat,Anysphere ($3.4B / $29.3B),$3.4B,$29.3B,Artificial Intelligence  Developer Tools  +1,,https://fundbat.com/company/anysphere,2026-04-24T21:45:22.953979+00:00
+fundbat,Skild AI ($1.8B / $14.0B),$1.8B,$14.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/skild-ai,2026-04-24T21:45:24.711619+00:00
+fundbat,Runscope ($7M / -),$7M,-,Developer Tools  SaaS,,https://fundbat.com/company/runscope,2026-04-24T21:45:59.766881+00:00
+fundbat,Vanta ($503M / -),$503M,-,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/vanta,2026-04-24T21:45:32.237652+00:00
+fundbat,Arctic Wolf ($687M / $4.3B),$687M,$4.3B,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/arctic-wolf,2026-04-24T21:45:29.743693+00:00
+fundbat,Pardes Biosciences ($127M / -),$127M,-,Biotech,,https://fundbat.com/company/pardes-biosciences,2026-04-24T21:45:43.997857+00:00
+fundbat,Adonis ($95M / -),$95M,-,Healthtech  Artificial Intelligence,,https://fundbat.com/company/adonis,2026-04-24T21:45:46.882153+00:00
+fundbat,Sanity ($101M / $506M),$101M,$506M,Developer Tools  SaaS  +1,,https://fundbat.com/company/sanity,2026-04-24T21:45:46.413954+00:00
+fundbat,Opendoor ($1.3B / NASDAQ: OPEN),$1.3B,NASDAQ: OPEN,Fintech  SaaS  +1,,https://fundbat.com/company/opendoor,2026-04-24T21:45:25.883594+00:00
+fundbat,Sygaldry ($139M / -),$139M,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/sygaldry,2026-04-24T21:45:43.262257+00:00
+fundbat,Cursor ($3.4B / $29.3B),$3.4B,$29.3B,Artificial Intelligence  Developer Tools,,https://fundbat.com/company/cursor,2026-04-24T21:45:22.901700+00:00
+fundbat,Anchorage Digital ($587M / $4.2B),$587M,$4.2B,Fintech  Cybersecurity,,https://fundbat.com/company/anchorage-digital,2026-04-24T21:45:30.918353+00:00
+fundbat,Starcloud ($200M / $1.1B),$200M,$1.1B,Aerospace  Cloud Computing  +1,,https://fundbat.com/company/starcloud,2026-04-24T21:45:39.484903+00:00
+fundbat,Wayve ($2.8B / $8.6B),$2.8B,$8.6B,Artificial Intelligence  Transportation,,https://fundbat.com/company/wayve,2026-04-24T21:45:23.309755+00:00
+fundbat,Deeptune ($45M / -),$45M,-,Artificial Intelligence  Developer Tools,,https://fundbat.com/company/deeptune,2026-04-24T21:45:52.335889+00:00
+fundbat,Weebly ($40M / $455M),$40M,$455M,SaaS,,https://fundbat.com/company/weebly,2026-04-24T21:45:53.520967+00:00
+fundbat,Navikenz ($12M / -),$12M,-,Artificial Intelligence  SaaS,,https://fundbat.com/company/navikenz,2026-04-24T21:45:58.584727+00:00
+fundbat,Sendwave ($14M / -),$14M,-,Fintech  Payments,,https://fundbat.com/company/sendwave,2026-04-24T21:45:58.002716+00:00
+fundbat,Anduril Industries ($6.3B / -),$6.3B,-,Artificial Intelligence  Hardware  +1,,https://fundbat.com/company/anduril,2026-04-24T21:45:22.339631+00:00
+fundbat,GitHub ($350M / $2.0B),$350M,$2.0B,Developer Tools  SaaS,,https://fundbat.com/company/github,2026-04-24T21:45:34.740710+00:00
+fundbat,Cybervergent ($3M / -),$3M,-,Cybersecurity,,https://fundbat.com/company/cybervergent,2026-04-24T21:46:00.746028+00:00
+fundbat,Microsoft (- / NASDAQ: MSFT),-,NASDAQ: MSFT,Enterprise Software  Cloud Computing  +1,,https://fundbat.com/company/microsoft,2026-04-24T21:46:02.939194+00:00
+fundbat,Devoted Health ($2.1B / $12.9B),$2.1B,$12.9B,Artificial Intelligence  SaaS,,https://fundbat.com/company/devoted-health,2026-04-24T21:45:24.265667+00:00
+fundbat,Clever ($43M / -),$43M,-,SaaS  Edtech,,https://fundbat.com/company/clever,2026-04-24T21:45:52.748271+00:00
+fundbat,Glean ($765M / -),$765M,-,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/glean,2026-04-24T21:45:28.983005+00:00
+fundbat,Pindrop ($312M / $925M),$312M,$925M,Artificial Intelligence  Cybersecurity,,https://fundbat.com/company/pindrop,2026-04-24T21:45:36.206668+00:00
+fundbat,Unity Technologies ($749M / NYSE: U),$749M,NYSE: U,Developer Tools  Entertainment,,https://fundbat.com/company/unity-technologies,2026-04-24T21:45:29.169124+00:00
+fundbat,Adaptive Security ($147M / -),$147M,-,Cybersecurity  Artificial Intelligence,,https://fundbat.com/company/adaptive-security,2026-04-24T21:45:42.799878+00:00
+fundbat,Zoom ($157M / NASDAQ: ZM),$157M,NASDAQ: ZM,SaaS  Productivity  +1,,https://fundbat.com/company/zoom,2026-04-24T21:45:42.296005+00:00
+fundbat,Cohesity ($810M / $2.5B),$810M,$2.5B,Enterprise Software  Cloud Computing  +2,,https://fundbat.com/company/cohesity,2026-04-24T21:45:28.598398+00:00
+fundbat,Sift ($67M / -),$67M,-,Developer Tools  Artificial Intelligence  +1,,https://fundbat.com/company/sift-stack,2026-04-24T21:45:49.273839+00:00
+fundbat,Startale Group ($63M / -),$63M,-,Blockchain & Crypto  Fintech,,https://fundbat.com/company/startale-group,2026-04-24T21:45:49.952994+00:00
+fundbat,Stability AI ($256M / $1.0B),$256M,$1.0B,Artificial Intelligence  Entertainment  +1,,https://fundbat.com/company/stability-ai,2026-04-24T21:45:37.495700+00:00
+fundbat,Material Security ($162M / $1.1B),$162M,$1.1B,Cybersecurity  SaaS  +1,,https://fundbat.com/company/material-security,2026-04-24T21:45:41.824078+00:00
+fundbat,Vise ($125M / $1.0B),$125M,$1.0B,Fintech  Artificial Intelligence  +2,,https://fundbat.com/company/vise,2026-04-24T21:45:44.256817+00:00
+fundbat,Uptiq ($70M / -),$70M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/uptiq,2026-04-24T21:45:49.169589+00:00
+fundbat,Balanced ($3M / -),$3M,-,Fintech  Payments,,https://fundbat.com/company/balanced,2026-04-24T21:46:00.642914+00:00
+fundbat,Watershed ($185M / $1.8B),$185M,$1.8B,Climate Tech  Enterprise Software  +2,,https://fundbat.com/company/watershed,2026-04-24T21:45:40.118521+00:00
+fundbat,Hanover Park ($27M / -),$27M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/hanover-park,2026-04-24T21:45:55.432063+00:00
+fundbat,Cognito ($2M / -),$2M,-,Fintech  Cybersecurity  +1,,https://fundbat.com/company/cognito,2026-04-24T21:46:01.127029+00:00
+fundbat,Eclypsium ($111M / -),$111M,-,Cybersecurity  Cloud Computing,,https://fundbat.com/company/eclypsium,2026-04-24T21:45:45.499748+00:00
+fundbat,Airtop ($39M / -),$39M,-,Artificial Intelligence  Developer Tools  +2,,https://fundbat.com/company/airtop,2026-04-24T21:45:53.621994+00:00
+fundbat,Drishti Technologies ($37M / -),$37M,-,Artificial Intelligence  Hardware,,https://fundbat.com/company/drishti-technologies,2026-04-24T21:45:53.848795+00:00
+fundbat,Shield AI ($3.3B / $12.7B),$3.3B,$12.7B,Artificial Intelligence  Aerospace,,https://fundbat.com/company/shield-ai,2026-04-24T21:45:23.055764+00:00
+fundbat,Shepherd ($66M / -),$66M,-,Fintech  Artificial Intelligence,,https://fundbat.com/company/shepherd-insurance,2026-04-24T21:45:49.620916+00:00
+fundbat,Stacks ($33M / -),$33M,-,Fintech  Artificial Intelligence  +1,,https://fundbat.com/company/stacks,2026-04-24T21:45:54.469218+00:00
+fundbat,Plaid ($1.3B / $6.1B),$1.3B,$6.1B,Fintech  Developer Tools  +2,,https://fundbat.com/company/plaid,2026-04-24T21:45:26.032641+00:00
+fundbat,Honor ($622M / $1.3B),$622M,$1.3B,SaaS,,https://fundbat.com/company/honor,2026-04-24T21:45:30.349673+00:00
+fundbat,Candex ($60M / -),$60M,-,Fintech  Enterprise Software,,https://fundbat.com/company/candex,2026-04-24T21:45:50.215947+00:00
+fundbat,ZoomInfo (- / NASDAQ: ZI),-,NASDAQ: ZI,SaaS  Enterprise Software  +1,,https://fundbat.com/company/zoominfo,2026-04-24T21:46:01.324272+00:00
+fundbat,Wonderful ($284M / $2.0B),$284M,$2.0B,Artificial Intelligence  Enterprise Software  +1,,https://fundbat.com/company/wonderful,2026-04-24T21:45:36.662854+00:00
+fundbat,Etched ($625M / $5.0B),$625M,$5.0B,Artificial Intelligence  Hardware,,https://fundbat.com/company/etched,2026-04-24T21:45:30.248988+00:00
+fundbat,Ubicquia ($161M / -),$161M,-,Climate Tech  Hardware,,https://fundbat.com/company/ubicquia,2026-04-24T21:45:41.924921+00:00
+fundbat,Scale AI ($15.9B / $29.0B),$15.9B,$29.0B,Artificial Intelligence  Data & Analytics,,https://fundbat.com/company/scale-ai,2026-04-24T21:45:21.876584+00:00
+fundbat,500px ($22M / -),$22M,-,Social Media  Entertainment,,https://fundbat.com/company/500px,2026-04-24T21:45:56.084206+00:00
+fundbat,Lyft ($4.6B / -),$4.6B,-,Transportation,,https://fundbat.com/company/lyft,2026-04-24T21:45:22.443581+00:00
+fundbat,Notion ($337M / $10.0B),$337M,$10.0B,Productivity  SaaS  +1,,https://fundbat.com/company/notion,2026-04-24T21:45:35.139892+00:00
+fundbat,PostHog ($172M / $1.4B),$172M,$1.4B,Developer Tools  Data & Analytics  +1,,https://fundbat.com/company/posthog,2026-04-24T21:45:41.160009+00:00
+fundbat,Qodo ($121M / -),$121M,-,Developer Tools  Artificial Intelligence,,https://fundbat.com/company/qodo,2026-04-24T21:45:44.828951+00:00
+fundbat,Sprinklr ($579M / NYSE: CXM),$579M,NYSE: CXM,SaaS  Enterprise Software  +1,,https://fundbat.com/company/sprinklr,2026-04-24T21:45:31.090728+00:00
+fundbat,ByteDance ($8.1B / $180.0B),$8.1B,$180.0B,Social Media  Entertainment  +2,,https://fundbat.com/company/bytedance,2026-04-24T21:45:22.134193+00:00
+fundbat,Meadow Memorials ($11M / -),$11M,-,Consumer Tech,,https://fundbat.com/company/meadow-memorials,2026-04-24T21:45:58.834105+00:00
+fundbat,Carta ($1.2B / $7.4B),$1.2B,$7.4B,Fintech  SaaS,,https://fundbat.com/company/carta,2026-04-24T21:45:26.582686+00:00
+fundbat,KAST ($90M / $600M),$90M,$600M,Fintech  Payments  +1,,https://fundbat.com/company/kast,2026-04-24T21:45:47.351795+00:00
+fundbat,Armis ($1.2B / -),$1.2B,-,Cybersecurity  Enterprise Software  +1,,https://fundbat.com/company/armis,2026-04-24T21:45:26.485680+00:00
+vc_funding,The 12-month window raises 0 Unknown,,,,[],,2026-04-24T21:44:42.305398+00:00
+vc_funding,AI raises 0 Unknown,,,,[],,2026-04-24T21:44:41.675710+00:00
+vc_funding,TechCrunch + SusHi Tech Tokyo 2026 raises 0 Unknown,,,,[],,2026-04-24T21:44:42.061045+00:00
+vc_funding,Duolingo is now giving users access to advanced learning content raises 0 Unknown,,,,[],,2026-04-24T21:44:42.545407+00:00
+vc_funding,Venture raises 0 Unknown,,,,[],,2026-04-24T21:44:41.930328+00:00
+vc_funding,Gaming raises 0 Unknown,,,,[],,2026-04-24T21:44:42.154464+00:00
+vc_funding,Apps raises 0 Unknown,,,,[],,2026-04-24T21:44:42.203516+00:00
+vc_funding,AI chip startup Cerebras files for IPO raises 0 Unknown,,,,[],,2026-04-24T21:44:42.355790+00:00
+vc_funding,StrictlyVC San Francisco 2026 raises 0 Unknown,,,,[],,2026-04-24T21:44:41.547303+00:00
+vc_funding,"Tim Cook stepping down as Apple CEO, John Ternus taking over raises 0 Unknown",,,,[],,2026-04-24T21:44:42.647346+00:00
+vc_funding,"Unauthorized group has gained access to Anthropic’s exclusive cyber tool Mythos, report claims raises 0 Unknown",,,,[],,2026-04-24T21:44:42.596458+00:00
+vc_funding,"Cohere acquires, merges with German-based startup to create a ‘transatlantic AI powerhouse’ raises 0 Unknown",,,,[],,2026-04-24T21:44:41.439198+00:00
+vc_funding,"OpenAI releases GPT-5.5, bringing company one step closer to an AI ‘super app’ raises 0 Unknown",,,,[],,2026-04-24T21:44:42.433476+00:00
+vc_funding,Media & Entertainment raises 0 Unknown,,,,[],,2026-04-24T21:44:42.253386+00:00
+vc_funding,Blue Origin’s New Glenn put a customer satellite in the wrong orbit during its third launch raises 0 Unknown,,,,[],,2026-04-24T21:44:42.700978+00:00
+vc_funding,Microsoft offers buyout for up to 7% of US employees raises 0 Unknown,,,,[],,2026-04-24T21:44:42.492487+00:00
+vc_funding,Startups raises 0 Unknown,,,,[],,2026-04-24T21:44:41.488235+00:00
+vc_funding,Bret Taylor’s Sierra buys YC-backed AI startup Fragment raises 0 Unknown,,,,[],,2026-04-24T21:44:41.626600+00:00

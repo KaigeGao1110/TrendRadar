@@ -273,6 +273,13 @@ def fetch(source):
         with console.status("[bold green]Fetching Twitter pain signals..."):
             data = twitter_pain.fetch_latest()
         _display_stories(data, "Twitter Pain Signals")
+
+        # Pre-filter with gemma4:31b before writing to DynamoDB
+        if data:
+            with console.status("[bold cyan]🔍 Filtering pain signals with gemma4:31b..."):
+                pain_filter = PainFilter()
+                data = pain_filter.filter_batch(data)
+
         _process_source_data(
             source="twitter_pain",
             event_type="pain_signal",
@@ -414,6 +421,7 @@ def analyze():
     console.print(f"  Actionable (score ≥ 70): {result['actionable']}")
 
 
+from analyzer.pain_filter import PainFilter
 from analyzer.obsidian_writer import ObsidianWriter
 from storage.embedding import EmbeddingClient
 from storage.supabase_v2 import SupabaseV2Client
