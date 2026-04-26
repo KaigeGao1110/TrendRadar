@@ -20,39 +20,6 @@ def _check_pytrends():
         )
 
 
-def fetch_trending_searches() -> list[dict]:
-    """Fetch today's trending searches from Google Trends.
-
-    Returns:
-        List of dicts with trending search queries.
-    """
-    TrendReq = _check_pytrends()
-    try:
-        pytrends = TrendReq(hl="en-US", tz=360, timeout=REQUEST_TIMEOUT)
-        df = pytrends.trending_searches(pn="united_states")
-        results = []
-        for _, row in df.iterrows():
-            query = str(row.iloc[0]) if len(row) > 0 else ""
-            if not query:
-                continue
-            results.append({
-                "title": query,
-                "url": f"https://trends.google.com/trends/explore?q={query}",
-                "source": "google_trends",
-                "description": f"Google Trends daily trending search: {query}",
-                "industry": ["trending"],
-                "published_at": datetime.utcnow().isoformat() + "Z",
-                "metadata": {
-                    "query": query,
-                    "type": "daily_trending",
-                },
-            })
-        return results
-    except Exception as e:
-        print(f"⚠️ Google Trends trending_searches failed: {e}")
-        return []
-
-
 def fetch_related_queries(keyword: str = "startup") -> list[dict]:
     """Fetch related queries for a keyword from Google Trends.
 
@@ -128,17 +95,17 @@ def fetch_related_queries(keyword: str = "startup") -> list[dict]:
 
 
 def fetch_latest() -> list[dict]:
-    """Fetch trending searches and related queries for key startup terms.
+    """Fetch related queries for key startup terms from Google Trends.
+
+    Note: trending_searches() is no longer used — the Google Trends
+    endpoint it relied on returns 404. We use keyword-based related_queries
+    as the sole data source.
 
     Returns:
         List of dicts with title, url, source, description, industry,
         published_at, metadata.
     """
     all_results = []
-
-    # Daily trending searches
-    trending = fetch_trending_searches()
-    all_results.extend(trending)
 
     # Related queries for key terms
     keywords = ["startup", "SaaS", "AI tool"]

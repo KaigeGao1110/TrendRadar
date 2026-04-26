@@ -270,7 +270,10 @@ def _fetch_product_detail(product_url: str) -> dict:
 
 
 def fetch_latest(deep_fetch: bool = False, max_detail_products: int = 10) -> list[dict]:
-    """Fetch trending products from Product Hunt.
+    """Fetch trending products from Product Hunt via RSS feed.
+
+    HTML scraping is not used because PH returns 403 for automated requests.
+    RSS feed is the reliable, no-auth-needed source.
 
     Args:
         deep_fetch: If True, fetch detail pages for top products (slower).
@@ -280,27 +283,9 @@ def fetch_latest(deep_fetch: bool = False, max_detail_products: int = 10) -> lis
         List of dicts with title, url, source, description, industry,
         published_at, metadata.
     """
-    # Try today's trending page first
-    urls_to_try = [
-        f"{PRODUCTHUNT_BASE}",
-        f"{PRODUCTHUNT_BASE}/topics/tech",  # Tech topic
-    ]
+    all_products = _fetch_via_rss(limit=50)
 
-    all_products = []
-    seen_urls = set()
-
-    for url in urls_to_try:
-        products = _parse_producthunt_page(url)
-        for p in products:
-            if p["url"] not in seen_urls:
-                seen_urls.add(p["url"])
-                all_products.append(p)
-
-    # Fallback to RSS if HTML scraping returned nothing (e.g. 403)
-    if not all_products:
-        all_products = _fetch_via_rss(limit=30)
-
-    # Sort by votes
+    # Sort by votes (RSS doesn't include votes, but keep for consistency)
     all_products.sort(
         key=lambda x: x.get("metadata", {}).get("votes_count", 0),
         reverse=True,
