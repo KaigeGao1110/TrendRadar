@@ -363,7 +363,7 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
                     {"role": "user", "content": prompt},
                 ],
                 temperature=0.1,
-                max_tokens=1000,
+                max_tokens=3000,
             )
 
             raw = response.choices[0].message.content.strip()
