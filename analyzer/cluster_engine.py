@@ -344,7 +344,7 @@ Score on three dimensions (0-100):
 3. timing: Is now the right time to enter?
 
 IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no explanation outside JSON. Do not wrap in code fences.
-{{"pain_density": <int>, "tech_feasibility": <int>, "timing": <int>, "reasoning": "<2-3 sentence explanation>"}}"""
+{{"pain_density": <int>, "tech_feasibility": <int>, "timing": <int>, "reasoning": "<1 sentence>"}}"""
 
         pain_score = 50
         tech_score = 50
@@ -363,7 +363,7 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
                     {"role": "user", "content": prompt},
                 ],
                 temperature=0.1,
-                max_tokens=500,
+                max_tokens=1000,
             )
 
             raw = response.choices[0].message.content.strip()

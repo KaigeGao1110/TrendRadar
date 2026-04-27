@@ -154,6 +154,37 @@ def _parse_scoring_json(raw: str) -> dict | None:
         except (json.JSONDecodeError, ValueError):
             pass
 
+    # Layer 2.5: try to repair truncated JSON
+    # Model output gets cut off: {"pain_density": 30, "tech_feasibility": 85, "timing": 25, "reasoning": "some text...
+    # Strategy: find opening { with scoring keys, extract what we can
+    truncated = re.search(r'\{[^{}]*"(?:pain_density|tech_feasibility|timing)"[^{}]*', text, re.DOTALL)
+    if truncated:
+        partial = truncated.group()
+        # Try to close it and parse
+        for closing in ['"}', '}', '"}']:
+            try:
+                result = json.loads(partial + closing)
+                if isinstance(result, dict):
+                    for key in ("pain_density", "tech_feasibility", "timing"):
+                        result.setdefault(key, 50)
+                    result.setdefault("reasoning", "truncated_json_repair")
+                    logger.info("Repaired truncated JSON: %s", result)
+                    return result
+            except (json.JSONDecodeError, ValueError):
+                continue
+        # If closing fails, extract key-value pairs directly from partial
+        scores = {}
+        for key in ("pain_density", "tech_feasibility", "timing"):
+            m = re.search(key + r'\s*:\s*(\d+)', partial)
+            if m:
+                scores[key] = int(m.group(1))
+        if scores:
+            for key in ("pain_density", "tech_feasibility", "timing"):
+                scores.setdefault(key, 50)
+            scores["reasoning"] = "truncated_json_extract"
+            logger.info("Extracted from truncated JSON: %s", scores)
+            return scores
+
     # Layer 3: keyword fallback — extract numbers from plain text
     scores = {}
     for key in ("pain_density", "tech_feasibility", "timing"):
