@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
-DUCKDUCKGO_URL = "https://html.duckduckgo.com/html/"
+DUCKDUCKGO_URL = "https://lite.duckduckgo.com/lite/"
 TAVILY_API_URL = "https://api.tavily.com/search"
 REQUEST_TIMEOUT = 30
 DDG_REQUEST_DELAY = 2.0  # seconds between DuckDuckGo requests
@@ -156,17 +156,12 @@ def _search_tavily(query: str) -> list[dict]:
 
 
 def _search_ddg(query: str) -> list[dict]:
-    """Search via DuckDuckGo HTML (free, but rate-limited)."""
+    """Search via DuckDuckGo Lite (text-based, free, no JS required)."""
     try:
         resp = requests.get(
             DUCKDUCKGO_URL,
             params={"q": query},
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-                ),
-            },
+            headers={"User-Agent": USER_AGENT},
             timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
@@ -174,41 +169,15 @@ def _search_ddg(query: str) -> list[dict]:
         print(f"DuckDuckGo search error: {e}")
         return []
 
-    html = resp.text
     results = []
-
-    result_blocks = re.findall(
-        r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
-        html,
+    # DuckDuckGo Lite uses <a rel="nofollow" href="//duckduckgo.com/l/?uddg=...">text</a>
+    links = re.findall(
+        r'<a[^>]+rel="nofollow"[^>]+href="([^"]+)"[^>]*>(.*?)</a>',
+        resp.text,
         re.DOTALL,
     )
-    if not result_blocks:
-        result_blocks = re.findall(
-            r'<div class="web-result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
-            html,
-            re.DOTALL,
-        )
-    if not result_blocks:
-        result_blocks = re.findall(
-            r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*(?=<div class="result|<div id="links")',
-            html,
-            re.DOTALL,
-        )
-
-    for block in result_blocks[:3]:
-        url_match = re.search(
-            r'<a[^>]+class="result__a"[^>]+href="([^"]+)"',
-            block,
-        )
-        if not url_match:
-            url_match = re.search(
-                r'<a[^>]+href="([^"]+)"[^>]*class="result__a"',
-                block,
-            )
-        if not url_match:
-            url_match = re.search(r'<a[^>]+href="([^"]+)"', block)
-        raw_url = url_match.group(1) if url_match else ""
-
+    for raw_url, title_html in links[:3]:
+        # Extract actual URL from DDG redirect
         if "duckduckgo.com/l/" in raw_url:
             parsed = urlparse(raw_url)
             params = parse_qs(parsed.query)
@@ -218,22 +187,9 @@ def _search_ddg(query: str) -> list[dict]:
         else:
             url = raw_url
 
-        title_match = re.search(
-            r'<a[^>]+class="result__a"[^>]*>(.*?)<\/a>',
-            block,
-            re.DOTALL,
-        )
-        title = re.sub(r"<[^>]+>", "", title_match.group(1)).strip() if title_match else ""
-
-        snippet_match = re.search(
-            r'<a[^>]+class="result__snippet"[^>]*>(.*?)<\/a>',
-            block,
-            re.DOTALL,
-        )
-        snippet = re.sub(r"<[^>]+>", "", snippet_match.group(1)).strip() if snippet_match else ""
-
-        if url:
-            results.append({"title": title, "url": url, "snippet": snippet})
+        title = re.sub(r"<[^>]+>", "", title_html).strip()
+        if url and "duckduckgo.com" not in url:
+            results.append({"title": title, "url": url, "snippet": ""})
 
     return results
 
@@ -321,14 +277,14 @@ def search_company(name: str) -> list[dict]:
     cleaned = clean_company_name(name)
     query = f"{cleaned} company what does it do sector"
 
-    # Use Tavily API first (reliable, 1000 free/month)
-    results = _search_tavily(query)
+    # Try DuckDuckGo Lite first (text-based, free, no JS required)
+    time.sleep(DDG_REQUEST_DELAY)
+    results = _search_ddg(query)
     if results:
         return results
 
-    # Fallback to Google (unreliable for bulk)
-    time.sleep(2.0)
-    results = _search_google(query)
+    # Fallback to Tavily API (if quota available)
+    results = _search_tavily(query)
     if results:
         return results
 

@@ -64,12 +64,23 @@ def _get_supabase_client() -> Optional[Client]:
 
 def _get_existing_normalized_names(client: Client) -> Set[str]:
     """Fetch all normalized names already in sec_company_profiles."""
-    try:
-        result = client.table("sec_company_profiles").select("normalized_name").execute()
-        return {row["normalized_name"] for row in (result.data or []) if row.get("normalized_name")}
-    except Exception as e:
-        print(f"Error fetching existing profiles: {e}")
-        return set()
+    names: Set[str] = set()
+    page_size = 1000
+    offset = 0
+    while True:
+        try:
+            result = client.table("sec_company_profiles").select("normalized_name").range(offset, offset + page_size - 1).execute()
+            batch = result.data or []
+            for row in batch:
+                if row.get("normalized_name"):
+                    names.add(row["normalized_name"])
+            if len(batch) < page_size:
+                break
+            offset += page_size
+        except Exception as e:
+            print(f"Error fetching existing profiles at offset {offset}: {e}")
+            break
+    return names
 
 
 def get_unenriched_companies(limit: Optional[int] = None) -> List[dict]:
@@ -94,16 +105,24 @@ def get_unenriched_companies(limit: Optional[int] = None) -> List[dict]:
 
     existing_names = _get_existing_normalized_names(client)
 
-    # Fetch all filings (paginated if needed)
+    # Fetch ALL filings (Supabase default limit is 1000, so paginate)
     all_filings: List[dict] = []
-    try:
-        result = client.table("sec_form_d_filings").select(
-            "accession_number,entity_name,industry_group,total_offering_amount"
-        ).execute()
-        all_filings = result.data or []
-    except Exception as e:
-        print(f"Error fetching filings: {e}")
-        return []
+    page_size = 1000
+    offset = 0
+    while True:
+        try:
+            result = client.table("sec_form_d_filings").select(
+                "accession_number,entity_name,industry_group,total_offering_amount"
+            ).range(offset, offset + page_size - 1).execute()
+            batch = result.data or []
+            all_filings.extend(batch)
+            if len(batch) < page_size:
+                break
+            offset += page_size
+        except Exception as e:
+            print(f"Error fetching filings at offset {offset}: {e}")
+            break
+    print(f"Fetched {len(all_filings)} total filings")
 
     # Filter: skip irrelevant industries and already-enriched companies
     companies: Dict[str, dict] = {}
