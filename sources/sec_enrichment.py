@@ -30,6 +30,10 @@ DUCKDUCKGO_URL = "https://html.duckduckgo.com/html/"
 TAVILY_API_URL = "https://api.tavily.com/search"
 REQUEST_TIMEOUT = 30
 DDG_REQUEST_DELAY = 2.0  # seconds between DuckDuckGo requests
+USER_AGENT = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
 
 # Suffixes to strip from company names
 NAME_SUFFIXES = [
@@ -234,8 +238,76 @@ def _search_ddg(query: str) -> list[dict]:
     return results
 
 
+def _search_google(query: str) -> list[dict]:
+    """Search via Google HTML."""
+    try:
+        url = f"https://www.google.com/search?q={requests.utils.quote(query)}&num=5"
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        results = []
+        # Parse Google results
+        for match in re.finditer(r'<a[^>]+href="/url\?q=([^&"]+)', resp.text):
+            href = match.group(1)
+            if "google.com" not in href and "youtube.com" not in href:
+                results.append({"title": "", "url": href, "snippet": ""})
+            if len(results) >= 3:
+                break
+        return results
+    except Exception as e:
+        print(f"Google search error: {e}")
+        return []
+
+
+def _search_bing(query: str) -> list[dict]:
+    """Search via Bing HTML."""
+    try:
+        url = f"https://cn.bing.com/search?q={requests.utils.quote(query)}&ensearch=1"
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        results = []
+        # Parse Bing results
+        for match in re.finditer(r'<a[^>]+href="(https?://[^"]+)"[^>]*><h2', resp.text):
+            href = match.group(1)
+            if "bing.com" not in href and "microsoft.com" not in href:
+                results.append({"title": "", "url": href, "snippet": ""})
+            if len(results) >= 3:
+                break
+        # Fallback pattern
+        if not results:
+            for match in re.finditer(r'<cite>(https?://[^<]+)</cite>', resp.text):
+                href = match.group(1)
+                results.append({"title": "", "url": href, "snippet": ""})
+                if len(results) >= 3:
+                    break
+        return results
+    except Exception as e:
+        print(f"Bing search error: {e}")
+        return []
+
+
+def _search_brave(query: str) -> list[dict]:
+    """Search via Brave HTML."""
+    try:
+        url = f"https://search.brave.com/search?q={requests.utils.quote(query)}"
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        results = []
+        for match in re.finditer(r'<a[^>]+class="result-header"[^>]+href="([^"]+)"', resp.text):
+            href = match.group(1)
+            if "brave.com" not in href:
+                results.append({"title": "", "url": href, "snippet": ""})
+            if len(results) >= 3:
+                break
+        return results
+    except Exception as e:
+        print(f"Brave search error: {e}")
+        return []
+
+
 def search_company(name: str) -> list[dict]:
-    """Search for a company. Try Tavily first, fallback to DuckDuckGo.
+    """Search for a company using multiple free engines with fallback.
+
+    Order: Google → Bing → Brave → DuckDuckGo → Tavily (last resort)
 
     Args:
         name: Company name to search.
@@ -249,14 +321,25 @@ def search_company(name: str) -> list[dict]:
     cleaned = clean_company_name(name)
     query = f"{cleaned} company what does it do sector"
 
-    # Try Tavily first (better quality, 1000 free/month)
+    # Try free engines in order
+    engines = [
+        ("Google", _search_google),
+        ("Bing", _search_bing),
+        ("Brave", _search_brave),
+    ]
+
+    for engine_name, engine_fn in engines:
+        time.sleep(1.0)  # Be nice to free engines
+        results = engine_fn(query)
+        if results:
+            return results
+
+    # Last resort: Tavily (limited free tier)
     results = _search_tavily(query)
     if results:
         return results
 
-    # Fallback to DuckDuckGo (free but rate-limited)
-    time.sleep(DDG_REQUEST_DELAY)
-    return _search_ddg(query)
+    return []
 
     html = resp.text
     results = []
@@ -467,6 +550,10 @@ def extract_company_info(name: str, text: str) -> dict:
         if content.startswith("```"):
             content = re.sub(r'^```(?:json)?\s*', '', content)
             content = re.sub(r'\s*```$', '', content)
+        # Try to extract JSON from response
+        json_match = re.search(r'\{[^{}]*\}', content, re.DOTALL)
+        if json_match:
+            content = json_match.group(0)
         parsed = json.loads(content)
     except (KeyError, json.JSONDecodeError, TypeError) as e:
         print(f"LLM response parse error for '{name}': {e}")
