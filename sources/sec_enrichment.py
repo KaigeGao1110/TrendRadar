@@ -124,6 +124,41 @@ def normalize_name(name: str) -> str:
     return cleaned.upper().strip()
 
 
+
+def _search_exa(query: str) -> list[dict]:
+    """Search via Exa API (semantic search, 1000 free/month)."""
+    api_key = os.environ.get("EXA_API_KEY", "")
+    if not api_key:
+        return []
+    try:
+        resp = requests.post(
+            "https://api.exa.ai/search",
+            headers={
+                "x-api-key": api_key,
+                "Content-Type": "application/json",
+            },
+            json={
+                "query": query,
+                "num_results": 3,
+                "type": "auto",
+                "contents": {"text": {"maxCharacters": 200}},
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        results = []
+        for r in data.get("results", [])[:3]:
+            results.append({
+                "title": r.get("title", ""),
+                "url": r.get("url", ""),
+                "snippet": (r.get("text", "") or "")[:200],
+            })
+        return results
+    except Exception as e:
+        print(f"Exa search error: {e}")
+        return []
+
 def _search_tavily(query: str) -> list[dict]:
     """Search via Tavily API (free tier: 1000/month)."""
     api_key = _get_tavily_key()
@@ -277,17 +312,42 @@ def search_company(name: str) -> list[dict]:
     cleaned = clean_company_name(name)
     query = f"{cleaned} company what does it do sector"
 
-    # Try DuckDuckGo Lite first (text-based, free, no JS required)
-    time.sleep(DDG_REQUEST_DELAY)
-    results = _search_ddg(query)
-    if results:
-        return results
-
-    # Fallback to Tavily API (if quota available)
-    results = _search_tavily(query)
-    if results:
-        return results
-
+    # Parallel multi-engine: query all at once, merge results
+    all_results: list[dict] = []
+    sources_used: list[str] = []
+    
+    # DDG Lite (free, unlimited)
+    ddg = _search_ddg(query)
+    if ddg:
+        all_results.extend(ddg)
+        sources_used.append("DDG")
+    
+    # Exa (1000 free/month, semantic)
+    exa = _search_exa(query)
+    if exa:
+        all_results.extend(exa)
+        sources_used.append("Exa")
+    
+    # Tavily (1000 free/month, AI-structured)
+    tavily = _search_tavily(query)
+    if tavily:
+        all_results.extend(tavily)
+        sources_used.append("Tavily")
+    
+    # Dedupe by URL, keep unique results
+    seen_urls: set[str] = set()
+    unique_results: list[dict] = []
+    for r in all_results:
+        url = r.get("url", "")
+        if url and url not in seen_urls:
+            seen_urls.add(url)
+            unique_results.append(r)
+    
+    # Return top 5 unique results
+    if unique_results:
+        print(f"Search: {sources_used} → {len(unique_results)} unique results")
+        return unique_results[:5]
+    
     return []
 
     html = resp.text
