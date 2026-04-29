@@ -190,18 +190,18 @@ def fetch(source):
             get_title_fn=lambda x: x.get("title", ""),
         )
     
-    if source in ("all", "fundbat"):
-        with console.status("[bold green]Fetching FundBat funding data..."):
-            data = fundbat.fetch_all_companies()
-        _display_companies(data, "FundBat Startup Funding")
-        # Process and save to storage
-        _process_source_data(
-            source="fundbat",
-            event_type="funding_round",
-            data=data,
-            get_url_fn=lambda x: x.get("url", ""),
-            get_title_fn=lambda x: x.get("name", "") + f" ({x.get('funding_amount', '')} / {x.get('valuation', '')})",
-        )
+    # FundBat deprecated - SEC Form D is now primary funding source
+    # if source in ("all", "fundbat"):
+    #     with console.status("[bold green]Fetching FundBat funding data..."):
+    #         data = fundbat.fetch_all_companies()
+    #     _display_companies(data, "FundBat Startup Funding")
+    #     _process_source_data(
+    #         source="fundbat",
+    #         event_type="funding_round",
+    #         data=data,
+    #         get_url_fn=lambda x: x.get("url", ""),
+    #         get_title_fn=lambda x: x.get("name", "") + f" ({x.get('funding_amount', '')} / {x.get('valuation', '')})",
+    #     )
 
     if source in ("all", "reddit"):
         with console.status("[bold green]Fetching Reddit posts..."):

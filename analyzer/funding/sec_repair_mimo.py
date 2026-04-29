@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import re
 from dotenv import load_dotenv
 from urllib.parse import urlparse
@@ -67,7 +68,7 @@ def repair_with_mimo(entity_name: str, existing_source: str = None) -> dict:
 
 Company: {entity_name}{context}
 
-Return ONLY valid JSON: {"description": "...", "sector": "...", "main_business": "...", "website": "..."}"""
+Return ONLY valid JSON with keys: description, sector, main_business, website"""
 
         resp = requests.post(
             MIMO_API_URL,
@@ -141,22 +142,26 @@ def main():
     
     repaired = 0
     failed = 0
+    CONCURRENCY = 10  # MiMo RPM limit is 100
     
-    for i, p in enumerate(profiles, 1):
+    def process_one(p):
         entity_name = p["entity_name"]
-        print(f"[{i}/{len(profiles)}] Repairing: {entity_name}")
-        
         result = repair_with_mimo(entity_name, p.get("enrichment_source"))
-        
         if result and result.get("sector"):
-            if update_profile(client, p["id"], result):
+            update_profile(client, p["id"], result)
+            return (entity_name, result["sector"], True)
+        return (entity_name, None, False)
+    
+    with ThreadPoolExecutor(max_workers=CONCURRENCY) as executor:
+        futures = {executor.submit(process_one, p): p for p in profiles}
+        for i, future in enumerate(as_completed(futures), 1):
+            name, sector, success = future.result()
+            if success:
                 repaired += 1
-                print(f"  ✓ {result['sector']}")
+                print(f"[{i}/{len(profiles)}] ✓ {name[:40]} -> {sector}")
             else:
                 failed += 1
-        else:
-            failed += 1
-            print(f"  ✗ No data extracted")
+                print(f"[{i}/{len(profiles)}] ✗ {name[:40]}")
     
     print(f"\nRepair complete: {repaired} repaired, {failed} failed")
 
