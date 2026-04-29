@@ -27,7 +27,9 @@ if __name__ == "__main__":
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
 DUCKDUCKGO_URL = "https://html.duckduckgo.com/html/"
+TAVILY_API_URL = "https://api.tavily.com/search"
 REQUEST_TIMEOUT = 30
+DDG_REQUEST_DELAY = 2.0  # seconds between DuckDuckGo requests
 
 # Suffixes to strip from company names
 NAME_SUFFIXES = [
@@ -76,6 +78,23 @@ def _get_openrouter_key() -> Optional[str]:
     return None
 
 
+def _get_tavily_key() -> Optional[str]:
+    """Load Tavily API key from environment or openclaw config."""
+    key = os.environ.get("TAVILY_API_KEY")
+    if key:
+        return key
+    config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                config = json.load(f)
+            env = config.get("env", {})
+            return env.get("TAVILY_API_KEY")
+        except (json.JSONDecodeError, OSError):
+            pass
+    return None
+
+
 def clean_company_name(name: str) -> str:
     """Remove legal suffixes and clean a company name for search.
 
@@ -101,21 +120,39 @@ def normalize_name(name: str) -> str:
     return cleaned.upper().strip()
 
 
-def search_company(name: str) -> list[dict]:
-    """Search for a company via DuckDuckGo.
+def _search_tavily(query: str) -> list[dict]:
+    """Search via Tavily API (free tier: 1000/month)."""
+    api_key = _get_tavily_key()
+    if not api_key:
+        return []
+    try:
+        resp = requests.post(
+            TAVILY_API_URL,
+            json={
+                "api_key": api_key,
+                "query": query,
+                "max_results": 3,
+                "include_answer": False,
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        results = []
+        for r in data.get("results", []):
+            results.append({
+                "title": r.get("title", ""),
+                "url": r.get("url", ""),
+                "snippet": r.get("content", "")[:200],
+            })
+        return results
+    except Exception as e:
+        print(f"Tavily search error: {e}")
+        return []
 
-    Args:
-        name: Company name to search.
 
-    Returns:
-        List of up to 3 result dicts with keys:
-        - title: result title
-        - url: result URL
-        - snippet: result snippet text
-    """
-    cleaned = clean_company_name(name)
-    query = f"{cleaned} company what does it do sector"
-
+def _search_ddg(query: str) -> list[dict]:
+    """Search via DuckDuckGo HTML (free, but rate-limited)."""
     try:
         resp = requests.get(
             DUCKDUCKGO_URL,
@@ -130,8 +167,96 @@ def search_company(name: str) -> list[dict]:
         )
         resp.raise_for_status()
     except requests.RequestException as e:
-        print(f"DuckDuckGo search error for '{name}': {e}")
+        print(f"DuckDuckGo search error: {e}")
         return []
+
+    html = resp.text
+    results = []
+
+    result_blocks = re.findall(
+        r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
+        html,
+        re.DOTALL,
+    )
+    if not result_blocks:
+        result_blocks = re.findall(
+            r'<div class="web-result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
+            html,
+            re.DOTALL,
+        )
+    if not result_blocks:
+        result_blocks = re.findall(
+            r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*(?=<div class="result|<div id="links")',
+            html,
+            re.DOTALL,
+        )
+
+    for block in result_blocks[:3]:
+        url_match = re.search(
+            r'<a[^>]+class="result__a"[^>]+href="([^"]+)"',
+            block,
+        )
+        if not url_match:
+            url_match = re.search(
+                r'<a[^>]+href="([^"]+)"[^>]*class="result__a"',
+                block,
+            )
+        if not url_match:
+            url_match = re.search(r'<a[^>]+href="([^"]+)"', block)
+        raw_url = url_match.group(1) if url_match else ""
+
+        if "duckduckgo.com/l/" in raw_url:
+            parsed = urlparse(raw_url)
+            params = parse_qs(parsed.query)
+            url = params.get("uddg", [raw_url])[0]
+        elif raw_url.startswith("//"):
+            url = "https:" + raw_url
+        else:
+            url = raw_url
+
+        title_match = re.search(
+            r'<a[^>]+class="result__a"[^>]*>(.*?)<\/a>',
+            block,
+            re.DOTALL,
+        )
+        title = re.sub(r"<[^>]+>", "", title_match.group(1)).strip() if title_match else ""
+
+        snippet_match = re.search(
+            r'<a[^>]+class="result__snippet"[^>]*>(.*?)<\/a>',
+            block,
+            re.DOTALL,
+        )
+        snippet = re.sub(r"<[^>]+>", "", snippet_match.group(1)).strip() if snippet_match else ""
+
+        if url:
+            results.append({"title": title, "url": url, "snippet": snippet})
+
+    return results
+
+
+def search_company(name: str) -> list[dict]:
+    """Search for a company. Try Tavily first, fallback to DuckDuckGo.
+
+    Args:
+        name: Company name to search.
+
+    Returns:
+        List of up to 3 result dicts with keys:
+        - title: result title
+        - url: result URL
+        - snippet: result snippet text
+    """
+    cleaned = clean_company_name(name)
+    query = f"{cleaned} company what does it do sector"
+
+    # Try Tavily first (better quality, 1000 free/month)
+    results = _search_tavily(query)
+    if results:
+        return results
+
+    # Fallback to DuckDuckGo (free but rate-limited)
+    time.sleep(DDG_REQUEST_DELAY)
+    return _search_ddg(query)
 
     html = resp.text
     results = []
