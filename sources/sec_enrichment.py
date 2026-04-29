@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+MIMO_API_URL = "https://api.xiaomimimo.com/v1/chat/completions"
 OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
 DUCKDUCKGO_URL = "https://lite.duckduckgo.com/lite/"
 TAVILY_API_URL = "https://api.tavily.com/search"
@@ -139,7 +140,7 @@ def _search_exa(query: str) -> list[dict]:
             },
             json={
                 "query": query,
-                "num_results": 3,
+                "num_results": 2,
                 "type": "auto",
                 "contents": {"text": {"maxCharacters": 200}},
             },
@@ -148,7 +149,7 @@ def _search_exa(query: str) -> list[dict]:
         resp.raise_for_status()
         data = resp.json()
         results = []
-        for r in data.get("results", [])[:3]:
+        for r in data.get("results", [])[:2]:
             results.append({
                 "title": r.get("title", ""),
                 "url": r.get("url", ""),
@@ -158,6 +159,55 @@ def _search_exa(query: str) -> list[dict]:
     except Exception as e:
         print(f"Exa search error: {e}")
         return []
+
+def _search_mimo(query: str) -> list[dict]:
+    """Search via MiMo Web Search API (search only, 2 results).
+    
+    MiMo handles web search internally and returns sources with summaries.
+    We only use the search results, not the LLM extraction.
+    """
+    api_key = os.environ.get("MIMO_API_KEY", "")
+    if not api_key:
+        return []
+    try:
+        resp = requests.post(
+            MIMO_API_URL,
+            headers={
+                "api-key": api_key,
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "mimo-v2-flash",
+                "messages": [{
+                    "role": "user",
+                    "content": f"Find information about: {query}"
+                }],
+                "tools": [{
+                    "type": "web_search",
+                    "max_keyword": 2,
+                    "force_search": True,
+                    "limit": 2,
+                }],
+                "max_completion_tokens": 100,
+                "temperature": 0.3,
+            },
+            timeout=20,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        annotations = data["choices"][0]["message"].get("annotations", [])
+        results = []
+        for a in annotations[:2]:
+            results.append({
+                "title": a.get("title", ""),
+                "url": a.get("url", ""),
+                "snippet": a.get("summary", "")[:200],
+            })
+        return results
+    except Exception as e:
+        print(f"MiMo search error: {e}")
+        return []
+
 
 def _search_tavily(query: str) -> list[dict]:
     """Search via Tavily API (free tier: 1000/month)."""
@@ -327,6 +377,12 @@ def search_company(name: str) -> list[dict]:
     if exa:
         all_results.extend(exa)
         sources_used.append("Exa")
+    
+    # MiMo Web Search ($5/1K, high quality)
+    mimo = _search_mimo(query)
+    if mimo:
+        all_results.extend(mimo)
+        sources_used.append("MiMo")
     
     # Tavily (1000 free/month, AI-structured)
     tavily = _search_tavily(query)
