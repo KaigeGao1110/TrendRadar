@@ -321,21 +321,14 @@ def search_company(name: str) -> list[dict]:
     cleaned = clean_company_name(name)
     query = f"{cleaned} company what does it do sector"
 
-    # Try free engines in order
-    engines = [
-        ("Google", _search_google),
-        ("Bing", _search_bing),
-        ("Brave", _search_brave),
-    ]
-
-    for engine_name, engine_fn in engines:
-        time.sleep(1.0)  # Be nice to free engines
-        results = engine_fn(query)
-        if results:
-            return results
-
-    # Last resort: Tavily (limited free tier)
+    # Use Tavily API first (reliable, 1000 free/month)
     results = _search_tavily(query)
+    if results:
+        return results
+
+    # Fallback to Google (unreliable for bulk)
+    time.sleep(2.0)
+    results = _search_google(query)
     if results:
         return results
 
