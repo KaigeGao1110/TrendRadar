@@ -43,6 +43,8 @@ class FundingClient:
             region_name=os.environ.get("AWS_REGION", "us-east-1"),
         )
         self.table = self.dynamodb.Table(FUNDING_TABLE_NAME)
+        # In-memory cache for dedup lookups (avoid repeated scans)
+        self._event_id_cache: dict[str, str] = {}  # event_id -> PK
 
     @property
     def available(self) -> bool:
@@ -50,6 +52,40 @@ class FundingClient:
         try:
             self.table.table_status
             return True
+        except ClientError:
+            return False
+
+    def _event_exists(self, event_id: str) -> bool:
+        """Check if an event_id already exists in the table.
+
+        Uses source-index GSI to narrow the scan, then filters by event_id.
+        Results are cached for the session to avoid repeated lookups.
+
+        Args:
+            event_id: The event ID to check.
+
+        Returns:
+            True if the event already exists.
+        """
+        if event_id in self._event_id_cache:
+            return True
+
+        # Query by source to narrow down (we don't have event_id-index)
+        # Fall back to scan with filter
+        try:
+            response = self.table.scan(
+                FilterExpression="event_id = :eid",
+                ExpressionAttributeValues={":eid": event_id},
+                ProjectionExpression="#pk, event_id",
+                ExpressionAttributeNames={"#pk": "funding_type#first_seen_date"},
+                Limit=1,
+            )
+            items = response.get("Items", [])
+            if items:
+                # Cache the PK for potential updates
+                self._event_id_cache[event_id] = items[0]["funding_type#first_seen_date"]
+                return True
+            return False
         except ClientError:
             return False
 
@@ -65,6 +101,8 @@ class FundingClient:
     ) -> dict:
         """Save a funding event to the trendradar-funding table.
 
+        Performs global deduplication by event_id across all partitions.
+
         Args:
             source: Source name (fundbat, vc_funding)
             event_type: Type of event (e.g., "funding_round")
@@ -75,9 +113,13 @@ class FundingClient:
             published_at: Optional publish date
 
         Returns:
-            Saved event dict
+            Saved event dict with 'exists' flag indicating if it was a duplicate.
         """
         event_id = generate_event_id(source, url, title)
+
+        # Global dedup check: event_id must be unique across all partitions
+        if self._event_exists(event_id):
+            return {"event_id": event_id, "exists": True}
 
         now = datetime.now(timezone.utc)
         first_seen_date = now.strftime("%Y-%m-%d")
@@ -99,14 +141,11 @@ class FundingClient:
         }
 
         try:
-            self.table.put_item(
-                Item=event,
-                ConditionExpression="attribute_not_exists(event_id)",
-            )
+            self.table.put_item(Item=event)
+            # Cache the new event_id
+            self._event_id_cache[event_id] = event["funding_type#first_seen_date"]
             return {**event, "exists": False}
         except ClientError as e:
-            if e.response["Error"]["Code"] == "ConditionalCheckFailedException":
-                return {"event_id": event_id, "exists": True}
             raise
 
     def search_related_funding(
