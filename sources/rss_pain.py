@@ -88,8 +88,10 @@ Return ONLY valid JSON array. If no pain signals found, return empty array [].
         return []
 
 
-def fetch_rss_pain_signals(limit_per_feed: int = 5) -> list[dict]:
+def fetch_rss_pain_signals(limit_per_feed: int = 3) -> list[dict]:
     """Fetch pain signals from all RSS newsletters.
+    
+    Batches items into fewer LLM calls for speed.
     
     Args:
         limit_per_feed: Max items to fetch per newsletter
@@ -101,22 +103,26 @@ def fetch_rss_pain_signals(limit_per_feed: int = 5) -> list[dict]:
     items = fetch_all_newsletters(limit_per_feed=limit_per_feed)
     print(f"Fetched {len(items)} newsletter items")
     
-    all_pains = []
-    
+    # Group by source for batch LLM extraction
+    from collections import defaultdict
+    by_source = defaultdict(list)
     for item in items:
+        source = item.get("source", "unknown")
         title = item.get("title", "")
         description = item.get("description", "")
-        source = item.get("source", "unknown")
-        
-        # Combine title + description for analysis
         text = f"{title}\n{description}"
-        if len(text) < 20:
-            continue
-        
-        pains = extract_pains_from_text(text, source=source)
+        if len(text) >= 20:
+            by_source[source].append(text)
+    
+    # Batch extract: one LLM call per source (max 3 texts per call)
+    all_pains = []
+    for source, texts in by_source.items():
+        # Combine up to 3 texts into one LLM call
+        batch = "\n---\n".join(texts[:3])
+        pains = extract_pains_from_text(batch, source=source)
         all_pains.extend(pains)
     
-    print(f"Extracted {len(all_pains)} pain signals from RSS")
+    print(f"Extracted {len(all_pains)} pain signals from RSS ({len(by_source)} sources)")
     return all_pains
 
 
@@ -146,9 +152,10 @@ def fetch_historical_rss_pains(days: int = 60) -> list[dict]:
     
     for newsletter in newsletters:
         # Search for pain-related content from this newsletter
+        # Simple query with newsletter name + pain keywords
         queries = [
-            f'site:{newsletter.lower().replace(" ", "")}.com frustration problem pain',
-            f'"{newsletter}" broken slow expensive need better',
+            f'{newsletter} frustration problem pain struggle',
+            f'{newsletter} broken slow expensive need better alternative',
         ]
         
         for query in queries:
@@ -164,7 +171,7 @@ def fetch_historical_rss_pains(days: int = 60) -> list[dict]:
                         "num_results": 3,
                         "type": "auto",
                         "contents": {"text": {"maxCharacters": 500}},
-                        "startPublishedDate": f"{days}d",
+                        "startPublishedDate": (datetime.now() - __import__("datetime", fromlist=["datetime"]).timedelta(days=days)).strftime("%Y-%m-%dT00:00:00.000Z"),
                     },
                     timeout=20,
                 )
