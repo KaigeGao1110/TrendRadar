@@ -120,6 +120,77 @@ def fetch_rss_pain_signals(limit_per_feed: int = 5) -> list[dict]:
     return all_pains
 
 
+def fetch_historical_rss_pains(days: int = 60) -> list[dict]:
+    """Fetch pain signals from newsletter archives via Exa search.
+    
+    Since RSS only keeps recent items, use Exa to search for historical
+    content from newsletter archives.
+    
+    Args:
+        days: How many days back to search
+    
+    Returns:
+        List of pain signals from historical newsletter content
+    """
+    import os
+    
+    if not os.environ.get("EXA_API_KEY", ""):
+        print("No EXA_API_KEY, skipping historical RSS pain search")
+        return []
+    
+    newsletters = ["a16z", "Lenny's Newsletter", "Stratechery", "TLDR", 
+                   "Not Boring", "The Generalist", "Dense Discovery", "Margins"]
+    
+    all_pains = []
+    seen_urls = set()
+    
+    for newsletter in newsletters:
+        # Search for pain-related content from this newsletter
+        queries = [
+            f'site:{newsletter.lower().replace(" ", "")}.com frustration problem pain',
+            f'"{newsletter}" broken slow expensive need better',
+        ]
+        
+        for query in queries:
+            try:
+                resp = requests.post(
+                    "https://api.exa.ai/search",
+                    headers={
+                        "x-api-key": os.environ.get("EXA_API_KEY", ""),
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "query": query,
+                        "num_results": 3,
+                        "type": "auto",
+                        "contents": {"text": {"maxCharacters": 500}},
+                        "startPublishedDate": f"{days}d",
+                    },
+                    timeout=20,
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                
+                for r in data.get("results", [])[:3]:
+                    url = r.get("url", "")
+                    if url and url not in seen_urls:
+                        seen_urls.add(url)
+                        text = r.get("text", "") or ""
+                        
+                        # Extract pain signals from text
+                        pains = extract_pains_from_text(text, source=newsletter)
+                        for p in pains:
+                            p["url"] = url
+                            p["title"] = r.get("title", "")
+                            p["published"] = r.get("publishedDate")
+                        all_pains.extend(pains)
+            except Exception as e:
+                print(f"Historical RSS search error for {newsletter}: {e}")
+    
+    print(f"Extracted {len(all_pains)} pain signals from historical newsletters")
+    return all_pains
+
+
 if __name__ == "__main__":
     print("Testing RSS pain extraction...")
     pains = fetch_rss_pain_signals(limit_per_feed=3)
