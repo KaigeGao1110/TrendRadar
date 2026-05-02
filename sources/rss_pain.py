@@ -1,0 +1,129 @@
+"""RSS Pain Extractor — extract pain signals from newsletter content using LLM.
+
+Fetches RSS newsletters and uses OpenRouter free model to identify pain points,
+frustrations, and unmet needs mentioned in the content.
+"""
+
+import os
+import json
+import re
+import requests
+from datetime import datetime
+from sources.rss import fetch_all_newsletters, NEWSLETTERS
+
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
+REQUEST_TIMEOUT = 30
+
+
+def extract_pains_from_text(text: str, source: str = "") -> list[dict]:
+    """Use LLM to extract pain signals from text.
+    
+    Args:
+        text: Newsletter content to analyze
+        source: Source name (e.g. "TLDR", "a16z")
+    
+    Returns:
+        List of pain signals: [{pain, context, severity, category}]
+    """
+    api_key = os.environ.get("OPENROUTER_API_KEY", "")
+    if not api_key:
+        return []
+    
+    prompt = f"""Analyze this newsletter content and extract pain points, frustrations, 
+and unmet needs. Focus on:
+- Tools/software that people complain about
+- Processes that are described as broken or slow
+- Industries with known problems
+- Unmet needs that could be opportunities
+
+Source: {source}
+Content: {text[:2000]}
+
+Return JSON array of pain signals (max 5):
+[{{"pain": "description of the pain point", "context": "where/how it was mentioned", 
+   "severity": "high/medium/low", "category": "industry or topic"}}]
+
+Return ONLY valid JSON array. If no pain signals found, return empty array [].
+"""
+    
+    try:
+        resp = requests.post(
+            OPENROUTER_API_URL,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": OPENROUTER_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 500,
+                "temperature": 0.3,
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        content = data["choices"][0]["message"]["content"]
+        
+        # Parse JSON
+        try:
+            pains = json.loads(content)
+        except json.JSONDecodeError:
+            # Try to extract JSON block
+            match = re.search(r'\[.*\]', content, re.DOTALL)
+            if match:
+                pains = json.loads(match.group())
+            else:
+                pains = []
+        
+        # Add source info
+        for p in pains:
+            p["source"] = source
+            p["extracted_at"] = datetime.now().isoformat()
+        
+        return pains
+    except Exception as e:
+        print(f"LLM extraction error for {source}: {e}")
+        return []
+
+
+def fetch_rss_pain_signals(limit_per_feed: int = 5) -> list[dict]:
+    """Fetch pain signals from all RSS newsletters.
+    
+    Args:
+        limit_per_feed: Max items to fetch per newsletter
+    
+    Returns:
+        List of pain signals extracted from newsletters
+    """
+    print("Fetching RSS newsletters...")
+    items = fetch_all_newsletters(limit_per_feed=limit_per_feed)
+    print(f"Fetched {len(items)} newsletter items")
+    
+    all_pains = []
+    
+    for item in items:
+        title = item.get("title", "")
+        description = item.get("description", "")
+        source = item.get("source", "unknown")
+        
+        # Combine title + description for analysis
+        text = f"{title}\n{description}"
+        if len(text) < 20:
+            continue
+        
+        pains = extract_pains_from_text(text, source=source)
+        all_pains.extend(pains)
+    
+    print(f"Extracted {len(all_pains)} pain signals from RSS")
+    return all_pains
+
+
+if __name__ == "__main__":
+    print("Testing RSS pain extraction...")
+    pains = fetch_rss_pain_signals(limit_per_feed=3)
+    for p in pains[:5]:
+        print(f"  [{p.get('severity')}] {p.get('pain', '')[:80]}")
+        print(f"    Source: {p.get('source')}, Category: {p.get('category')}")
+        print()

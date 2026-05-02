@@ -29,7 +29,7 @@ def cosine_similarity(a: list[float], b: list[float]) -> float:
 logger = logging.getLogger(__name__)
 
 # Pain signal sources (Layer 1)
-PAIN_SOURCES = {"twitter_pain", "reddit", "hackernews_comments", "producthunt_deep"}
+PAIN_SOURCES = {"twitter_pain", "reddit", "hackernews_comments", "producthunt_deep", "exa_pain", "rss_pain"}
 
 # Similarity threshold for semantic clustering
 SIMILARITY_THRESHOLD = 0.5

@@ -14,6 +14,8 @@ from datetime import date
 from sources import yc, producthunt, hackernews, vc_funding, newsapi, rss, fundbat
 from sources import reddit, github_trending, hackernews_comments, producthunt_deep, google_trends
 from sources import twitter_pain
+from sources import exa_pain
+from sources import rss_pain
 from analyzer.digest import generate_daily_digest, generate_weekly_digest
 from storage.trends import get_all_latest, get_history, save_snapshot as save_json_snapshot
 from storage.s3 import S3Client
@@ -287,6 +289,34 @@ def fetch(source):
             get_url_fn=lambda x: x.get("url", ""),
             get_title_fn=lambda x: x.get("title", ""),
             get_published_fn=lambda x: x.get("published_at"),
+        )
+
+    # Exa semantic pain search
+    if source in ("all", "exa_pain", "exa"):
+        with console.status("[bold green]🔍 Exa: semantic pain search..."):
+            data = exa_pain.fetch_all_pain_signals(limit_per_query=2)
+        _display_stories(data, "Exa Pain Signals (Semantic)")
+        _process_source_data(
+            source="exa_pain",
+            event_type="pain_signal",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("title", ""),
+            get_published_fn=lambda x: x.get("published"),
+        )
+
+    # RSS newsletter pain extraction
+    if source in ("all", "rss_pain", "rss"):
+        with console.status("[bold green]📰 RSS: extracting pain signals..."):
+            data = rss_pain.fetch_rss_pain_signals(limit_per_feed=5)
+        _display_stories(data, "RSS Pain Signals (Newsletter)")
+        _process_source_data(
+            source="rss_pain",
+            event_type="pain_signal",
+            data=data,
+            get_url_fn=lambda x: x.get("url", ""),
+            get_title_fn=lambda x: x.get("pain", ""),
+            get_published_fn=lambda x: x.get("extracted_at"),
         )
 
 
