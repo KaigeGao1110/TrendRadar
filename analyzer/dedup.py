@@ -3,6 +3,7 @@
 Implements embedding similarity dedup from PRD-v2.md Section 7.2.
 """
 
+import json
 import math
 from typing import Optional
 
@@ -56,6 +57,11 @@ def find_similar_opportunities(
         similar = []
         for row in result.data:
             existing_emb = row.get("embedding")
+            if isinstance(existing_emb, str):
+                try:
+                    existing_emb = json.loads(existing_emb)
+                except (json.JSONDecodeError, TypeError):
+                    continue
             if existing_emb and len(existing_emb) == len(embedding):
                 sim = cosine_similarity(embedding, existing_emb)
                 if sim >= match_threshold:

@@ -158,16 +158,28 @@ class SupabaseV2Client:
             return []
 
         # Compute cosine similarity in Python
-        query_vec = np.array(embedding)
+        query_emb = embedding
+        if isinstance(query_emb, str):
+            try:
+                query_emb = json.loads(query_emb)
+            except (json.JSONDecodeError, TypeError):
+                return []
+        query_vec = np.array(query_emb)
         query_norm = np.linalg.norm(query_vec)
         if query_norm == 0:
             return []
 
         matches = []
         for row in result.data:
-            emb = row.get("embedding")
+            emb = row.get('embedding')
             if not emb:
                 continue
+            # Supabase may return embedding as a JSON string
+            if isinstance(emb, str):
+                try:
+                    emb = json.loads(emb)
+                except (json.JSONDecodeError, TypeError):
+                    continue
             row_vec = np.array(emb)
             row_norm = np.linalg.norm(row_vec)
             if row_norm == 0:
@@ -175,12 +187,13 @@ class SupabaseV2Client:
             similarity = float(np.dot(query_vec, row_vec) / (query_norm * row_norm))
             if similarity >= threshold:
                 matches.append({
-                    "id": row["id"],
-                    "pain_text": row["pain_text"],
-                    "source": row["source"],
-                    "confidence": row.get("confidence", 0),
-                    "similarity": similarity,
+                    'id': row['id'],
+                    'pain_text': row['pain_text'],
+                    'source': row['source'],
+                    'confidence': row.get('confidence', 0),
+                    'similarity': similarity,
                 })
+
 
         # Sort by similarity descending
         matches.sort(key=lambda x: x["similarity"], reverse=True)
