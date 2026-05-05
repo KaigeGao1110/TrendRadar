@@ -13,14 +13,24 @@ HEADERS = {
 }
 
 SUBREDDITS = [
-    "startups",
     "SaaS",
+    "microsaas",
     "Entrepreneur",
     "smallbusiness",
-    "SideProject",
+    "webdev",
+    "devops",
 ]
 
 REQUEST_TIMEOUT = 30
+
+PAIN_KEYWORDS = [
+    "frustrated", "annoyed", "hate", "terrible", "broken",
+    "waste of time", "overpriced", "looking for alternative",
+    "cancel", "switch", "migrating", "anyone know",
+    "paying too much", "need a better", "wish there was",
+    "problem with", "issue with", "bug with",
+    "pain point", "struggling with", "workaround",
+]
 
 
 def _fetch_subreddit(subreddit: str, limit: int = 25) -> list[dict]:
@@ -48,6 +58,12 @@ def _fetch_subreddit(subreddit: str, limit: int = 25) -> list[dict]:
             else None
         )
 
+        # Pain keyword filtering — only keep posts with pain signals
+        title_lower = d.get("title", "").lower()
+        desc_lower = (d.get("selftext", "") or "")[:500].lower()
+        if not any(kw in title_lower or kw in desc_lower for kw in PAIN_KEYWORDS):
+            continue
+
         posts.append({
             "title": d.get("title", ""),
             "url": d.get("url", f"https://www.reddit.com/r/{subreddit}/comments/{d.get('id', '')}"),
@@ -70,7 +86,7 @@ def _fetch_subreddit(subreddit: str, limit: int = 25) -> list[dict]:
     return posts
 
 
-def fetch_latest(limit_per_sub: int = 10) -> list[dict]:
+def fetch_latest(limit_per_sub: int = 15) -> list[dict]:
     """Fetch latest posts from all configured subreddits.
 
     Args:

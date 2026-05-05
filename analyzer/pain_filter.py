@@ -23,23 +23,27 @@ REQUEST_TIMEOUT = 60
 CALL_INTERVAL = 0.3  # seconds between calls to avoid Ollama overload
 MAX_TOKENS = 500  # gemma4 thinking models need more tokens
 
-FILTER_PROMPT = '''You are a startup pain point analyzer. Determine if this social media post expresses a genuine need for a product, tool, or service that could be built as a startup.
+FILTER_PROMPT = '''You are a startup pain point analyzer. Determine if this social media post expresses a REAL PAIN POINT — someone who is actively suffering, losing time/money, or has already tried solutions that failed.
 
-VALID signals:
-- "I wish there was a tool to..."
-- "Someone should build..."
-- "Why is there no way to..."
-- "Looking for a tool that..."
-- Explicit frustration with a process that could be automated/solved
-- Request for recommendations for tools/solutions
+VALID signals (must meet at least ONE):
+- Already spending money/time on a workaround (proven willingness to pay)
+- Explicit frustration with current solution ("I hate...", "I can\'t believe...", "waste of time")
+- Actively seeking alternatives ("looking for alternative", "migrating from", "switching to")
+- Churn behavior ("cancelled my...", "dropped...", "leaving X for...")
+- Failed to find any solution after trying ("tried everything", "nothing works")
+- Willingness to pay stated or implied ("I\'d pay for...", "take my money")
 
 INVALID (reject):
+- "I wish there was..." (aspirational, no proven pain)
+- "Someone should build..." (idea, not pain)
+- "I built X" / "Show HN:" (self-promotion, side project)
+- "Any tips for..." (information request, not product need)
 - Pure emotional venting without actionable need
 - Political/social opinions
-- Customer service complaints about specific companies (unless pattern)
+- Customer service complaints about specific companies (unless a pattern)
 - Crypto/spam/promotional content
-- Personal life frustrations
 - Sports/entertainment opinions
+- Vague feature requests ("would be nice if...")
 
 Post: "{text}"
 Author followers: {followers}

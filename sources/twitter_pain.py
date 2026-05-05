@@ -21,11 +21,18 @@ API_KEY = "59351167bemsh69cb04174744b16p1959cdjsn9e952846fbf3"
 REQUEST_TIMEOUT = 30
 
 PAIN_QUERIES = [
-    '"I wish there was"',      # unmet needs
-    '"someone should build"',   # explicit product demand
-    '"looking for a tool"',     # active tool seeking
-    '"why is there no"',        # gap complaints
-    '"so frustrated with"',     # strong pain points
+    '"I hate that"',                  # 明确不满
+    '"I can\'t believe there\'s no"', # 强烈 frustration
+    '"still paying for"',             # 付费但不满意
+    '"waste hours on"',               # 时间浪费
+    '"tried everything"',             # 已在找方案
+    '"anyone know a better"',         # 现有方案不够
+    '"cancelled my"',                 # 流失信号
+    '"migrating away from"',          # 在换工具
+    '"worst experience with"',        # 强烈负面
+    '"desperately need"',             # 急迫需求
+    '"looking for alternative to"',   # 找替代品
+    '"so frustrated with"',           # frustration (保留原有的1个有效query)
 ]
 
 # NSFW / spam filter keywords
