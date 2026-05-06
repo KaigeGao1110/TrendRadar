@@ -454,7 +454,7 @@ def analyze():
 from analyzer.pain_filter import PainFilter
 from analyzer.obsidian_writer import ObsidianWriter
 from storage.embedding import EmbeddingClient
-from storage.supabase_v2 import SupabaseV2Client
+from storage.chroma_client import ChromaClient
 from analyzer.pain_verifier import PainVerifier
 from analyzer.cluster_engine import ClusterEngine
 
@@ -479,16 +479,15 @@ def analyze_v2():
             return
 
         try:
-            supabase_v2 = SupabaseV2Client()
-        except ValueError as e:
-            console.print(f"[red]❌ Supabase v2 client init failed: {e}")
+            chroma = ChromaClient()
+            dynamo = DynamoClient()
+            funding_client = FundingClient()
+            verifier = PainVerifier(embedding_client, chroma, dynamo, funding_client)
+            engine = ClusterEngine(embedding_client, chroma, dynamo, verifier)
+            writer = ObsidianWriter()
+        except Exception as e:
+            console.print(f"[red]❌ Storage client init failed: {e}")
             return
-
-        dynamo = DynamoClient()
-        funding_client = FundingClient()
-        verifier = PainVerifier(embedding_client, supabase_v2, dynamo, funding_client)
-        engine = ClusterEngine(embedding_client, supabase_v2, dynamo, verifier)
-        writer = ObsidianWriter()
 
     today = _dt.now(_tz.utc).strftime("%Y-%m-%d")
     console.print(f"[bold]📅 Processing signals for {today}[/bold]")

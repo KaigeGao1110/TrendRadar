@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from storage.embedding import EmbeddingClient
-from storage.supabase_v2 import SupabaseV2Client
+from storage.chroma_client import ChromaClient
 from storage.dynamo import DynamoClient, FundingClient
 from analyzer.pain_verifier import PainVerifier, PAIN_SOURCES, cosine_similarity
 from analyzer.scorer import score_event, _get_client, SCORING_MODEL, _parse_scoring_json
@@ -29,12 +29,12 @@ class ClusterEngine:
     def __init__(
         self,
         embedding_client: EmbeddingClient,
-        supabase_v2: SupabaseV2Client,
+        chroma: ChromaClient,
         dynamo: DynamoClient,
         pain_verifier: PainVerifier,
     ):
         self.embedding = embedding_client
-        self.supabase = supabase_v2
+        self.chroma = chroma
         self.dynamo = dynamo
         self.verifier = pain_verifier
 
@@ -118,7 +118,26 @@ class ClusterEngine:
         # Sort by total_score descending
         clusters.sort(key=lambda c: c.get("total_score", 0), reverse=True)
 
-        # 8. Save to Supabase
+        # 8. Save verified pain signals to ChromaDB for cross-day dedup
+        for pain in actionable_pains:
+            try:
+                v = pain.get("verification", {})
+                emb = v.get("embedding") or pain.get("embedding")
+                if emb and pain.get("title"):
+                    self.chroma.save_pain_signal(
+                        pain_text=pain.get("title", ""),
+                        source=pain.get("source", ""),
+                        embedding=emb,
+                        confidence=v.get("confidence", 0),
+                        volume_score=v.get("volume_score", 0),
+                        quality_score=v.get("quality_multiplier", 0),
+                        cross_source_count=v.get("mention_count", 0),
+                        market_bonus=v.get("market_bonus", 0),
+                    )
+            except Exception as e:
+                logger.warning("Failed to save pain signal: %s", e)
+
+        # 9. Save clusters to ChromaDB
         for cluster in clusters:
             try:
                 self._save_cluster(cluster)
@@ -443,7 +462,7 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             "confidence": cluster.get("confidence", 0),
         }
 
-        record = self.supabase.save_opportunity_cluster(
+        record = self.chroma.save_opportunity_cluster(
             title=cluster.get("title", "Untitled"),
             description=cluster.get("description", ""),
             scores=scores,

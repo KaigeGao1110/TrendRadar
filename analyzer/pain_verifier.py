@@ -12,7 +12,7 @@ import re
 from typing import Optional
 
 from storage.embedding import EmbeddingClient
-from storage.supabase_v2 import SupabaseV2Client
+from storage.chroma_client import ChromaClient
 from storage.dynamo import DynamoClient, FundingClient
 
 
@@ -41,12 +41,12 @@ class PainVerifier:
     def __init__(
         self,
         embedding_client: EmbeddingClient,
-        supabase_v2: SupabaseV2Client,
+        chroma: ChromaClient,
         dynamo: DynamoClient,
         funding_client: Optional[FundingClient] = None,
     ):
         self.embedding = embedding_client
-        self.supabase = supabase_v2
+        self.chroma = chroma
         self.dynamo = dynamo
         self.funding = funding_client or FundingClient()
 
@@ -69,7 +69,7 @@ class PainVerifier:
 
         Includes the current signal itself (count >= 1).
         """
-        matches = self.supabase.find_similar_pains(
+        matches = self.chroma.find_similar_pains(
             embedding=pain_embedding,
             threshold=SIMILARITY_THRESHOLD,
             limit=50,
@@ -148,7 +148,7 @@ class PainVerifier:
 
     def _find_sources_for_pain(self, pain_embedding: list[float], pain_text: str) -> set[str]:
         """Find which sources mention a similar pain via Supabase search."""
-        matches = self.supabase.find_similar_pains(
+        matches = self.chroma.find_similar_pains(
             embedding=pain_embedding,
             threshold=SIMILARITY_THRESHOLD,
             limit=50,
