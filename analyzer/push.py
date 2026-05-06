@@ -2,7 +2,6 @@
 
 Generates formatted daily summaries of high-value opportunities.
 Output goes to stdout (OpenClaw cron will deliver to Telegram).
-Also saves to Supabase digests table for historical tracking.
 """
 
 import json
@@ -10,7 +9,6 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from storage.dynamo import DynamoClient
-from analyzer.cron import get_supabase_client
 
 
 def get_actionable_events_today(min_score: int = 70, limit: int = 50) -> list[dict]:
@@ -105,50 +103,8 @@ def generate_daily_push(min_score: int = 70, limit: int = 10) -> str:
     lines.append(stats)
     
     message = "\n".join(lines)
-    
-    # Save to Supabase digests table (optional, non-blocking)
-    try:
-        save_digest_to_supabase(today, events, message)
-    except Exception:
-        pass  # Don't fail push if Supabase save fails
-    
+
     return message
-
-
-def save_digest_to_supabase(date: str, events: list[dict], message: str) -> None:
-    """Save digest to Supabase for historical tracking.
-    
-    Args:
-        date: Date string YYYY-MM-DD
-        events: List of actionable events
-        message: Formatted message
-    """
-    try:
-        supabase = get_supabase_client()
-    except ValueError:
-        return  # Supabase not configured
-    
-    # Prepare event summaries (lighter weight than full events)
-    event_summaries = [
-        {
-            "event_id": e.get("event_id"),
-            "title": e.get("title"),
-            "score": e.get("score"),
-            "source": e.get("source"),
-            "url": e.get("url"),
-        }
-        for e in events
-    ]
-    
-    supabase.table("digests").upsert(
-        {
-            "date": date,
-            "events": event_summaries,
-            "message": message,
-            "event_count": len(events),
-        },
-        on_conflict="date",
-    ).execute()
 
 
 def main():

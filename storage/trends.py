@@ -1,33 +1,12 @@
-"""Trend data storage.
-
-Delegates to Supabase when SUPABASE_URL and SUPABASE_KEY are set.
-"""
+"""Trend data storage (local JSON file backend)."""
 
 import json
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
 TRENDS_FILE = Path(__file__).parent.parent / "data" / "trends.json"
 
-# ── Supabase delegation ───────────────────────────────────────────────────────
-
-def _use_supabase() -> bool:
-    """Return True when SUPABASE_URL and SUPABASE_KEY are both set."""
-    return bool(os.getenv("SUPABASE_URL", "").strip() and os.getenv("SUPABASE_KEY", "").strip())
-
-_supabase_client = None
-
-def _get_supabase_client():
-    """Lazily create and return a SupabaseClient instance."""
-    global _supabase_client
-    if _supabase_client is None:
-        from storage.supabase_client import SupabaseClient
-        _supabase_client = SupabaseClient()
-    return _supabase_client
-
-# ── JSON helpers ─────────────────────────────────────────────────────────────
 
 def _ensure_data_dir() -> None:
     """Ensure the data directory exists."""
@@ -71,8 +50,6 @@ def save_snapshot(source: str, data: dict) -> dict:
     Returns:
         The saved data with metadata.
     """
-    if _use_supabase():
-        return _get_supabase_client().save_snapshot(source, data)
     trend_data = _load()
     snapshot = {
         "source": source,
@@ -98,8 +75,6 @@ def get_latest(source: str) -> Optional[dict]:
     Returns:
         Latest snapshot dict or None.
     """
-    if _use_supabase():
-        return _get_supabase_client().get_latest(source)
     trend_data = _load()
     if source not in trend_data["sources"] or not trend_data["sources"][source]:
         return None
@@ -116,8 +91,6 @@ def get_history(source: str, limit: int = 7) -> list[dict]:
     Returns:
         List of historical snapshots.
     """
-    if _use_supabase():
-        return _get_supabase_client().get_history(source, limit)
     trend_data = _load()
     if source not in trend_data["sources"]:
         return []
@@ -130,8 +103,6 @@ def get_all_latest() -> dict:
     Returns:
         Dictionary of {source: latest_snapshot}.
     """
-    if _use_supabase():
-        return _get_supabase_client().get_all_latest()
     trend_data = _load()
     result = {}
     for source, snapshots in trend_data.get("sources", {}).items():
@@ -149,8 +120,6 @@ def save_digest(digest: dict) -> dict:
     Returns:
         The saved digest with timestamp.
     """
-    if _use_supabase():
-        return _get_supabase_client().save_digest(digest)
     trend_data = _load()
     if "digests" not in trend_data:
         trend_data["digests"] = []
@@ -170,8 +139,6 @@ def get_latest_digest(digest_type: str = "daily") -> Optional[dict]:
     Returns:
         Latest digest dict or None.
     """
-    if _use_supabase():
-        return _get_supabase_client().get_latest_digest(digest_type)
     trend_data = _load()
     for d in trend_data.get("digests", []):
         if d.get("type") == digest_type:

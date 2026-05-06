@@ -470,6 +470,20 @@ def analyze_v2():
     load_dotenv(_os.path.expanduser("~/.openclaw/.env"))
     load_dotenv(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), ".env"), override=True)
 
+    # Fallback: read ARK_API_KEY and DEEPSEEK_API_KEY from openclaw.json if not in env
+    openclaw_json = _os.path.expanduser("~/.openclaw/openclaw.json")
+    if _os.path.exists(openclaw_json):
+        try:
+            with open(openclaw_json) as f:
+                openclaw_cfg = _json.load(f)
+            env_vals = openclaw_cfg.get("env", {})
+            if "ARK_API_KEY" not in _os.environ and "ARK_API_KEY" in env_vals:
+                _os.environ["ARK_API_KEY"] = env_vals["ARK_API_KEY"]
+            if "DEEPSEEK_API_KEY" not in _os.environ and "DEEPSEEK_API_KEY" in env_vals:
+                _os.environ["DEEPSEEK_API_KEY"] = env_vals["DEEPSEEK_API_KEY"]
+        except Exception:
+            pass
+
     with console.status("[bold green]Initializing v2.1 analysis pipeline..."):
         try:
             embedding_client = EmbeddingClient()

@@ -325,7 +325,7 @@ class ClusterEngine:
     def score_cluster(self, cluster: dict) -> dict:
         """Score an opportunity cluster using AI.
 
-        Uses the same scoring model (gemma4:31b) as scorer.py but
+        Uses the scoring model from scorer.py but
         evaluates the cluster as a whole across three dimensions.
 
         Args:
@@ -385,13 +385,8 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
                 max_tokens=3000,
             )
 
-            raw = response.choices[0].message.content.strip()
 
-            # gemma4 thinking model: if content empty, try reasoning field
-            if not raw:
-                reasoning_field = getattr(response.choices[0].message, 'reasoning', '') or ''
-                if reasoning_field:
-                    raw = reasoning_field
+            raw = response.choices[0].message.content.strip()
 
             result = _parse_scoring_json(raw)
             if result is None:

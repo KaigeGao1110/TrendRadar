@@ -1,11 +1,14 @@
-"""AI-powered pain point pre-filter using local gemma4:31b via Ollama.
+"""AI-powered pain point pre-filter using DeepSeek V4 Flash via DeepSeek API.
 
 Filters Twitter pain signals before DynamoDB write to remove noise
 (non-startup-related content, pure venting, spam, etc.).
 """
 
 import json
+import os
 import re
+import signal
+import threading
 import time
 import logging
 from collections import Counter
@@ -17,11 +20,13 @@ from rich.table import Table
 logger = logging.getLogger(__name__)
 console = Console()
 
-OLLAMA_ENDPOINT = "http://localhost:11434/v1/chat/completions"
-MODEL_NAME = "gemma4:31b"
-REQUEST_TIMEOUT = 60
-CALL_INTERVAL = 0.3  # seconds between calls to avoid Ollama overload
-MAX_TOKENS = 500  # gemma4 thinking models need more tokens
+DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_MODEL = "deepseek-chat"
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+REQUEST_TIMEOUT = 30
+BATCH_TIMEOUT = 120  # seconds for entire batch
+CALL_INTERVAL = 0.3  # seconds between calls
+MAX_TOKENS = 200
 
 FILTER_PROMPT = '''You are a startup pain point analyzer. Determine if this social media post expresses a REAL PAIN POINT — someone who is actively suffering, losing time/money, or has already tried solutions that failed.
 
@@ -54,48 +59,62 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
 
 
 class PainFilter:
-    """Pre-filter pain signals using local gemma4:31b model."""
+    """Pre-filter pain signals using DeepSeek V4 Flash."""
 
     def __init__(self):
         self.stats = {"total": 0, "passed": 0, "rejected": 0, "errors": 0}
         self.reject_reasons: Counter = Counter()
 
-    def _call_ollama(self, prompt: str) -> str | None:
-        """Call Ollama OpenAI-compatible endpoint."""
+    def _call_deepseek(self, prompt: str) -> str | None:
+        """Call DeepSeek API, falling back to Ollama if API key not set."""
+        # Try DeepSeek first
+        if DEEPSEEK_API_KEY:
+            try:
+                resp = requests.post(
+                    DEEPSEEK_ENDPOINT,
+                    headers={"Authorization": f"Bearer {DEEPSEEK_API_KEY}"},
+                    json={
+                        "model": DEEPSEEK_MODEL,
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.0,
+                        "max_tokens": MAX_TOKENS,
+                    },
+                    timeout=REQUEST_TIMEOUT,
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                choices = data.get("choices", [])
+                if not choices:
+                    return None
+                return choices[0].get("message", {}).get("content", "") or None
+            except requests.exceptions.RequestException as e:
+                logger.warning("DeepSeek request failed: %s", e)
+
+        # Fallback to Ollama if no API key
         try:
             resp = requests.post(
-                OLLAMA_ENDPOINT,
+                "http://localhost:11434/v1/chat/completions",
                 json={
-                    "model": MODEL_NAME,
-                    "messages": [
-                        {"role": "user", "content": prompt},
-                    ],
+                    "model": "gemma4:31b",
+                    "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.0,
-                    "max_tokens": MAX_TOKENS,
+                    "max_tokens": 500,
                 },
                 timeout=REQUEST_TIMEOUT,
             )
             resp.raise_for_status()
             data = resp.json()
-        except requests.exceptions.RequestException as e:
-            logger.warning("Ollama request failed: %s", e)
-            return None
-
-        # Extract response text - handle thinking models
-        choices = data.get("choices", [])
-        if not choices:
-            return None
-
-        message = choices[0].get("message", {})
-        content = message.get("content", "")
-
-        # gemma4 is a thinking model: if content is empty, try reasoning field
-        if not content.strip():
-            content = message.get("reasoning", "")
-            if not content:
+            choices = data.get("choices", [])
+            if not choices:
                 return None
-
-        return content
+            message = choices[0].get("message", {})
+            content = message.get("content", "")
+            if not content.strip():
+                content = message.get("reasoning", "")
+            return content or None
+        except requests.exceptions.RequestException as e:
+            logger.warning("Ollama fallback failed: %s", e)
+            return None
 
     def _parse_response(self, raw: str) -> tuple[bool, str]:
         """Parse JSON response from model output, with keyword fallback."""
@@ -184,21 +203,22 @@ class PainFilter:
             views=views,
         )
 
-        raw = self._call_ollama(user_prompt)
+        raw = self._call_deepseek(user_prompt)
         if raw is None:
             # On error, conservatively pass through (don't lose data)
-            return True, "ollama_unavailable_passed_through"
+            return True, "deepseek_unavailable_passed_through"
 
         return self._parse_response(raw)
 
     def filter_batch(self, items: list[dict]) -> list[dict]:
-        """Filter a batch of twitter_pain items.
+        """Filter a batch of twitter_pain items with total timeout protection.
 
         Args:
             items: List of twitter_pain item dicts (with 'title' and 'metadata' keys).
 
         Returns:
             List of items that passed the filter, each with added 'filter_reason' field.
+            If batch times out (120s), returns all items passed so far + remaining items pass-through.
         """
         if not items:
             return []
@@ -206,32 +226,53 @@ class PainFilter:
         self.stats = {"total": 0, "passed": 0, "rejected": 0, "errors": 0}
         self.reject_reasons = Counter()
         passed = []
+        timed_out = False
 
-        for i, item in enumerate(items):
-            text = item.get("title", "") or item.get("description", "")
-            metadata = item.get("metadata", {})
+        def timeout_handler():
+            nonlocal timed_out
+            timed_out = True
+            logger.warning("PainFilter batch timeout after %ds, passing through remaining items", BATCH_TIMEOUT)
 
-            self.stats["total"] += 1
-            is_valid, reason = self.is_valid_pain(text, metadata)
+        # Use threading.Timer for cross-platform timeout
+        timer = threading.Timer(BATCH_TIMEOUT, timeout_handler)
+        timer.start()
 
-            if is_valid:
-                self.stats["passed"] += 1
-                item["filter_reason"] = reason
-                passed.append(item)
-            else:
-                self.stats["rejected"] += 1
-                self.reject_reasons[reason] += 1
+        try:
+            for i, item in enumerate(items):
+                if timed_out:
+                    # Pass through remaining items
+                    item["filter_reason"] = "batch_timeout_passed_through"
+                    passed.append(item)
+                    self.stats["total"] += 1
+                    self.stats["passed"] += 1
+                    continue
 
-            # Rate limit
-            if i < len(items) - 1:
-                time.sleep(CALL_INTERVAL)
+                text = item.get("title", "") or item.get("description", "")
+                metadata = item.get("metadata", {})
+
+                self.stats["total"] += 1
+                is_valid, reason = self.is_valid_pain(text, metadata)
+
+                if is_valid:
+                    self.stats["passed"] += 1
+                    item["filter_reason"] = reason
+                    passed.append(item)
+                else:
+                    self.stats["rejected"] += 1
+                    self.reject_reasons[reason] += 1
+
+                # Rate limit
+                if i < len(items) - 1:
+                    time.sleep(CALL_INTERVAL)
+        finally:
+            timer.cancel()
 
         self._print_stats()
         return passed
 
     def _print_stats(self):
         """Print filter statistics using Rich."""
-        console.print(f"\n[bold]🔍 Pain Filter Results (gemma4:31b)[/bold]")
+        console.print(f"\n[bold]🔍 Pain Filter Results (DeepSeek V4 Flash)[/bold]")
         console.print(f"  Total: {self.stats['total']}")
         console.print(f"  [green]Passed: {self.stats['passed']}[/green]")
         console.print(f"  [red]Rejected: {self.stats['rejected']}[/red]")

@@ -121,11 +121,10 @@ def fetch_vc():
 
 @app.post("/fetch-all")
 def fetch_all_sources():
-    """Fetch from all sources and save snapshots to Supabase.
+    """Fetch from all sources and save snapshots to local JSON storage.
 
-    Called by Cloud Scheduler every hour to populate the database
-    so Slack commands can read from cache (Supabase) instead of
-    scraping in real-time.
+    Called by Cloud Scheduler every hour to populate the cache
+    so Slack commands can read from cache instead of scraping in real-time.
     """
     results = {}
 

@@ -46,37 +46,48 @@ class EmbeddingClient:
             List of 2048 floats.
 
         Raises:
-            RuntimeError: If the API call fails.
+            RuntimeError: If all retries fail.
         """
         self._rate_limit()
 
-        resp = requests.post(
-            EMBEDDING_URL,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": MODEL,
-                "input": [{"type": "text", "text": text}],
-            },
-            timeout=30,
-        )
+        last_err = None
+        for attempt in range(3):
+            try:
+                resp = requests.post(
+                    EMBEDDING_URL,
+                    headers={
+                        "Authorization": f"Bearer {self.api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": MODEL,
+                        "input": [{"type": "text", "text": text}],
+                    },
+                    timeout=45,
+                )
 
-        if resp.status_code != 200:
-            raise RuntimeError(
-                f"Embedding API error {resp.status_code}: {resp.text[:500]}"
-            )
+                if resp.status_code != 200:
+                    raise RuntimeError(
+                        f"Embedding API error {resp.status_code}: {resp.text[:500]}"
+                    )
 
-        data = resp.json()
-        embedding = data["data"]["embedding"]
+                data = resp.json()
+                embedding = data["data"]["embedding"]
 
-        if len(embedding) != DIMENSION:
-            logger.warning(
-                "Expected %d dims, got %d", DIMENSION, len(embedding)
-            )
+                if len(embedding) != DIMENSION:
+                    logger.warning(
+                        "Expected %d dims, got %d", DIMENSION, len(embedding)
+                    )
 
-        return embedding
+                return embedding
+            except Exception as e:
+                last_err = e
+                logger.warning("Embedding attempt %d failed: %s", attempt + 1, e)
+                if attempt < 2:
+                    time.sleep(2 ** attempt)  # 1s, 2s, 4s
+
+        logger.error("All embedding retries failed for text: %s", text[:100])
+        raise RuntimeError(f"Embedding failed after 3 retries: {last_err}")
 
     def embed_batch(self, texts: list[str]) -> list[list[float]]:
         """Generate embeddings for multiple texts. One API call per text.

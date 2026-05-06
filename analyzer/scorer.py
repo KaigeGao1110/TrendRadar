@@ -36,14 +36,21 @@ RATE_LIMIT_INTERVAL = 0.35  # ~3 requests/sec max
 
 
 def _get_client() -> OpenAI:
-    """Get OpenAI-compatible client pointing to local Ollama."""
+    """Get OpenAI-compatible client pointing to DeepSeek API or local Ollama fallback."""
+    api_key = os.environ.get("DEEPSEEK_API_KEY", "")
+    if api_key:
+        return OpenAI(
+            base_url="https://api.deepseek.com/v1",
+            api_key=api_key,
+        )
+    # Fallback to Ollama
     return OpenAI(
         base_url="http://localhost:11434/v1",
-        api_key="ollama",  # Ollama doesn't need a real key
+        api_key="ollama",
     )
 
 
-SCORING_MODEL = "gemma4:31b"
+SCORING_MODEL = "deepseek-chat"
 
 
 SCORING_SYSTEM_PROMPT = """You are an expert startup opportunity analyst. Score each event on three dimensions:
@@ -234,12 +241,6 @@ def score_event(client: OpenAI, event: dict) -> dict | None:
         )
         
         raw = response.choices[0].message.content.strip()
-        
-        # gemma4 thinking model may put all output in reasoning field
-        if not raw:
-            reasoning_field = getattr(response.choices[0].message, 'reasoning', '') or ''
-            if reasoning_field:
-                raw = reasoning_field
         
         result = _parse_scoring_json(raw)
         if result is None:
