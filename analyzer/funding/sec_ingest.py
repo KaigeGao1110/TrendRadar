@@ -1,6 +1,6 @@
 """Orchestrator for SEC Form D data ingestion.
 
-Daily fetch from EDGAR API + quarterly bulk load from ZIP → Supabase.
+Daily fetch from EDGAR API + quarterly bulk load from ZIP → local SQLite.
 """
 
 import os
@@ -18,28 +18,12 @@ if __name__ == "__main__":
     except ImportError:
         pass
 
-try:
-    from supabase import create_client, Client
-except ImportError:
-    create_client = None  # type: ignore
-    Client = None  # type: ignore
-
+from storage.sec_local_db import SecLocalDB
 from sources import sec_edgar, sec_edgar_bulk
 
 
-def _get_supabase_client() -> Optional[Client]:
-    """Initialize Supabase client from environment variables."""
-    if not create_client:
-        return None
-    url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_KEY")
-    if not url or not key:
-        return None
-    return create_client(url, key)
-
-
 def _prepare_record_for_upsert(record: dict) -> dict:
-    """Normalize a parsed record for Supabase upsert."""
+    """Normalize a parsed record for SQLite upsert."""
     return {
         "accession_number": record.get("accession_number"),
         "entity_name": record.get("entity_name") or "Unknown",
@@ -77,10 +61,7 @@ def ingest_daily(date_str: Optional[str] = None) -> dict:
     if date_str is None:
         date_str = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
 
-    client = _get_supabase_client()
-    if not client:
-        print("Supabase client not available. Check SUPABASE_URL and SUPABASE_KEY.")
-        return {"date": date_str, "total_found": 0, "ingested": 0, "errors": 0, "top_deals": []}
+    db = SecLocalDB()
 
     print(f"Fetching Form D filings for {date_str}...")
     try:
@@ -96,9 +77,7 @@ def ingest_daily(date_str: Optional[str] = None) -> dict:
         record = _prepare_record_for_upsert(filing)
         record["source"] = "sec_edgar_api"
         try:
-            client.table("sec_form_d_filings").upsert(
-                record, on_conflict="accession_number"
-            ).execute()
+            db.upsert_filing(record)
             ingested += 1
         except Exception as e:
             print(f"Upsert error for {record['accession_number']}: {e}")
@@ -149,10 +128,7 @@ def ingest_bulk(year: int, quarter: int) -> dict:
         - ingested: int
         - errors: int
     """
-    client = _get_supabase_client()
-    if not client:
-        print("Supabase client not available. Check SUPABASE_URL and SUPABASE_KEY.")
-        return {"year": year, "quarter": quarter, "downloaded": "", "parsed": 0, "ingested": 0, "errors": 0}
+    db = SecLocalDB()
 
     print(f"Downloading quarterly ZIP for {year} Q{quarter}...")
     try:
@@ -175,9 +151,7 @@ def ingest_bulk(year: int, quarter: int) -> dict:
         prepared = _prepare_record_for_upsert(record)
         prepared["source"] = "sec_edgar_bulk"
         try:
-            client.table("sec_form_d_filings").upsert(
-                prepared, on_conflict="accession_number"
-            ).execute()
+            db.upsert_filing(prepared)
             ingested += 1
         except Exception as e:
             print(f"Upsert error for {prepared['accession_number']}: {e}")
@@ -211,22 +185,9 @@ def generate_daily_report(date_str: Optional[str] = None) -> str:
     if date_str is None:
         date_str = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
 
-    client = _get_supabase_client()
-    if not client:
-        print("Supabase client not available. Report will be empty.")
-        records: List[dict] = []
-    else:
-        try:
-            result = (
-                client.table("sec_form_d_filings")
-                .select("*")
-                .eq("filing_date", date_str)
-                .execute()
-            )
-            records = result.data or []
-        except Exception as e:
-            print(f"Query error: {e}")
-            records = []
+    db = SecLocalDB()
+    all_filings = db.get_all_filings()
+    records = [r for r in all_filings if r.get("filing_date") == date_str]
 
     total = len(records)
     total_amount = sum(

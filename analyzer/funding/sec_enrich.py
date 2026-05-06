@@ -21,12 +21,7 @@ if __name__ == "__main__":
     except ImportError:
         pass
 
-try:
-    from supabase import create_client, Client
-except ImportError:
-    create_client = None  # type: ignore
-    Client = None  # type: ignore
-
+from storage.sec_local_db import SecLocalDB
 from sources import sec_enrichment
 
 
@@ -51,38 +46,6 @@ SKIP_INDUSTRIES = {
 }
 
 
-def _get_supabase_client() -> Optional[Client]:
-    """Initialize Supabase client from environment variables."""
-    if not create_client:
-        return None
-    url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
-    if not url or not key:
-        return None
-    return create_client(url, key)
-
-
-def _get_existing_normalized_names(client: Client) -> Set[str]:
-    """Fetch all normalized names already in sec_company_profiles."""
-    names: Set[str] = set()
-    page_size = 1000
-    offset = 0
-    while True:
-        try:
-            result = client.table("sec_company_profiles").select("normalized_name").range(offset, offset + page_size - 1).execute()
-            batch = result.data or []
-            for row in batch:
-                if row.get("normalized_name"):
-                    names.add(row["normalized_name"])
-            if len(batch) < page_size:
-                break
-            offset += page_size
-        except Exception as e:
-            print(f"Error fetching existing profiles at offset {offset}: {e}")
-            break
-    return names
-
-
 def get_unenriched_companies(limit: Optional[int] = None) -> List[dict]:
     """Query sec_form_d_filings for records not yet enriched.
 
@@ -98,30 +61,10 @@ def get_unenriched_companies(limit: Optional[int] = None) -> List[dict]:
         - industry_group: industry classification
         - total_offering_amount: funding amount
     """
-    client = _get_supabase_client()
-    if not client:
-        print("Supabase client not available. Check SUPABASE_URL and SUPABASE_KEY.")
-        return []
+    db = SecLocalDB()
+    existing_names = db.get_existing_normalized_names()
 
-    existing_names = _get_existing_normalized_names(client)
-
-    # Fetch ALL filings (Supabase default limit is 1000, so paginate)
-    all_filings: List[dict] = []
-    page_size = 1000
-    offset = 0
-    while True:
-        try:
-            result = client.table("sec_form_d_filings").select(
-                "accession_number,entity_name,industry_group,total_offering_amount"
-            ).range(offset, offset + page_size - 1).execute()
-            batch = result.data or []
-            all_filings.extend(batch)
-            if len(batch) < page_size:
-                break
-            offset += page_size
-        except Exception as e:
-            print(f"Error fetching filings at offset {offset}: {e}")
-            break
+    all_filings = db.get_all_filings()
     print(f"Fetched {len(all_filings)} total filings")
 
     # Filter: skip irrelevant industries and already-enriched companies
@@ -173,10 +116,7 @@ def enrich_and_store(company: dict) -> bool:
     Returns:
         True if successful, False otherwise.
     """
-    client = _get_supabase_client()
-    if not client:
-        print("Supabase client not available.")
-        return False
+    db = SecLocalDB()
 
     entity_name = company.get("entity_name", "")
     if not entity_name:
@@ -207,9 +147,7 @@ def enrich_and_store(company: dict) -> bool:
     }
 
     try:
-        client.table("sec_company_profiles").upsert(
-            record, on_conflict="normalized_name"
-        ).execute()
+        db.upsert_profile(record)
         return True
     except Exception as e:
         print(f"Upsert error for '{entity_name}': {e}")
@@ -229,11 +167,11 @@ def run_bulk_enrichment(limit: Optional[int] = None) -> dict:
         - errors: failed enrichments
         - sectors_found: dict of sector -> count
     """
+    db = SecLocalDB()
     companies = get_unenriched_companies(limit=limit)
     total = len(companies)
     enriched = 0
     errors = 0
-    sectors_found: Dict[str, int] = {}
 
     print(f"Starting bulk enrichment for {total} companies...")
 
@@ -244,23 +182,6 @@ def run_bulk_enrichment(limit: Optional[int] = None) -> dict:
         success = enrich_and_store(company)
         if success:
             enriched += 1
-            # Try to get the sector from what was just stored
-            # We can infer from the company name by re-normalizing
-            normalized = sec_enrichment.normalize_name(name)
-            try:
-                result = (
-                    _get_supabase_client()
-                    .table("sec_company_profiles")
-                    .select("sector")
-                    .eq("normalized_name", normalized)
-                    .limit(1)
-                    .execute()
-                )
-                if result.data and result.data[0].get("sector"):
-                    sector = result.data[0]["sector"]
-                    sectors_found[sector] = sectors_found.get(sector, 0) + 1
-            except Exception:
-                pass
         else:
             errors += 1
 
@@ -270,6 +191,9 @@ def run_bulk_enrichment(limit: Optional[int] = None) -> dict:
         # Rate limit: 1 second between companies
         if i < total:
             time.sleep(1)
+
+    # Get sector counts from the database
+    sectors_found = db.get_sector_counts()
 
     summary = {
         "total": total,
