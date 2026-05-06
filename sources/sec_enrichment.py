@@ -25,7 +25,6 @@ if __name__ == "__main__":
 
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-MIMO_API_URL = "https://api.xiaomimimo.com/v1/chat/completions"
 OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
 DUCKDUCKGO_URL = "https://lite.duckduckgo.com/lite/"
 TAVILY_API_URL = "https://api.tavily.com/search"
@@ -126,87 +125,6 @@ def normalize_name(name: str) -> str:
 
 
 
-def _search_exa(query: str) -> list[dict]:
-    """Search via Exa API (semantic search, 1000 free/month)."""
-    api_key = os.environ.get("EXA_API_KEY", "")
-    if not api_key:
-        return []
-    try:
-        resp = requests.post(
-            "https://api.exa.ai/search",
-            headers={
-                "x-api-key": api_key,
-                "Content-Type": "application/json",
-            },
-            json={
-                "query": query,
-                "num_results": 2,
-                "type": "auto",
-                "contents": {"text": {"maxCharacters": 200}},
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        results = []
-        for r in data.get("results", [])[:2]:
-            results.append({
-                "title": r.get("title", ""),
-                "url": r.get("url", ""),
-                "snippet": (r.get("text", "") or "")[:200],
-            })
-        return results
-    except Exception as e:
-        print(f"Exa search error: {e}")
-        return []
-
-def _search_mimo(query: str) -> list[dict]:
-    """Search via MiMo Web Search API (search only, 2 results).
-    
-    MiMo handles web search internally and returns sources with summaries.
-    We only use the search results, not the LLM extraction.
-    """
-    api_key = os.environ.get("MIMO_API_KEY", "")
-    if not api_key:
-        return []
-    try:
-        resp = requests.post(
-            MIMO_API_URL,
-            headers={
-                "api-key": api_key,
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": "mimo-v2-flash",
-                "messages": [{
-                    "role": "user",
-                    "content": f"Find information about: {query}"
-                }],
-                "tools": [{
-                    "type": "web_search",
-                    "max_keyword": 2,
-                    "force_search": True,
-                    "limit": 2,
-                }],
-                "max_completion_tokens": 100,
-                "temperature": 0.3,
-            },
-            timeout=20,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        annotations = data["choices"][0]["message"].get("annotations", [])
-        results = []
-        for a in annotations[:2]:
-            results.append({
-                "title": a.get("title", ""),
-                "url": a.get("url", ""),
-                "snippet": a.get("summary", "")[:200],
-            })
-        return results
-    except Exception as e:
-        print(f"MiMo search error: {e}")
-        return []
 
 
 def _search_tavily(query: str) -> list[dict]:
@@ -348,7 +266,7 @@ def _search_brave(query: str) -> list[dict]:
 def search_company(name: str) -> list[dict]:
     """Search for a company using multiple free engines with fallback.
 
-    Order: Google → Bing → Brave → DuckDuckGo → Tavily (last resort)
+    Order: DDG Lite → Google → Bing → Brave → Tavily (last resort)
 
     Args:
         name: Company name to search.
@@ -362,34 +280,40 @@ def search_company(name: str) -> list[dict]:
     cleaned = clean_company_name(name)
     query = f"{cleaned} company what does it do sector"
 
-    # Parallel multi-engine: query all at once, merge results
+    # Sequential with fallback: try each engine in order
     all_results: list[dict] = []
     sources_used: list[str] = []
-    
-    # DDG Lite (free, unlimited)
+
+    # DDG Lite (free, unlimited) - try first
     ddg = _search_ddg(query)
     if ddg:
         all_results.extend(ddg)
         sources_used.append("DDG")
-    
-    # Exa (1000 free/month, semantic)
-    exa = _search_exa(query)
-    if exa:
-        all_results.extend(exa)
-        sources_used.append("Exa")
-    
-    # MiMo Web Search ($5/1K, high quality)
-    mimo = _search_mimo(query)
-    if mimo:
-        all_results.extend(mimo)
-        sources_used.append("MiMo")
-    
-    # Tavily (1000 free/month, AI-structured)
+
+    # Google HTML
+    google = _search_google(query)
+    if google:
+        all_results.extend(google)
+        sources_used.append("Google")
+
+    # Bing HTML
+    bing = _search_bing(query)
+    if bing:
+        all_results.extend(bing)
+        sources_used.append("Bing")
+
+    # Brave HTML
+    brave = _search_brave(query)
+    if brave:
+        all_results.extend(brave)
+        sources_used.append("Brave")
+
+    # Tavily (1000 free/month, AI-structured) - fallback
     tavily = _search_tavily(query)
     if tavily:
         all_results.extend(tavily)
         sources_used.append("Tavily")
-    
+
     # Dedupe by URL, keep unique results
     seen_urls: set[str] = set()
     unique_results: list[dict] = []
@@ -398,103 +322,13 @@ def search_company(name: str) -> list[dict]:
         if url and url not in seen_urls:
             seen_urls.add(url)
             unique_results.append(r)
-    
+
     # Return top 5 unique results
     if unique_results:
         print(f"Search: {sources_used} → {len(unique_results)} unique results")
         return unique_results[:5]
-    
+
     return []
-
-    html = resp.text
-    results = []
-
-    # Parse DuckDuckGo HTML results
-    # Each result is in a .result div
-    result_blocks = re.findall(
-        r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
-        html,
-        re.DOTALL,
-    )
-    if not result_blocks:
-        # Fallback: try simpler pattern
-        result_blocks = re.findall(
-            r'<div class="web-result[^"]*"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>',
-            html,
-            re.DOTALL,
-        )
-    if not result_blocks:
-        # Even simpler fallback
-        result_blocks = re.findall(
-            r'<div class="result[^"]*"[^>]*>.*?<\/div>\s*(?=<div class="result|<div id="links")',
-            html,
-            re.DOTALL,
-        )
-
-    for block in result_blocks[:3]:
-        # Extract URL
-        url_match = re.search(
-            r'<a[^>]+class="result__a"[^>]+href="([^"]+)"',
-            block,
-        )
-        if not url_match:
-            url_match = re.search(
-                r'<a[^>]+href="([^"]+)"[^>]*class="result__a"',
-                block,
-            )
-        if not url_match:
-            url_match = re.search(r'<a[^>]+href="([^"]+)"', block)
-        url = url_match.group(1) if url_match else ""
-
-        # DuckDuckGo uses redirect URLs - extract actual URL
-        if "duckduckgo.com/l/" in url:
-            parsed = urlparse(url)
-            params = parse_qs(parsed.query)
-            url = params.get("uddg", [url])[0]
-        elif url.startswith("//"):
-            url = "https:" + url
-        elif url.startswith("/"):
-            url = "https://duckduckgo.com" + url
-
-        # Extract title
-        title_match = re.search(
-            r'<a[^>]+class="result__a"[^>]*>(.*?)<\/a>',
-            block,
-            re.DOTALL,
-        )
-        if not title_match:
-            title_match = re.search(r'<a[^>]*>(.*?)<\/a>', block, re.DOTALL)
-        title = _strip_html_tags(title_match.group(1)) if title_match else ""
-
-        # Extract snippet
-        snippet_match = re.search(
-            r'<a[^>]+class="result__snippet"[^>]*>(.*?)<\/a>',
-            block,
-            re.DOTALL,
-        )
-        if not snippet_match:
-            snippet_match = re.search(
-                r'<div[^>]+class="result__snippet"[^>]*>(.*?)<\/div>',
-                block,
-                re.DOTALL,
-            )
-        if not snippet_match:
-            # Try any div after the title link
-            snippet_match = re.search(
-                r'<\/a>\s*<div[^>]*>(.*?)<\/div>',
-                block,
-                re.DOTALL,
-            )
-        snippet = _strip_html_tags(snippet_match.group(1)) if snippet_match else ""
-
-        if url and title:
-            results.append({
-                "title": title.strip(),
-                "url": url.strip(),
-                "snippet": snippet.strip(),
-            })
-
-    return results
 
 
 def _strip_html_tags(html: str) -> str:
@@ -551,24 +385,24 @@ def extract_company_info(name: str, text: str) -> dict:
         print("OpenRouter API key not found")
         return {
             "description": None,
-            "sector": None,
-            "main_business": None,
+            "primary_sector": None,
+            "sub_sector": None,
+            "target_customer": None,
+            "business_model": None,
+            "main_product": None,
             "website": None,
         }
 
     prompt = (
         f'Given this text about "{name}", extract JSON with:\n'
         f"  description: one sentence describing what the company does\n"
-        f"  sector: classify into a sector (free text, suggest: AI/ML, Fintech, "
-        f"HealthTech, BioTech, EdTech, DevOps/Infra, Cybersecurity, E-commerce, "
-        f"SaaS, ClimateTech, AgTech, Robotics, Autonomous, Gaming, Media, "
-        f"RealEstateTech, LegalTech, HRTech, FoodTech, SpaceTech, Defense, "
-        f"Blockchain/Web3, Hardware, Semiconductor, Biopharma, MedicalDevices, "
-        f"InsurTech, ConstructionTech, Logistics, Finance, Energy, Manufacturing, Other)\n"
-        f"  main_business: what they sell/build/do\n"
-        f"  website: homepage URL\n\n"
-        f'Return ONLY valid JSON: {{"description": "...", "sector": "...", '
-        f'"main_business": "...", "website": "..."}}\n\n'
+        f"  primary_sector: broad category (DevOps, Healthcare, Finance, Education, Logistics, Manufacturing, Media, Energy, Real Estate, Agriculture, Defense, Construction, Retail, Food, Gaming, Legal, Travel, Other)\n"
+        f"  sub_sector: specific niche within that sector (e.g., Frontend Deployment, Cancer Therapeutics, Payment Processing, AI Code Generation, Robot-Assisted Surgery)\n"
+        f"  target_customer: who buys this product/service (developers, enterprises, SMBs, consumers, hospitals, government, etc.)\n"
+        f"  business_model: how they make money (SaaS subscription, marketplace, hardware sales, consulting, licensing, advertising, etc.)\n"
+        f"  main_product: name of core product/service if mentioned\n"
+        f"  website: homepage URL if available\n\n"
+        f'Return ONLY valid JSON, no markdown, no explanation.\n\n'
         f"Text:\n{text[:2500]}"
     )
 
@@ -592,8 +426,11 @@ def extract_company_info(name: str, text: str) -> dict:
         print(f"OpenRouter API error for '{name}': {e}")
         return {
             "description": None,
-            "sector": None,
-            "main_business": None,
+            "primary_sector": None,
+            "sub_sector": None,
+            "target_customer": None,
+            "business_model": None,
+            "main_product": None,
             "website": None,
         }
 
@@ -601,7 +438,7 @@ def extract_company_info(name: str, text: str) -> dict:
         data = resp.json()
         if "choices" not in data:
             print(f"LLM unexpected response for '{name}': {json.dumps(data)[:200]}")
-            return {"description": None, "sector": None, "main_business": None, "website": None}
+            return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
 
         choice = data["choices"][0]
         content = choice.get("message", {}).get("content")
@@ -609,7 +446,7 @@ def extract_company_info(name: str, text: str) -> dict:
             content = choice.get("text") or choice.get("delta", {}).get("content")
         if not content:
             print(f"LLM empty content for '{name}'")
-            return {"description": None, "sector": None, "main_business": None, "website": None}
+            return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
 
         content = content.strip()
         if content.startswith("```"):
@@ -622,12 +459,15 @@ def extract_company_info(name: str, text: str) -> dict:
         parsed = json.loads(content)
     except (KeyError, json.JSONDecodeError, TypeError) as e:
         print(f"LLM response parse error for '{name}': {e}")
-        return {"description": None, "sector": None, "main_business": None, "website": None}
+        return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
 
     return {
         "description": parsed.get("description"),
-        "sector": parsed.get("sector"),
-        "main_business": parsed.get("main_business"),
+        "primary_sector": parsed.get("primary_sector"),
+        "sub_sector": parsed.get("sub_sector"),
+        "target_customer": parsed.get("target_customer"),
+        "business_model": parsed.get("business_model"),
+        "main_product": parsed.get("main_product"),
         "website": parsed.get("website"),
     }
 
@@ -643,27 +483,36 @@ def enrich_company(name: str) -> dict:
         - normalized_name: dedup key
         - entity_name: original name
         - description: one sentence description
-        - sector: classified sector
-        - main_business: what they do
+        - primary_sector: broad sector category
+        - sub_sector: specific niche
+        - target_customer: who buys the product
+        - business_model: how they make money
+        - main_product: core product name
         - website: homepage URL
         - enrichment_source: source of data
         - enrichment_quality: high/medium/low
+        - quality_reason: no_search_results/page_fetch_failed/extraction_failed/partial_info
     """
     normalized = normalize_name(name)
     result = {
         "normalized_name": normalized,
         "entity_name": name,
         "description": None,
-        "sector": None,
-        "main_business": None,
+        "primary_sector": None,
+        "sub_sector": None,
+        "target_customer": None,
+        "business_model": None,
+        "main_product": None,
         "website": None,
         "enrichment_source": None,
         "enrichment_quality": "low",
+        "quality_reason": None,
     }
 
     # Step 1: Search
     search_results = search_company(name)
     if not search_results:
+        result["quality_reason"] = "no_search_results"
         return result
 
     # Step 2: Fetch best result (prefer company website over directories)
@@ -678,27 +527,37 @@ def enrich_company(name: str) -> dict:
             break
 
     if not best_text:
+        result["quality_reason"] = "page_fetch_failed"
         return result
 
     # Step 3: Extract info via LLM
     extracted = extract_company_info(name, best_text)
 
     result["description"] = extracted.get("description")
-    result["sector"] = extracted.get("sector")
-    result["main_business"] = extracted.get("main_business")
+    result["primary_sector"] = extracted.get("primary_sector")
+    result["sub_sector"] = extracted.get("sub_sector")
+    result["target_customer"] = extracted.get("target_customer")
+    result["business_model"] = extracted.get("business_model")
+    result["main_product"] = extracted.get("main_product")
     result["website"] = extracted.get("website")
     result["enrichment_source"] = best_url
 
-    # Determine quality
+    # Determine quality and reason
     has_desc = bool(result["description"])
-    has_sector = bool(result["sector"])
-    has_biz = bool(result["main_business"])
+    has_sector = bool(result.get("primary_sector"))
+    has_sub = bool(result.get("sub_sector"))
+    has_biz = bool(result.get("business_model"))
+    has_product = bool(result.get("main_product"))
+
     if has_desc and has_sector and has_biz:
         result["enrichment_quality"] = "high"
+        result["quality_reason"] = None
     elif has_desc or has_sector:
         result["enrichment_quality"] = "medium"
+        result["quality_reason"] = "partial_info"
     else:
         result["enrichment_quality"] = "low"
+        result["quality_reason"] = "extraction_failed"
 
     return result
 

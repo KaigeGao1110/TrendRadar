@@ -33,23 +33,47 @@ class SecLocalDB:
                 raw_data TEXT,
                 created_at TEXT DEFAULT (datetime('now'))
             );
+        """)
 
+        # Migrate sec_company_profiles: create if not exists, then add new columns
+        self.conn.execute("""
             CREATE TABLE IF NOT EXISTS sec_company_profiles (
                 normalized_name TEXT PRIMARY KEY,
                 entity_name TEXT,
                 description TEXT,
-                sector TEXT,
-                main_business TEXT,
+                primary_sector TEXT,
+                sub_sector TEXT,
+                target_customer TEXT,
+                business_model TEXT,
+                main_product TEXT,
                 website TEXT,
                 accession_numbers TEXT DEFAULT '[]',
                 enrichment_source TEXT,
                 enrichment_quality TEXT,
+                quality_reason TEXT,
                 enriched_at TEXT
             );
+        """)
 
+        # Add new columns if they don't exist (migration for existing tables)
+        new_columns = [
+            ("primary_sector", "TEXT"),
+            ("sub_sector", "TEXT"),
+            ("target_customer", "TEXT"),
+            ("business_model", "TEXT"),
+            ("main_product", "TEXT"),
+            ("quality_reason", "TEXT"),
+        ]
+        for col_name, col_type in new_columns:
+            try:
+                self.conn.execute(f"ALTER TABLE sec_company_profiles ADD COLUMN {col_name} {col_type}")
+            except Exception:
+                pass  # Column already exists
+
+        self.conn.executescript("""
             CREATE INDEX IF NOT EXISTS idx_filings_entity ON sec_form_d_filings(entity_name);
             CREATE INDEX IF NOT EXISTS idx_filings_industry ON sec_form_d_filings(industry_group);
-            CREATE INDEX IF NOT EXISTS idx_profiles_sector ON sec_company_profiles(sector);
+            CREATE INDEX IF NOT EXISTS idx_profiles_sector ON sec_company_profiles(primary_sector);
         """)
         self.conn.commit()
 
@@ -108,18 +132,22 @@ class SecLocalDB:
         """Insert or update a company profile."""
         self.conn.execute("""
             INSERT OR REPLACE INTO sec_company_profiles
-            (normalized_name, entity_name, description, sector, main_business, website, accession_numbers, enrichment_source, enrichment_quality, enriched_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (normalized_name, entity_name, description, primary_sector, sub_sector, target_customer, business_model, main_product, website, accession_numbers, enrichment_source, enrichment_quality, quality_reason, enriched_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             profile.get("normalized_name"),
             profile.get("entity_name"),
             profile.get("description"),
-            profile.get("sector"),
-            profile.get("main_business"),
+            profile.get("primary_sector"),
+            profile.get("sub_sector"),
+            profile.get("target_customer"),
+            profile.get("business_model"),
+            profile.get("main_product"),
             profile.get("website"),
             json.dumps(profile.get("accession_numbers", [])),
             profile.get("enrichment_source"),
             profile.get("enrichment_quality"),
+            profile.get("quality_reason"),
             profile.get("enriched_at"),
         ))
         self.conn.commit()
@@ -135,9 +163,9 @@ class SecLocalDB:
 
     def get_sector_counts(self) -> dict[str, int]:
         rows = self.conn.execute(
-            "SELECT sector, COUNT(*) as cnt FROM sec_company_profiles WHERE sector IS NOT NULL GROUP BY sector ORDER BY cnt DESC"
+            "SELECT primary_sector, COUNT(*) as cnt FROM sec_company_profiles WHERE primary_sector IS NOT NULL GROUP BY primary_sector ORDER BY cnt DESC"
         ).fetchall()
-        return {r["sector"]: r["cnt"] for r in rows}
+        return {r["primary_sector"]: r["cnt"] for r in rows}
 
     def close(self):
         self.conn.close()

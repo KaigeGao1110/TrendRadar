@@ -137,12 +137,16 @@ def enrich_and_store(company: dict) -> bool:
         "normalized_name": enriched["normalized_name"],
         "entity_name": enriched["entity_name"],
         "description": enriched.get("description"),
-        "sector": enriched.get("sector"),
-        "main_business": enriched.get("main_business"),
+        "primary_sector": enriched.get("primary_sector"),
+        "sub_sector": enriched.get("sub_sector"),
+        "target_customer": enriched.get("target_customer"),
+        "business_model": enriched.get("business_model"),
+        "main_product": enriched.get("main_product"),
         "website": enriched.get("website"),
         "accession_numbers": company.get("accession_numbers", []),
         "enrichment_source": enriched.get("enrichment_source"),
         "enrichment_quality": enriched.get("enrichment_quality"),
+        "quality_reason": enriched.get("quality_reason"),
         "enriched_at": datetime.now(timezone.utc).isoformat(),
     }
 
