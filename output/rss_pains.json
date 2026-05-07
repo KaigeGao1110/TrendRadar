@@ -1,0 +1,202 @@
+[
+  {
+    "pain": "Companies are struggling with the transition from AI training workloads to inference and agent workloads, leading to mismatched hardware investments and underutilized training chips.",
+    "context": "Amazon earnings note that the shift away from training towards inference and agents is paying off, implying prior pain in aligning hardware strategy.",
+    "severity": "high",
+    "category": "AI hardware",
+    "source": "Stratechery",
+    "extracted_at": "2026-05-02T02:35:45.467895"
+  },
+  {
+    "pain": "Uncertainty and delays around Intel's Terafab project are creating supply chain risk and capital allocation headaches for chip designers and fab partners.",
+    "context": "The article questions \"Whither Terafab?\" after Intel's strong earnings but unclear fab roadmap.",
+    "severity": "medium",
+    "category": "Semiconductor manufacturing",
+    "source": "Stratechery",
+    "extracted_at": "2026-05-02T02:35:45.467906"
+  },
+  {
+    "pain": "Advertisers find Amazon's ad platform opaque and difficult to optimize, limiting ROI on ad spend.",
+    "context": "Additional notes on ads in the Amazon earnings recap highlight ongoing friction for marketers.",
+    "severity": "medium",
+    "category": "Digital advertising",
+    "source": "Stratechery",
+    "extracted_at": "2026-05-02T02:35:45.467908"
+  },
+  {
+    "pain": "Sports rights negotiations remain fragmented and slow, causing broadcasters and streaming services to miss timely access to premium content.",
+    "context": "Amazon earnings mention challenges around sports rights as a separate note.",
+    "severity": "low",
+    "category": "Media & entertainment",
+    "source": "Stratechery",
+    "extracted_at": "2026-05-02T02:35:45.467909"
+  },
+  {
+    "pain": "Commodity market volatility is impacting cost forecasting for cloud providers, making budgeting for infrastructure upgrades unpredictable.",
+    "context": "Amazon earnings discuss Trainium and commodity markets, indicating pressure from price swings.",
+    "severity": "medium",
+    "category": "Cloud infrastructure",
+    "source": "Stratechery",
+    "extracted_at": "2026-05-02T02:35:45.467910"
+  },
+  {
+    "pain": "Developers are frustrated with the Prompt API limitations compared to Mozilla's approach, indicating a need for more flexible and open AI prompting tools.",
+    "context": "Mention of \"Mozilla vs Prompt API\" suggests a conflict or dissatisfaction with the current Prompt API.",
+    "severity": "medium",
+    "category": "AI development tools",
+    "source": "TLDR",
+    "extracted_at": "2026-05-02T02:35:57.899478"
+  },
+  {
+    "pain": "Long\u2011running AI agents are problematic, likely causing performance, cost, or reliability issues for users.",
+    "context": "Listed as \"long running agents\" among the topics, implying a pain point with agent execution time.",
+    "severity": "high",
+    "category": "AI operations",
+    "source": "TLDR",
+    "extracted_at": "2026-05-02T02:35:57.899489"
+  },
+  {
+    "pain": "The introduction of ads within ChatGPT is causing user annoyance and concerns about the platform\u2019s user experience.",
+    "context": "Referenced as \"inside ChatGPT ads\".",
+    "severity": "high",
+    "category": "Consumer AI services",
+    "source": "TLDR",
+    "extracted_at": "2026-05-02T02:35:57.899490"
+  },
+  {
+    "pain": "Netflix's new vertical feed format may be confusing or less usable for viewers accustomed to traditional layouts, indicating a UI/UX pain.",
+    "context": "Mention of \"Netflix's vertical feed\" suggests a change that could be problematic for users.",
+    "severity": "medium",
+    "category": "Streaming media",
+    "source": "TLDR",
+    "extracted_at": "2026-05-02T02:35:57.899491"
+  },
+  {
+    "pain": "Developers need better integration capabilities for AI-generated content, as hinted by the release of the Cursor SDK, which may be addressing gaps in existing tooling.",
+    "context": "Mention of \"Cursor SDK\" implies a response to missing or inadequate development tools.",
+    "severity": "medium",
+    "category": "Software development tools",
+    "source": "TLDR",
+    "extracted_at": "2026-05-02T02:35:57.899492"
+  },
+  {
+    "pain": "Leaky abstractions causing systems to break and making debugging difficult",
+    "context": "\"Call the Plumber; We\u2019ve Got a Leaky Abstraction\" \u2013 a model of how things break",
+    "severity": "high",
+    "category": "software engineering / system design",
+    "source": "a16z",
+    "extracted_at": "2026-05-02T02:36:11.157271"
+  },
+  {
+    "pain": "Rising SaaS prices (\"SaaSflation\") squeezing budgets for product teams",
+    "context": "\"Your SaaSflation Is My Opportunity\" \u2013 highlights cost pressure on SaaS users",
+    "severity": "medium",
+    "category": "SaaS procurement",
+    "source": "a16z",
+    "extracted_at": "2026-05-02T02:36:11.157281"
+  },
+  {
+    "pain": "Traditional design tools lag behind AI\u2011native workflows, forcing designers to cobble together inefficient processes",
+    "context": "Announcement of the \"a16z Design Engineer Fellowship\" emphasizes the need for AI\u2011native design leaders",
+    "severity": "medium",
+    "category": "design tooling",
+    "source": "a16z",
+    "extracted_at": "2026-05-02T02:36:11.157282"
+  },
+  {
+    "pain": "Slow feedback loops in product development due to fragmented engineering and design silos",
+    "context": "Fellowship description mentions designers \"absorbed engineering into their craft\" to address siloed processes",
+    "severity": "medium",
+    "category": "product development processes",
+    "source": "a16z",
+    "extracted_at": "2026-05-02T02:36:11.157283"
+  },
+  {
+    "pain": "Inadequate monitoring of social media dynamics leading to missed growth opportunities",
+    "context": "Section titled \"Peak Social Media\" implies challenges in tracking and leveraging social trends",
+    "severity": "low",
+    "category": "social media analytics",
+    "source": "a16z",
+    "extracted_at": "2026-05-02T02:36:11.157283"
+  },
+  {
+    "pain": "Non\u2011technical marketers struggle to build AI\u2011powered products because they lack coding skills.",
+    "context": "Jason Levin\u2019s story about building Memelord without coding and his call for marketers to \"vibe code\".",
+    "severity": "high",
+    "category": "marketing / AI product development",
+    "source": "Lenny's Newsletter",
+    "extracted_at": "2026-05-02T02:36:26.174723"
+  },
+  {
+    "pain": "Current AI tooling makes it hard for non\u2011coders to create and launch revenue\u2011generating APIs quickly.",
+    "context": "From a $6.90 newsletter to a $3M API: the need to bootstrap an API with minimal technical effort.",
+    "severity": "high",
+    "category": "software development / API platforms",
+    "source": "Lenny's Newsletter",
+    "extracted_at": "2026-05-02T02:36:26.174738"
+  },
+  {
+    "pain": "Marketers need better, low\u2011code/ no\u2011code solutions to experiment with AI without hiring engineers.",
+    "context": "Levin\u2019s recommendation that every marketer should learn to code and the mention of agents becoming primary users.",
+    "severity": "medium",
+    "category": "marketing automation",
+    "source": "Lenny's Newsletter",
+    "extracted_at": "2026-05-02T02:36:26.174740"
+  },
+  {
+    "pain": "AI agents are becoming primary users, indicating existing workflows are not integrated or streamlined for human\u2011agent collaboration.",
+    "context": "Reference to agents as primary users of Memelord\u2019s platform.",
+    "severity": "medium",
+    "category": "AI workflow integration",
+    "source": "Lenny's Newsletter",
+    "extracted_at": "2026-05-02T02:36:26.174742"
+  },
+  {
+    "pain": "Lack of a simple, habit\u2011forming framework for people to consistently work with AI (the \u201cCouch\u2011to\u20115K for AI\u201d gap).",
+    "context": "Title of the guide promising a step\u2011by\u2011step AI habit that sticks.",
+    "severity": "low",
+    "category": "personal productivity / AI adoption",
+    "source": "Lenny's Newsletter",
+    "extracted_at": "2026-05-02T02:36:26.174743"
+  },
+  {
+    "pain": "High cost and limited access to life\u2011saving medicines, especially for families facing serious illnesses",
+    "context": "Viswa Colluru describes his mother's leukemia and the struggle to afford a needed drug",
+    "severity": "high",
+    "category": "pharmaceutical / healthcare",
+    "source": "The Generalist",
+    "extracted_at": "2026-05-02T02:36:53.607471"
+  },
+  {
+    "pain": "Inefficient or fragmented knowledge\u2011management tools that force researchers to build custom systems",
+    "context": "The Writer\u2011Researcher\u2019s Guide to Claude Code details building a full knowledge\u2011management system to overcome existing tool limitations",
+    "severity": "medium",
+    "category": "productivity software",
+    "source": "The Generalist",
+    "extracted_at": "2026-05-02T02:36:53.607481"
+  },
+  {
+    "pain": "AI hallucinations causing unreliable outputs, hindering trust in generative models",
+    "context": "Tudor Achim discusses how hallucinations drive creativity but also represent a flaw in current AI systems",
+    "severity": "medium",
+    "category": "artificial intelligence",
+    "source": "The Generalist",
+    "extracted_at": "2026-05-02T02:36:53.607482"
+  },
+  {
+    "pain": "Current AI verification processes are slow or non\u2011existent, making it hard to ensure formally verified outputs",
+    "context": "Harmonic\u2019s AI claims to produce formally verified results, implying existing tools lack this capability",
+    "severity": "medium",
+    "category": "AI research / software verification",
+    "source": "The Generalist",
+    "extracted_at": "2026-05-02T02:36:53.607482"
+  },
+  {
+    "pain": "Traditional drug\u2011discovery pipelines are outdated and unable to leverage modern AI at scale",
+    "context": "The article title \u201cThe Future Of Drug Discovery Is 4 Billion Years Old\u201d suggests the industry\u2019s processes are antiquated",
+    "severity": "high",
+    "category": "pharmaceutical / biotech",
+    "source": "The Generalist",
+    "extracted_at": "2026-05-02T02:36:53.607483"
+  }
+]
