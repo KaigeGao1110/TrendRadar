@@ -25,7 +25,11 @@ if __name__ == "__main__":
 
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
+FALLBACK_MODELS = [
+    "openai/gpt-oss-120b:free",
+    "meta-llama/llama-3.3-70b-instruct:free",
+    "google/gemma-4-31b-it:free",
+]
 DUCKDUCKGO_URL = "https://lite.duckduckgo.com/lite/"
 TAVILY_API_URL = "https://api.tavily.com/search"
 REQUEST_TIMEOUT = 30
@@ -263,6 +267,69 @@ def _search_brave(query: str) -> list[dict]:
         return []
 
 
+def _is_homepage_only(url: str, name: str) -> bool:
+    """Check if URL looks like a generic homepage (low info value)."""
+    cleaned = clean_company_name(name).lower()
+    parsed = urlparse(url)
+    domain = parsed.netloc.lower().replace("www.", "")
+    path = parsed.path.lower()
+    # Company homepage typically has minimal path segments
+    if path == "/" or path == "":
+        # Check if domain name roughly matches company name (not a directory site)
+        domain_words = domain.split(".")
+        return len([w for w in domain_words if len(w) > 3]) <= 2
+    return False
+
+
+def search_company_specialized(name: str, strategy: str = "crunchbase") -> list[dict]:
+    """Run specialized search queries to find more specific company info.
+
+    Args:
+        name: Company name.
+        strategy: 'crunchbase' (site:crunchbase.com OR site:linkedin.com) or
+                  'executive' (company + CEO/founded/series).
+    Returns:
+        List of up to 3 result dicts.
+    """
+    cleaned = clean_company_name(name)
+    results: list[dict] = []
+
+    if strategy == "crunchbase":
+        queries = [
+            f'{cleaned} site:crunchbase.com company',
+            f'{cleaned} site:linkedin.com company',
+        ]
+    else:
+        queries = [
+            f"{cleaned} company CEO founded",
+            f"{cleaned} company series funding",
+            f'"{cleaned}" startup about',
+        ]
+
+    for q in queries:
+        # Try DDG first, then Google
+        ddg = _search_ddg(q)
+        if ddg:
+            results.extend(ddg)
+        if len(results) >= 3:
+            break
+        google = _search_google(q)
+        if google:
+            results.extend(google)
+        if len(results) >= 3:
+            break
+
+    # Dedupe by URL
+    seen: set[str] = set()
+    unique: list[dict] = []
+    for r in results:
+        url = r.get("url", "")
+        if url and url not in seen:
+            seen.add(url)
+            unique.append(r)
+    return unique[:3]
+
+
 def search_company(name: str) -> list[dict]:
     """Search for a company using multiple free engines with fallback.
 
@@ -369,29 +436,75 @@ def fetch_company_page(url: str) -> str:
     return text[:3000]
 
 
+def _try_parse_json_response(content: str) -> Optional[dict]:
+    """Parse JSON from LLM response with multiple fallback strategies.
+
+    Handles: markdown code blocks, partial JSON objects, common format errors.
+    Returns None only if description field is missing (critical field).
+    """
+    if not content:
+        return None
+
+    content = content.strip()
+
+    # Strip markdown code fences
+    if content.startswith("```"):
+        content = re.sub(r"^```(?:json)?\s*", "", content)
+        content = re.sub(r"\s*```$", "", content)
+
+    # Strategy 1: try direct JSON parse
+    try:
+        return json.loads(content)
+    except (json.JSONDecodeError, TypeError):
+        pass
+
+    # Strategy 2: extract first {...} block
+    json_match = re.search(r"\{[\s\S]*\}", content, re.DOTALL)
+    if not json_match:
+        return None
+    candidate = json_match.group(0)
+
+    # Strategy 3: fix common JSON errors
+    # Remove trailing commas before closing braces/brackets
+    candidate = re.sub(r",\s*([\]}])", r"\1", candidate)
+    # Replace single quotes with double quotes (common LLM mistake)
+    candidate = re.sub(r"'([^'\\]*(?:\\.[^'\\]*)*)'", r'"\1"', candidate)
+    try:
+        parsed = json.loads(candidate)
+        # Must have at least description to be useful
+        if parsed.get("description"):
+            return parsed
+        return None
+    except (json.JSONDecodeError, TypeError):
+        pass
+
+    # Strategy 4: try raw candidate even without fixes
+    try:
+        parsed = json.loads(candidate)
+        if parsed.get("description"):
+            return parsed
+    except (json.JSONDecodeError, TypeError):
+        pass
+
+    return None
+
+
 def extract_company_info(name: str, text: str) -> dict:
-    """Extract company info from text using OpenRouter LLM.
+    """Extract company info from text using OpenRouter LLM with fallback.
 
     Args:
         name: Company name.
         text: Text content about the company.
 
     Returns:
-        Dict with keys: description, sector, main_business, website.
+        Dict with keys: description, primary_sector, sub_sector, target_customer,
+        business_model, main_product, website.
         Values may be None if extraction fails.
     """
     api_key = _get_openrouter_key()
     if not api_key:
         print("OpenRouter API key not found")
-        return {
-            "description": None,
-            "primary_sector": None,
-            "sub_sector": None,
-            "target_customer": None,
-            "business_model": None,
-            "main_product": None,
-            "website": None,
-        }
+        return _empty_extraction()
 
     prompt = (
         f'Given this text about "{name}", extract JSON with:\n'
@@ -406,69 +519,75 @@ def extract_company_info(name: str, text: str) -> dict:
         f"Text:\n{text[:2500]}"
     )
 
-    try:
-        resp = requests.post(
-            OPENROUTER_API_URL,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": OPENROUTER_MODEL,
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 500,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=60,
-        )
-        resp.raise_for_status()
-    except requests.RequestException as e:
-        print(f"OpenRouter API error for '{name}': {e}")
-        return {
-            "description": None,
-            "primary_sector": None,
-            "sub_sector": None,
-            "target_customer": None,
-            "business_model": None,
-            "main_product": None,
-            "website": None,
-        }
+    last_error = None
+    for model in FALLBACK_MODELS:
+        for attempt in range(3):
+            try:
+                resp = requests.post(
+                    OPENROUTER_API_URL,
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": model,
+                        "messages": [{"role": "user", "content": prompt}],
+                        "max_tokens": 500,
+                        "response_format": {"type": "json_object"},
+                    },
+                    timeout=60,
+                )
+                if resp.status_code == 429:
+                    # Rate limited - wait and retry with same model
+                    retry_after = int(resp.headers.get("retry-after", 10))
+                    print(f"Rate limited on {model}, waiting {retry_after}s")
+                    time.sleep(retry_after)
+                    continue
+                resp.raise_for_status()
+                data = resp.json()
 
-    try:
-        data = resp.json()
-        if "choices" not in data:
-            print(f"LLM unexpected response for '{name}': {json.dumps(data)[:200]}")
-            return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
+                if "choices" not in data:
+                    last_error = f"unexpected response: {json.dumps(data)[:200]}"
+                    break
 
-        choice = data["choices"][0]
-        content = choice.get("message", {}).get("content")
-        if not content:
-            content = choice.get("text") or choice.get("delta", {}).get("content")
-        if not content:
-            print(f"LLM empty content for '{name}'")
-            return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
+                choice = data["choices"][0]
+                content = choice.get("message", {}).get("content")
+                if not content:
+                    content = choice.get("text") or choice.get("delta", {}).get("content")
+                if not content:
+                    last_error = "empty content"
+                    break
 
-        content = content.strip()
-        if content.startswith("```"):
-            content = re.sub(r'^```(?:json)?\s*', '', content)
-            content = re.sub(r'\s*```$', '', content)
-        # Try to extract JSON from response
-        json_match = re.search(r'\{[^{}]*\}', content, re.DOTALL)
-        if json_match:
-            content = json_match.group(0)
-        parsed = json.loads(content)
-    except (KeyError, json.JSONDecodeError, TypeError) as e:
-        print(f"LLM response parse error for '{name}': {e}")
-        return {"description": None, "primary_sector": None, "sub_sector": None, "target_customer": None, "business_model": None, "main_product": None, "website": None}
+                parsed = _try_parse_json_response(content)
+                if parsed is not None:
+                    return {
+                        "description": parsed.get("description"),
+                        "primary_sector": parsed.get("primary_sector"),
+                        "sub_sector": parsed.get("sub_sector"),
+                        "target_customer": parsed.get("target_customer"),
+                        "business_model": parsed.get("business_model"),
+                        "main_product": parsed.get("main_product"),
+                        "website": parsed.get("website"),
+                    }
+                last_error = f"parse failed for {model}"
+                break
+            except requests.RequestException as e:
+                last_error = f"{model} error: {e}"
+                break
 
+    print(f"LLM extraction failed for '{name}': {last_error}")
+    return _empty_extraction()
+
+
+def _empty_extraction() -> dict:
     return {
-        "description": parsed.get("description"),
-        "primary_sector": parsed.get("primary_sector"),
-        "sub_sector": parsed.get("sub_sector"),
-        "target_customer": parsed.get("target_customer"),
-        "business_model": parsed.get("business_model"),
-        "main_product": parsed.get("main_product"),
-        "website": parsed.get("website"),
+        "description": None,
+        "primary_sector": None,
+        "sub_sector": None,
+        "target_customer": None,
+        "business_model": None,
+        "main_product": None,
+        "website": None,
     }
 
 
@@ -515,18 +634,18 @@ def enrich_company(name: str) -> dict:
         result["quality_reason"] = "no_search_results"
         return result
 
-    # Step 2: Fetch best result (prefer company website over directories)
+    # Step 2: Fetch all results and pick the one with the most text
+    # (some results return minimal CSS/JS from single-page apps)
     best_text = ""
     best_url = ""
     for sr in search_results:
         url = sr.get("url", "")
         text = fetch_company_page(url)
-        if text:
+        if text and len(text) > len(best_text):
             best_text = text
             best_url = url
-            break
 
-    if not best_text:
+    if not best_text or len(best_text) < 300:
         result["quality_reason"] = "page_fetch_failed"
         return result
 
@@ -558,6 +677,87 @@ def enrich_company(name: str) -> dict:
     else:
         result["enrichment_quality"] = "low"
         result["quality_reason"] = "extraction_failed"
+
+    return result
+
+
+def reenrich_low_quality(name: str, previous_result: dict) -> dict:
+    """Re-run enrichment on a previously low-quality result using fallback strategies.
+
+    Specifically targets extraction_failed cases by retrying with more robust
+    model fallback and specialized search queries.
+
+    Args:
+        name: Company name.
+        previous_result: Result dict from a prior enrich_company call.
+
+    Returns:
+        Updated enrichment result (same schema as enrich_company).
+    """
+    if previous_result.get("quality_reason") not in ("extraction_failed", "partial_info"):
+        return previous_result
+
+    normalized = normalize_name(name)
+    result = dict(previous_result)
+    result["normalized_name"] = normalized
+    result["entity_name"] = name
+
+    # Try specialized search first if we had no search results
+    search_results: list[dict] = []
+    if previous_result.get("quality_reason") == "extraction_failed":
+        # Try crunchbase/linkedin focused search
+        specialized = search_company_specialized(name, "crunchbase")
+        if specialized:
+            search_results = specialized
+        else:
+            search_results = search_company(name)
+
+        if not search_results:
+            result["quality_reason"] = "no_search_results"
+            return result
+
+        # Fetch best result
+        MIN_TEXT_LEN = 300
+        best_text = ""
+        best_url = ""
+        for sr in search_results:
+            url = sr.get("url", "")
+            text = fetch_company_page(url)
+            if text and len(text) >= MIN_TEXT_LEN:
+                best_text = text
+                best_url = url
+                break
+
+        if not best_text:
+            result["quality_reason"] = "page_fetch_failed"
+            return result
+
+        # Re-extract with fallback models
+        extracted = extract_company_info(name, best_text)
+
+        result["description"] = extracted.get("description")
+        result["primary_sector"] = extracted.get("primary_sector")
+        result["sub_sector"] = extracted.get("sub_sector")
+        result["target_customer"] = extracted.get("target_customer")
+        result["business_model"] = extracted.get("business_model")
+        result["main_product"] = extracted.get("main_product")
+        result["website"] = extracted.get("website")
+        result["enrichment_source"] = best_url
+
+        # Re-evaluate quality
+        has_desc = bool(result["description"])
+        has_sector = bool(result.get("primary_sector"))
+        has_biz = bool(result.get("business_model"))
+
+        if has_desc and has_sector and has_biz:
+            result["enrichment_quality"] = "high"
+            result["quality_reason"] = None
+        elif has_desc or has_sector:
+            result["enrichment_quality"] = "medium"
+            result["quality_reason"] = "partial_info"
+        else:
+            result["enrichment_quality"] = "low"
+            result["quality_reason"] = "extraction_failed"
 
     return result
 

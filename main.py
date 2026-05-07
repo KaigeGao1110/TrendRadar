@@ -659,7 +659,7 @@ def export(table, source, output):
                 row = {
                     "source": src,
                     "title": item.get("title", ""),
-                    "funding_amount": data.get("funding_amount", ""),
+                    "funding_amount": data.get("funding_amount", data.get("amount", "")),
                     "valuation": data.get("valuation", ""),
                     "category": data.get("category", ""),
                     "investors": data.get("investors", ""),
@@ -732,6 +732,120 @@ def retry_failed():
             fail_count += 1
     
     console.print(f"[green]✅ Retried {success_count} tasks successfully, {fail_count} failed again.")
+
+
+@cli.command()
+@click.option("--dry-run", is_flag=True, help="Show what would be deleted without deleting")
+@click.option("--threshold", default=0.95, help="Similarity threshold for deduplication (0.0-1.0)")
+def dedup(dry_run, threshold):
+    """Remove duplicate pain_signals and opportunity_clusters from ChromaDB.
+
+    Keeps the earliest record and removes duplicates with similarity > threshold.
+    """
+    from storage.chroma_client import ChromaClient
+
+    chroma = ChromaClient()
+    deleted_pains = 0
+    deleted_clusters = 0
+
+    # ---- Deduplicate pain_signals ----
+    console.print("[bold]Deduplicating pain_signals...[/bold]")
+
+    # Fetch all pain signals
+    all_pains = chroma.pains.get(include=["metadatas", "documents", "embeddings"])
+    if all_pains["ids"]:
+        id_list = all_pains["ids"]
+        docs = all_pains["documents"]
+        metas = all_pains["metadatas"]
+        embs = all_pains["embeddings"]
+
+        keep_ids = set()
+        dup_ids = []
+
+        for i, pain_id in enumerate(id_list):
+            if pain_id in keep_ids or pain_id in dup_ids:
+                continue
+
+            emb_i = embs[i]
+            if not emb_i:
+                keep_ids.add(pain_id)
+                continue
+
+            # Compare with all later entries
+            for j in range(i + 1, len(id_list)):
+                if id_list[j] in dup_ids:
+                    continue
+                emb_j = embs[j]
+                if not emb_j:
+                    continue
+
+                # Compute cosine similarity
+                import math
+                dot = sum(float(a) * float(b) for a, b in zip(emb_i, emb_j))
+                mag_i = math.sqrt(sum(float(x) ** 2 for x in emb_i))
+                mag_j = math.sqrt(sum(float(y) ** 2 for y in emb_j))
+                if mag_i == 0 or mag_j == 0:
+                    continue
+                sim = dot / (mag_i * mag_j)
+
+                if sim >= threshold:
+                    dup_ids.append(id_list[j])
+
+        console.print(f"  pain_signals: {len(id_list)} total, {len(dup_ids)} duplicates found")
+        if dry_run:
+            console.print(f"  [yellow]--dry-run: would delete {len(dup_ids)} duplicate pain_signals[/yellow]")
+        else:
+            if dup_ids:
+                chroma.pains.delete(ids=dup_ids)
+                deleted_pains = len(dup_ids)
+                console.print(f"  [green]Deleted {deleted_pains} duplicate pain_signals[/green]")
+
+    # ---- Deduplicate opportunity_clusters ----
+    console.print("[bold]Deduplicating opportunity_clusters...[/bold]")
+
+    all_clusters = chroma.clusters.get(include=["metadatas", "documents", "embeddings"])
+    if all_clusters["ids"]:
+        id_list = all_clusters["ids"]
+        embs = all_clusters["embeddings"]
+
+        dup_ids = []
+
+        for i, cluster_id in enumerate(id_list):
+            if cluster_id in dup_ids:
+                continue
+
+            emb_i = embs[i]
+            if not emb_i:
+                continue
+
+            for j in range(i + 1, len(id_list)):
+                if id_list[j] in dup_ids:
+                    continue
+                emb_j = embs[j]
+                if not emb_j:
+                    continue
+
+                import math
+                dot = sum(float(a) * float(b) for a, b in zip(emb_i, emb_j))
+                mag_i = math.sqrt(sum(float(x) ** 2 for x in emb_i))
+                mag_j = math.sqrt(sum(float(y) ** 2 for y in emb_j))
+                if mag_i == 0 or mag_j == 0:
+                    continue
+                sim = dot / (mag_i * mag_j)
+
+                if sim >= threshold:
+                    dup_ids.append(id_list[j])
+
+        console.print(f"  opportunity_clusters: {len(id_list)} total, {len(dup_ids)} duplicates found")
+        if dry_run:
+            console.print(f"  [yellow]--dry-run: would delete {len(dup_ids)} duplicate clusters[/yellow]")
+        else:
+            if dup_ids:
+                chroma.clusters.delete(ids=dup_ids)
+                deleted_clusters = len(dup_ids)
+                console.print(f"  [green]Deleted {deleted_clusters} duplicate clusters[/green]")
+
+    console.print(f"\n[bold]Done.[/bold] Removed {deleted_pains} pains, {deleted_clusters} clusters.")
 
 
 if __name__ == "__main__":

@@ -50,7 +50,18 @@ class ChromaClient:
         market_bonus: int = 0,
         cluster_id: Optional[str] = None,
     ) -> dict:
-        """Save a pain signal with embedding."""
+        """Save a pain signal with embedding. Skips duplicates (>0.95 similarity)."""
+        # Deduplication: check for near-duplicate before inserting
+        results = self.pains.query(
+            query_embeddings=[embedding],
+            n_results=1,
+            include=["distances"]
+        )
+        if results["distances"] and results["distances"][0]:
+            # cosine distance < 0.05 means similarity > 0.95
+            if results["distances"][0][0] < 0.05:
+                return {"id": None, "skipped": True}
+
         import uuid
         signal_id = str(uuid.uuid4())
 

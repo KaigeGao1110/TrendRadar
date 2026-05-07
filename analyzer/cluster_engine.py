@@ -131,7 +131,7 @@ class ClusterEngine:
                         confidence=v.get("confidence", 0),
                         volume_score=v.get("volume_score", 0),
                         quality_score=v.get("quality_multiplier", 0),
-                        cross_source_count=v.get("mention_count", 0),
+                        cross_source_count=len(v.get("sources", [])),
                         market_bonus=v.get("market_bonus", 0),
                     )
             except Exception as e:
@@ -145,7 +145,32 @@ class ClusterEngine:
                 logger.warning("Failed to save cluster '%s': %s", cluster.get("title", ""), e)
 
         logger.info("Generated %d opportunity clusters", len(clusters))
+
+        # 10. Mark all processed events as analyzed
+        self._mark_events_analyzed(events)
+
         return clusters
+
+    def _mark_events_analyzed(self, events: list[dict], score: Optional[int] = None) -> None:
+        """Mark processed events as analyzed in DynamoDB.
+
+        Uses the event_id-index GSI to look up each event's PK and update it.
+        """
+        for event in events:
+            event_id = event.get("event_id", "")
+            if not event_id:
+                continue
+            try:
+                # Compute total score for this event if not provided
+                event_score = score
+                if event_score is None:
+                    verification = event.get("verification", {})
+                    conf = verification.get("confidence", 0)
+                    # Use confidence as a proxy for event score
+                    event_score = conf if conf > 0 else None
+                self.dynamo.mark_analyzed(event_id, score=event_score)
+            except Exception as e:
+                logger.warning("Failed to mark event analyzed: %s", e)
 
     # ------------------------------------------------------------------
     # Embedding generation
@@ -424,10 +449,10 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
         elif confidence < 50:
             total_score = max(0, total_score - 10)
 
-        cluster["pain_score"] = pain_score
-        cluster["tech_score"] = tech_score
-        cluster["timing_score"] = timing_score
-        cluster["total_score"] = total_score
+        cluster["pain_score"] = max(pain_score, 10) if pain_score > 0 else 50
+        cluster["tech_score"] = max(tech_score, 10) if tech_score > 0 else 50
+        cluster["timing_score"] = max(timing_score, 10) if timing_score > 0 else 50
+        cluster["total_score"] = max(total_score, 5) if total_score > 0 else 50
         cluster["reasoning"] = reasoning
         cluster["is_actionable"] = total_score >= 70
 
