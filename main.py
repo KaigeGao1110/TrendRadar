@@ -767,7 +767,7 @@ def dedup(dry_run, threshold):
                 continue
 
             emb_i = embs[i]
-            if not emb_i:
+            if emb_i is None or len(emb_i) == 0:
                 keep_ids.add(pain_id)
                 continue
 
@@ -776,7 +776,7 @@ def dedup(dry_run, threshold):
                 if id_list[j] in dup_ids:
                     continue
                 emb_j = embs[j]
-                if not emb_j:
+                if emb_j is None or len(emb_j) == 0:
                     continue
 
                 # Compute cosine similarity
@@ -815,14 +815,14 @@ def dedup(dry_run, threshold):
                 continue
 
             emb_i = embs[i]
-            if not emb_i:
+            if emb_i is None or len(emb_i) == 0:
                 continue
 
             for j in range(i + 1, len(id_list)):
                 if id_list[j] in dup_ids:
                     continue
                 emb_j = embs[j]
-                if not emb_j:
+                if emb_j is None or len(emb_j) == 0:
                     continue
 
                 import math
