@@ -13,7 +13,6 @@ from datetime import date
 
 from sources import yc, producthunt, hackernews, vc_funding, newsapi, rss, fundbat
 from sources import reddit, github_trending, hackernews_comments, producthunt_deep, google_trends
-from sources import twitter_pain
 from sources import exa_pain
 from sources import rss_pain
 from analyzer.digest import generate_daily_digest, generate_weekly_digest
@@ -111,7 +110,7 @@ def trends():
 
 
 @trends.command()
-@click.option("--source", default="all", help="Source: yc, producthunt, hackernews, vc, newsapi, rss, fundbat, reddit, github_trending, hn_comments, ph_deep, google_trends, twitter_pain, all")
+@click.option("--source", default="all", help="Source: yc, producthunt, hackernews, vc, newsapi, rss, fundbat, reddit, github_trending, hn_comments, ph_deep, google_trends, exa_pain, rss_pain, all")
 def fetch(source):
     """Fetch trends from source(s)."""
     if source in ("all", "ycombinator", "yc"):
@@ -270,26 +269,6 @@ def fetch(source):
             get_published_fn=lambda x: x.get("published_at"),
         )
 
-
-    if source in ("all", "twitter_pain", "tp"):
-        with console.status("[bold green]Fetching Twitter pain signals..."):
-            data = twitter_pain.fetch_latest()
-        _display_stories(data, "Twitter Pain Signals")
-
-        # Pre-filter with gemma4:31b before writing to DynamoDB
-        if data:
-            with console.status("[bold cyan]🔍 Filtering pain signals with gemma4:31b..."):
-                pain_filter = PainFilter()
-                data = pain_filter.filter_batch(data)
-
-        _process_source_data(
-            source="twitter_pain",
-            event_type="pain_signal",
-            data=data,
-            get_url_fn=lambda x: x.get("url", ""),
-            get_title_fn=lambda x: x.get("title", ""),
-            get_published_fn=lambda x: x.get("published_at"),
-        )
 
     # Exa semantic pain search
     if source in ("all", "exa_pain", "exa"):
