@@ -5,6 +5,7 @@ import traceback
 import csv
 import sys
 import json as _json
+import os
 from collections import Counter
 from rich.console import Console
 from rich.table import Table
@@ -15,6 +16,7 @@ from sources import yc, producthunt, hackernews, vc_funding, newsapi, rss, fundb
 from sources import reddit, github_trending, hackernews_comments, producthunt_deep, google_trends
 from sources import exa_pain
 from sources import rss_pain
+from sources.sec_enrichment import backfill_profiles as sec_backfill_profiles
 from analyzer.digest import generate_daily_digest, generate_weekly_digest
 from storage.trends import get_all_latest, get_history, save_snapshot as save_json_snapshot
 from storage.s3 import S3Client
@@ -549,6 +551,44 @@ def analyze_v2():
         console.print(table)
 
 
+@cli.command("clean-funding")
+@click.option("--dry-run/--no-dry-run", default=True, help="Preview only (no changes written)")
+def clean_funding(dry_run):
+    """Clean funding data: extract company/amount/sector from title+data."""
+    with console.status("[bold green]Scanning funding records..."):
+        result = funding_client.clean_funding_data(dry_run=dry_run)
+
+    console.print(f"\n[bold]Records:[/bold] {result['total']}")
+    console.print(f"[bold]Company names cleaned:[/bold] {result['company_cleaned']}")
+    console.print(f"[bold]Amounts extracted:[/bold] {result['amount_extracted']}")
+    if result["errors"]:
+        console.print(f"[bold red]Errors:[/bold red] {result['errors']}")
+
+
+@cli.command("mark-analyzed")
+@click.option("--source", default=None, help="Only mark events from this source")
+@click.option("--limit", default=100, help="Max events to mark")
+def mark_analyzed(source, limit):
+    """Mark unanalyzed events as analyzed."""
+    with console.status("[bold green]Fetching unanalyzed events..."):
+        events = dynamo_client.get_unanalyzed_events(limit=limit)
+
+    if source:
+        events = [e for e in events if e.get("source") == source]
+
+    if not events:
+        console.print("[yellow]No unanalyzed events found.[/yellow]")
+        return
+
+    event_ids = [e["event_id"] for e in events]
+    console.print(f"[bold]Marking {len(event_ids)} events as analyzed...[/bold]")
+
+    result = dynamo_client.mark_events_analyzed(event_ids, batch_size=25)
+    console.print(f"[green]✅ Marked {result['success']} events[/green]")
+    if result["failed"]:
+        console.print(f"[red]❌ Failed: {result['failed']}[/red]")
+
+
 @cli.command()
 @click.option("--table", required=True, type=click.Choice(["events", "funding"]), help="Table to export")
 @click.option("--source", default=None, help="Filter by source")
@@ -825,6 +865,286 @@ def dedup(dry_run, threshold):
                 console.print(f"  [green]Deleted {deleted_clusters} duplicate clusters[/green]")
 
     console.print(f"\n[bold]Done.[/bold] Removed {deleted_pains} pains, {deleted_clusters} clusters.")
+
+
+@cli.command("query")
+@click.option("--type", "data_type", required=True,
+              type=click.Choice(["events", "funding", "pains", "clusters", "sec"]),
+              help="Data type to query")
+@click.option("--source", default=None, help="Filter by source")
+@click.option("--category", default=None, help="Filter by category (clusters/pains)")
+@click.option("--limit", default=20, help="Max results")
+@click.option("--sort", default="date", type=click.Choice(["date", "score", "amount"]),
+              help="Sort order")
+def query(data_type, source, category, limit, sort):
+    """Unified query across all data stores."""
+    from storage.chroma_client import ChromaClient
+    from storage.sec_local_db import SecLocalDB
+
+    if data_type == "events":
+        items = dynamo_client.get_unanalyzed_events(limit=limit)
+        if source:
+            items = [i for i in items if i.get("source") == source]
+        table = Table(title="Events")
+        table.add_column("source", style="cyan")
+        table.add_column("type", style="dim")
+        table.add_column("title", style="white")
+        table.add_column("url", style="dim")
+        for item in items[:limit]:
+            table.add_row(
+                item.get("source", ""),
+                item.get("event_type", ""),
+                item.get("title", "")[:50],
+                item.get("url", "")[:60],
+            )
+        console.print(table)
+        console.print(f"\nTotal: {len(items)}")
+
+    if data_type == "funding":
+        # Inline scan of funding table
+        import boto3
+        dynamodb = boto3.resource(
+            "dynamodb",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.environ.get("AWS_REGION", "us-east-1"),
+        )
+        from storage.dynamo import FUNDING_TABLE_NAME
+        table = dynamodb.Table(FUNDING_TABLE_NAME)
+        items = []
+        paginator = table.meta.client.get_paginator("scan")
+        for page in paginator.paginate(TableName=FUNDING_TABLE_NAME):
+            items.extend(page.get("Items", []))
+        if source:
+            items = [i for i in items if i.get("source") == source]
+        table_out = Table(title="Funding")
+        table_out.add_column("source", style="cyan")
+        table_out.add_column("company", style="white")
+        table_out.add_column("amount", style="green", justify="right")
+        table_out.add_column("round", style="dim")
+        for item in items[:limit]:
+            data = item.get("data", {})
+            if isinstance(data, str):
+                import json
+                try:
+                    data = json.loads(data)
+                except Exception:
+                    data = {}
+            table_out.add_row(
+                item.get("source", ""),
+                item.get("title", "")[:30],
+                str(data.get("funding_amount", "")),
+                str(data.get("round", "")),
+            )
+        console.print(table_out)
+        console.print(f"\nTotal: {len(items)}")
+
+    elif data_type == "pains":
+        chroma = ChromaClient()
+        results = chroma.pains.query(query_texts=["pain"], n_results=limit,
+                                     where={"source": source} if source else None,
+                                     include=["metadatas", "documents"])
+        if not results or not results.get("ids"):
+            console.print("[yellow]No pain signals found[/yellow]")
+            return
+        table = Table(title="Pain Signals")
+        table.add_column("source", style="cyan")
+        table.add_column("title", style="white")
+        table.add_column("confidence", style="yellow", justify="right")
+        for i, doc in enumerate(results.get("documents", [])):
+            meta = results.get("metadatas", [{}])[i] if i < len(results.get("metadatas", [])) else {}
+            if category and meta.get("category") != category:
+                continue
+            table.add_row(
+                meta.get("source", "?"),
+                doc[:60] if doc else "?",
+                str(meta.get("confidence", "?")),
+            )
+        console.print(table)
+
+    elif data_type == "clusters":
+        chroma = ChromaClient()
+        results = chroma.clusters.query(query_texts=["opportunity"], n_results=limit,
+                                        where={"category": category} if category else None,
+                                        include=["metadatas", "documents"])
+        if not results or not results.get("ids"):
+            console.print("[yellow]No clusters found[/yellow]")
+            return
+        table = Table(title="Opportunity Clusters")
+        table.add_column("title", style="cyan")
+        table.add_column("score", style="green", justify="right")
+        table.add_column("sources", style="dim")
+        for i, doc in enumerate(results.get("documents", [])):
+            meta = results.get("metadatas", [{}])[i] if i < len(results.get("metadatas", [])) else {}
+            table.add_row(
+                doc[:60] if doc else "?",
+                str(meta.get("total_score", "?")),
+                str(meta.get("sources", [])),
+            )
+        console.print(table)
+
+    elif data_type == "sec":
+        db = SecLocalDB()
+        rows = db.conn.execute(
+            "SELECT entity_name, primary_sector, sub_sector, business_model FROM sec_company_profiles LIMIT ?",
+            (limit,),
+        ).fetchall()
+        table = Table(title="SEC Company Profiles")
+        table.add_column("entity", style="cyan")
+        table.add_column("sector", style="green")
+        table.add_column("sub_sector", style="dim")
+        table.add_column("model", style="white")
+        for row in rows:
+            table.add_row(row[0] or "?", row[1] or "-", row[2] or "-", row[3] or "-")
+        console.print(table)
+
+
+@cli.command("stats")
+def stats():
+    """Show comprehensive data statistics across all stores."""
+    from storage.chroma_client import ChromaClient
+    from storage.sec_local_db import SecLocalDB
+
+    console.print("\n[bold cyan]=== TrendRadar Data Stats ===[/bold cyan]\n")
+
+    # --- Events ---
+    try:
+        all_events = dynamo_client.get_unanalyzed_events(limit=10000)
+        total_events = len(all_events)
+        source_counts: Counter = Counter()
+        analyzed_count = 0
+        for e in all_events:
+            source_counts[e.get("source", "unknown")] += 1
+            if e.get("is_analyzed") == "true":
+                analyzed_count += 1
+        top_sources = source_counts.most_common(5)
+        console.print(f"[green]📊 Events (DynamoDB):[/green] {total_events} total")
+        console.print(f"   Top sources: {', '.join(f'{s} {c}' for s, c in top_sources)}")
+        console.print(f"   Analyzed: {analyzed_count}/{total_events} ({100*analyzed_count/(total_events or 1):.1f}%)")
+    except Exception as e:
+        console.print(f"[red]Events error: {e}[/red]")
+        total_events = 0
+
+    console.print()
+
+    # --- Funding ---
+    try:
+        import boto3
+        dynamodb = boto3.resource(
+            "dynamodb",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.environ.get("AWS_REGION", "us-east-1"),
+        )
+        from storage.dynamo import FUNDING_TABLE_NAME
+        table = dynamodb.Table(FUNDING_TABLE_NAME)
+        all_funding = []
+        paginator = table.meta.client.get_paginator("scan")
+        for page in paginator.paginate(TableName=FUNDING_TABLE_NAME):
+            all_funding.extend(page.get("Items", []))
+        total_funding = len(all_funding)
+        def _parse_data(item):
+            d = item.get("data", {})
+            if isinstance(d, str):
+                try:
+                    return _json.loads(d)
+                except Exception:
+                    return {}
+            return d
+
+        has_amount = 0
+        for f in all_funding:
+            d = _parse_data(f)
+            try:
+                if int(d.get("funding_amount", 0)) > 0:
+                    has_amount += 1
+            except (ValueError, TypeError):
+                pass
+        source_counts: Counter = Counter()
+        for f in all_funding:
+            source_counts[f.get("source", "unknown")] += 1
+        console.print(f"[yellow]💰 Funding (DynamoDB):[/yellow] {total_funding} total")
+        console.print(f"   With amount: {has_amount}, Zero: {total_funding - has_amount}")
+        console.print(f"   Top sources: {', '.join(f'{s} {c}' for s, c in source_counts.most_common(3))}")
+    except Exception as e:
+        console.print(f"[red]Funding error: {e}[/red]")
+        total_funding = 0
+
+    console.print()
+
+    # --- Pain Signals ---
+    try:
+        chroma = ChromaClient()
+        pains = chroma.pains.get(limit=10000, include=["metadatas"])
+        total_pains = len(pains.get("ids", []))
+        source_counts: Counter = Counter()
+        confidences = []
+        for meta in pains.get("metadatas", []):
+            src = meta.get("source", "unknown")
+            source_counts[src] += 1
+            conf = meta.get("confidence")
+            if conf is not None:
+                try:
+                    confidences.append(float(conf))
+                except (TypeError, ValueError):
+                    pass
+        avg_conf = sum(confidences) / len(confidences) if confidences else 0
+        console.print(f"[magenta]⚡ Pain Signals (ChromaDB):[/magenta] {total_pains} total")
+        console.print(f"   Top sources: {', '.join(f'{s} {c}' for s, c in source_counts.most_common(3))}")
+        console.print(f"   Confidence: avg {avg_conf:.1f}")
+    except Exception as e:
+        console.print(f"[red]Pain signals error: {e}[/red]")
+        total_pains = 0
+
+    console.print()
+
+    # --- Clusters ---
+    try:
+        clusters = chroma.clusters.get(limit=10000, include=["metadatas"])
+        total_clusters = len(clusters.get("ids", []))
+        scores = []
+        cat_counts: Counter = Counter()
+        cross_sources = 0
+        for meta in clusters.get("metadatas", []):
+            score = meta.get("total_score")
+            if score is not None:
+                try:
+                    scores.append(float(score))
+                except (TypeError, ValueError):
+                    pass
+            cat = meta.get("category")
+            if cat:
+                cat_counts[cat] += 1
+            if meta.get("cross_source_count"):
+                cross_sources += 1
+        avg_score = sum(scores) / len(scores) if scores else 0
+        console.print(f"[cyan]🎯 Opportunity Clusters (ChromaDB):[/cyan] {total_clusters} total")
+        console.print(f"   Score avg: {avg_score:.1f}, Cross-source: {cross_sources}")
+        if cat_counts:
+            console.print(f"   Top categories: {', '.join(f'{c} {n}' for c, n in cat_counts.most_common(5))}")
+    except Exception as e:
+        console.print(f"[red]Clusters error: {e}[/red]")
+        total_clusters = 0
+
+    console.print()
+
+    # --- SEC ---
+    try:
+        db = SecLocalDB()
+        filings_count = db.get_filings_count()
+        profiles_count = db.get_profiles_count()
+        sector_counts = db.get_sector_counts()
+        # Count profiles with primary_sector
+        enriched = db.conn.execute(
+            "SELECT COUNT(*) FROM sec_company_profiles WHERE primary_sector IS NOT NULL"
+        ).fetchone()[0]
+        console.print(f"[blue]📋 SEC Filings (SQLite):[/blue] {filings_count} filings, {profiles_count} profiles")
+        console.print(f"   Enriched profiles: {enriched}/{profiles_count}")
+        if sector_counts:
+            top_sectors = list(sector_counts.items())[:5]
+            console.print(f"   Top sectors: {', '.join(f'{s} {c}' for s, c in top_sectors)}")
+    except Exception as e:
+        console.print(f"[red]SEC error: {e}[/red]")
 
 
 if __name__ == "__main__":

@@ -5,12 +5,16 @@ Implements global deduplication and event normalization.
 
 import os
 import json
+import re
 import hashlib
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 
 import boto3
 from botocore.exceptions import ClientError
+from rich.console import Console
+
+console = Console()
 
 TABLE_NAME = "trendradar-events"
 FUNDING_TABLE_NAME = "trendradar-funding"
@@ -244,6 +248,133 @@ class FundingClient:
 
         return results
 
+    def clean_funding_data(self, dry_run: bool = True) -> dict:
+        """Scan and clean funding data: extract company/amount/sector from title+data.
+
+        Args:
+            dry_run: If True, only print stats without writing changes
+
+        Returns:
+            Dict with cleaning statistics
+        """
+        stats = {
+            "total": 0,
+            "amount_extracted": 0,
+            "company_cleaned": 0,
+            "errors": 0,
+        }
+
+        # Scan all funding records with pagination
+        paginator = self.table.meta.client.get_paginator("scan")
+        response = paginator.paginate(TableName=FUNDING_TABLE_NAME)
+
+        for page in response:
+            items = page.get("Items", [])
+            for item in items:
+                stats["total"] += 1
+                try:
+                    # Parse data JSON string
+                    data_str = item.get("data", "{}")
+                    data = json.loads(data_str) if isinstance(data_str, str) else data_str
+
+                    title = item.get("title", "")
+                    update_values = {}
+
+                    # Extract real company name from title
+                    # Pattern: "CompanyName raises $X round" or similar
+                    raise_pattern = re.compile(
+                        r"^(.+?)\s+raises?\s+[\$0-9,\.]+\s*(?:million|billion|thousand|b|m|k)?",
+                        re.IGNORECASE,
+                    )
+                    match = raise_pattern.search(title)
+                    if match:
+                        company_name = match.group(1).strip()
+                        if company_name and company_name != title:
+                            update_values["company_name"] = company_name
+                            stats["company_cleaned"] += 1
+
+                    # Extract amount from title if data.amount == 0
+                    amount = data.get("amount", 0)
+                    if amount == 0:
+                        # Try to extract from title with patterns like "$200M" or "$2B"
+                        amount_patterns = [
+                            # $X Billion / $X B
+                            (r"\$([0-9,\.]+)\s*billion", 1_000_000_000),
+                            (r"\$([0-9,\.]+)\s*b\b?$", 1_000_000_000),
+                            # $X Million / $X M
+                            (r"\$([0-9,\.]+)\s*million", 1_000_000),
+                            (r"\$([0-9,\.]+)\s*m\b?$", 1_000_000),
+                            (r"\$([0-9,\.]+)\s*k\b?$", 1_000),
+                        ]
+                        for pattern, multiplier in amount_patterns:
+                            am = re.search(pattern, title, re.IGNORECASE)
+                            if am:
+                                try:
+                                    raw_num = am.group(1).replace(",", "")
+                                    extracted_amount = float(raw_num) * multiplier
+                                    update_values["funding_amount"] = int(extracted_amount)
+                                    stats["amount_extracted"] += 1
+                                    break
+                                except (ValueError, IndexError):
+                                    pass
+                    else:
+                        # Already has amount, just copy to top-level
+                        update_values["funding_amount"] = int(amount)
+
+                    # Standardize sector
+                    sector = data.get("sector", "")
+                    if sector:
+                        sector_lower = sector.lower().strip()
+                        SECTOR_MAP = {
+                            "ai": "AI/ML", "artificial intelligence": "AI/ML", "ml": "AI/ML",
+                            "machine learning": "AI/ML",
+                            "saas": "SaaS", "software": "SaaS",
+                            "fintech": "Fintech", "financial": "Fintech", "finance": "Fintech",
+                            "health": "Health", "healthcare": "Health", "medtech": "Health",
+                            "security": "Security", "cybersecurity": "Security",
+                            "devops": "DevOps",
+                            "developer": "Developer Tools", "developer tools": "Developer Tools",
+                            "data": "Data", "database": "Data",
+                            "edtech": "EdTech", "education": "EdTech",
+                            "ecommerce": "E-commerce", "e-commerce": "E-commerce",
+                            "crypto": "Crypto", "web3": "Crypto", "blockchain": "Crypto",
+                        }
+                        if sector_lower in SECTOR_MAP:
+                            update_values["sector"] = SECTOR_MAP[sector_lower]
+                        elif sector_lower not in ("unknown", ""):
+                            update_values["sector"] = sector
+
+                    # Round stage
+                    round_stage = data.get("round", "")
+                    if round_stage:
+                        update_values["round_stage"] = round_stage
+
+                except Exception:
+                    stats["errors"] += 1
+                    continue
+
+                if update_values and not dry_run:
+                    # Write back top-level fields
+                    try:
+                        self.table.update_item(
+                            Key={
+                                "funding_type#first_seen_date": item["funding_type#first_seen_date"],
+                                "event_id": item["event_id"],
+                            },
+                            UpdateExpression="SET " + ", ".join(f"{k} = :{k}" for k in update_values.keys()),
+                            ExpressionAttributeValues={f":{k}": v for k, v in update_values.items()},
+                        )
+                    except ClientError:
+                        stats["errors"] += 1
+
+        if dry_run:
+            console.print("[yellow]DRY RUN - No changes written[/yellow]")
+        console.print(f"Total records: {stats['total']}")
+        console.print(f"Company names cleaned: {stats['company_cleaned']}")
+        console.print(f"Amounts extracted from title: {stats['amount_extracted']}")
+        console.print(f"Errors: {stats['errors']}")
+        return stats
+
 
 class DynamoClient:
     """Client for interacting with DynamoDB events table."""
@@ -470,3 +601,61 @@ class DynamoClient:
             UpdateExpression=update_expr,
             ExpressionAttributeValues=expr_attrs,
         )
+
+    def mark_events_analyzed(self, event_ids: list[str], batch_size: int = 25) -> dict:
+        """Mark multiple events as analyzed using batch write.
+
+        Args:
+            event_ids: List of event IDs to mark as analyzed
+            batch_size: Number of items per batch (DynamoDB limit is 25)
+
+        Returns:
+            Dict with counts of success and failed
+        """
+        from storage.dynamo import TABLE_NAME
+
+        stats = {"success": 0, "failed": 0}
+
+        # First, resolve event_ids to PKs via event_id-index GSI
+        pk_map = {}  # event_id -> PK (first_seen_date#event_type)
+        for event_id in event_ids:
+            try:
+                response = self.table.query(
+                    IndexName="event_id-index",
+                    KeyConditionExpression="event_id = :event_id",
+                    ExpressionAttributeValues={":event_id": event_id},
+                    Limit=1,
+                )
+                items = response.get("Items", [])
+                if items:
+                    pk_map[event_id] = items[0]["first_seen_date#event_type"]
+                else:
+                    stats["failed"] += 1
+            except ClientError:
+                stats["failed"] += 1
+
+        # Batch write in groups of batch_size
+        for i in range(0, len(pk_map), batch_size):
+            batch = list(pk_map.items())[i:i + batch_size]
+            write_requests = []
+            for event_id, pk in batch:
+                write_requests.append({
+                    "PutRequest": {
+                        "Item": {
+                            "first_seen_date#event_type": pk,
+                            "event_id": event_id,
+                            "is_analyzed": "true",
+                            "last_updated_at": datetime.now(timezone.utc).isoformat(),
+                        }
+                    }
+                })
+
+            try:
+                self.table.meta.client.batch_write_item(
+                    RequestItems={TABLE_NAME: write_requests}
+                )
+                stats["success"] += len(batch)
+            except ClientError:
+                stats["failed"] += len(batch)
+
+        return stats

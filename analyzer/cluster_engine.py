@@ -22,6 +22,20 @@ logger = logging.getLogger(__name__)
 SIMILARITY_THRESHOLD = 0.5
 RATE_LIMIT_INTERVAL = 0.35
 
+SOURCE_TO_CATEGORY = {
+    "hackernews_comments": "Developer Tools",
+    "twitter_pain": "Other",
+    "producthunt_deep": "SaaS",
+    "reddit": "Other",
+    "rss_pain": "Other",
+    "exa_pain": "Other",
+}
+
+CATEGORIES = [
+    "Developer Tools", "AI/ML", "SaaS", "DevOps",
+    "Security", "Data", "Fintech", "EdTech", "Health", "Other",
+]
+
 
 class ClusterEngine:
     """Semantic clustering engine — groups events around pain signals."""
@@ -124,6 +138,7 @@ class ClusterEngine:
                 v = pain.get("verification", {})
                 emb = v.get("embedding") or pain.get("embedding")
                 if emb and pain.get("title"):
+                    pain_category = SOURCE_TO_CATEGORY.get(pain.get("source", ""), "Other")
                     self.chroma.save_pain_signal(
                         pain_text=pain.get("title", ""),
                         source=pain.get("source", ""),
@@ -133,6 +148,7 @@ class ClusterEngine:
                         quality_score=v.get("quality_multiplier", 0),
                         cross_source_count=len(v.get("sources", [])),
                         market_bonus=v.get("market_bonus", 0),
+                        category=pain_category,
                     )
             except Exception as e:
                 logger.warning("Failed to save pain signal: %s", e)
@@ -303,7 +319,7 @@ class ClusterEngine:
         title = pain_text[:80] if pain_text else "Untitled Opportunity"
         description = self._generate_description(pain, layer1, layer2, layer3)
 
-        # Build source summary
+        # Build source summary and cross_source_count
         all_sources = set()
         for ev in layer1 + layer2 + layer3:
             src = ev.get("source", "")
@@ -319,6 +335,7 @@ class ClusterEngine:
             "layer3": layer3,
             "confidence": verification.get("confidence", 0),
             "sources": sorted(all_sources),
+            "cross_source_count": len(all_sources),
             "pain_text": pain_text,
             "embedding": pain_emb,
             "verification": verification,
@@ -462,6 +479,58 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
     # Save
     # ------------------------------------------------------------------
 
+    def _classify_cluster(self, cluster: dict) -> str:
+        """Classify a cluster into a category using LLM."""
+        import os
+        import requests
+
+        title = cluster.get("title", "")
+        description = cluster.get("description", "")
+        layer1_titles = [e.get("title", "") for e in cluster.get("layer1", [])[:3]]
+        layer2_titles = [e.get("title", "") for e in cluster.get("layer2", [])[:3]]
+
+        prompt = (
+            "Classify this startup opportunity cluster into ONE category from this list:\n"
+            "Developer Tools, AI/ML, SaaS, DevOps, Security, Data, Fintech, EdTech, Health, Other\n\n"
+            f"Cluster Title: {title}\n"
+            f"Description: {description}\n"
+            f"Related Pain Signals: {', '.join(layer1_titles) or 'None'}\n"
+            f"Related Tech Signals: {', '.join(layer2_titles) or 'None'}\n\n"
+            "Choose the single best category for this cluster.\n\n"
+            'Respond with ONLY valid JSON, no markdown or explanation:\n{"category": "CategoryName"}'
+        )
+
+        api_key = os.environ.get("OPENROUTER_API_KEY", "")
+        if not api_key:
+            return "Other"
+
+        try:
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": "openai/gpt-oss-120b:free",
+                    "messages": [{"role": "user", "content": prompt}],
+                },
+                timeout=30,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+            import json as json_mod
+            parsed = json_mod.loads(content)
+            cat = parsed.get("category", "Other")
+            # Validate it's a known category
+            if cat in CATEGORIES:
+                return cat
+            return "Other"
+        except Exception as e:
+            logger.warning("Cluster classification failed: %s", e)
+            return "Other"
+
     def _save_cluster(self, cluster: dict) -> dict:
         """Save a scored cluster to Supabase."""
         # Build related events list
@@ -482,6 +551,9 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             "confidence": cluster.get("confidence", 0),
         }
 
+        # Classify cluster before saving
+        cluster_category = self._classify_cluster(cluster)
+
         record = self.chroma.save_opportunity_cluster(
             title=cluster.get("title", "Untitled"),
             description=cluster.get("description", ""),
@@ -490,6 +562,8 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             reasoning=cluster.get("reasoning", ""),
             related_events=related,
             is_actionable=cluster.get("is_actionable", False),
+            category=cluster_category,
+            cross_source_count=cluster.get("cross_source_count", 0),
         )
 
         cluster["cluster_id"] = record.get("id", "")

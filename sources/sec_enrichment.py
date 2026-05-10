@@ -762,6 +762,78 @@ def reenrich_low_quality(name: str, previous_result: dict) -> dict:
     return result
 
 
+def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None):
+    """Backfill primary_sector, sub_sector, target_customer, business_model, main_product.
+
+    For profiles where primary_sector IS NULL, re-run enrichment to extract the missing fields.
+
+    Args:
+        dry_run: If True, only print what would be updated without writing to DB.
+        limit: Optional max number of profiles to process.
+    """
+    from storage.sec_local_db import SecLocalDB
+
+    db = SecLocalDB()
+    # Find profiles missing primary_sector
+    query = "SELECT * FROM sec_company_profiles WHERE primary_sector IS NULL"
+    if limit:
+        query += f" LIMIT {limit}"
+    rows = db.conn.execute(query).fetchall()
+    profiles = [dict(r) for r in rows]
+
+    if not profiles:
+        print("No profiles need backfill (all have primary_sector).")
+        return
+
+    total = len(profiles)
+    print(f"Found {total} profiles needing backfill (dry_run={dry_run})")
+
+    updated = 0
+    errors = 0
+
+    for i, profile in enumerate(profiles, 1):
+        name = profile.get("entity_name") or profile.get("normalized_name", "")
+        print(f"[{i}/{total}] Processing: {name}")
+
+        # Run enrichment
+        result = enrich_company(name)
+
+        # Map result to profile fields
+        update_fields = {
+            "primary_sector": result.get("primary_sector"),
+            "sub_sector": result.get("sub_sector"),
+            "target_customer": result.get("target_customer"),
+            "business_model": result.get("business_model"),
+            "main_product": result.get("main_product"),
+            "description": result.get("description"),
+            "enrichment_source": result.get("enrichment_source"),
+            "enrichment_quality": result.get("enrichment_quality"),
+            "quality_reason": result.get("quality_reason"),
+            "enriched_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+        if dry_run:
+            print(f"  [dry-run] would update: primary_sector={update_fields['primary_sector']}, "
+                  f"sub_sector={update_fields['sub_sector']}, "
+                  f"business_model={update_fields['business_model']}")
+        else:
+            cols = list(update_fields.keys())
+            vals = list(update_fields.values())
+            set_clause = ", ".join(f"{c}=?" for c in cols)
+            db.conn.execute(
+                f"UPDATE sec_company_profiles SET {set_clause} WHERE normalized_name=?",
+                vals + [profile["normalized_name"]],
+            )
+            db.conn.commit()
+            print(f"  [updated] quality={result.get('enrichment_quality')}, primary_sector={update_fields['primary_sector']}")
+            updated += 1
+
+        # Rate limiting: 0.5s between calls
+        time.sleep(0.5)
+
+    print(f"\nDone. {'Would update' if dry_run else 'Updated'} {updated}/{total}, errors={errors}")
+
+
 if __name__ == "__main__":
     # Quick test
     test_name = "Deep Cogito Inc."
