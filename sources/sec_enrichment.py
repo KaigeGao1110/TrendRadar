@@ -763,6 +763,7 @@ def reenrich_low_quality(name: str, previous_result: dict) -> dict:
 
 
 def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None):
+    from datetime import datetime, timezone
     """Backfill primary_sector, sub_sector, target_customer, business_model, main_product.
 
     For profiles where primary_sector IS NULL, re-run enrichment to extract the missing fields.
