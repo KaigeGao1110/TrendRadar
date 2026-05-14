@@ -481,8 +481,7 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
 
     def _classify_cluster(self, cluster: dict) -> str:
         """Classify a cluster into a category using LLM."""
-        import os
-        import requests
+        from analyzer.model_selector import call_openrouter
 
         title = cluster.get("title", "")
         description = cluster.get("description", "")
@@ -500,26 +499,9 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             'Respond with ONLY valid JSON, no markdown or explanation:\n{"category": "CategoryName"}'
         )
 
-        api_key = os.environ.get("OPENROUTER_API_KEY", "")
-        if not api_key:
-            return "Other"
-
         try:
-            resp = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": "openai/gpt-oss-120b:free",
-                    "messages": [{"role": "user", "content": prompt}],
-                },
-                timeout=30,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+            result = call_openrouter(prompt, "cluster_classification", max_tokens=200, temperature=0.3)
+            content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
             import json as json_mod
             parsed = json_mod.loads(content)
             cat = parsed.get("category", "Other")

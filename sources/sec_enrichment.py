@@ -489,22 +489,9 @@ def _try_parse_json_response(content: str) -> Optional[dict]:
     return None
 
 
-def extract_company_info(name: str, text: str) -> dict:
-    """Extract company info from text using OpenRouter LLM with fallback.
-
-    Args:
-        name: Company name.
-        text: Text content about the company.
-
-    Returns:
-        Dict with keys: description, primary_sector, sub_sector, target_customer,
-        business_model, main_product, website.
-        Values may be None if extraction fails.
-    """
-    api_key = _get_openrouter_key()
-    if not api_key:
-        print("OpenRouter API key not found")
-        return _empty_extraction()
+def _enrich_with_model_selector(name: str, text: str) -> dict:
+    """Extract company info using the smart model selector."""
+    from analyzer.model_selector import call_openrouter
 
     prompt = (
         f'Given this text about "{name}", extract JSON with:\n'
@@ -519,64 +506,39 @@ def extract_company_info(name: str, text: str) -> dict:
         f"Text:\n{text[:2500]}"
     )
 
-    last_error = None
-    for model in FALLBACK_MODELS:
-        for attempt in range(3):
-            try:
-                resp = requests.post(
-                    OPENROUTER_API_URL,
-                    headers={
-                        "Authorization": f"Bearer {api_key}",
-                        "Content-Type": "application/json",
-                    },
-                    json={
-                        "model": model,
-                        "messages": [{"role": "user", "content": prompt}],
-                        "max_tokens": 500,
-                        "response_format": {"type": "json_object"},
-                    },
-                    timeout=60,
-                )
-                if resp.status_code == 429:
-                    # Rate limited - wait and retry with same model
-                    retry_after = int(resp.headers.get("retry-after", 10))
-                    print(f"Rate limited on {model}, waiting {retry_after}s")
-                    time.sleep(retry_after)
-                    continue
-                resp.raise_for_status()
-                data = resp.json()
+    try:
+        result = call_openrouter(prompt, "sec_enrichment", max_tokens=500, temperature=0.3)
+        content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
+        parsed = _try_parse_json_response(content)
+        if parsed is not None:
+            return {
+                "description": parsed.get("description"),
+                "primary_sector": parsed.get("primary_sector"),
+                "sub_sector": parsed.get("sub_sector"),
+                "target_customer": parsed.get("target_customer"),
+                "business_model": parsed.get("business_model"),
+                "main_product": parsed.get("main_product"),
+                "website": parsed.get("website"),
+            }
+    except Exception as e:
+        print(f"Model selector failed for '{name}': {e}")
 
-                if "choices" not in data:
-                    last_error = f"unexpected response: {json.dumps(data)[:200]}"
-                    break
-
-                choice = data["choices"][0]
-                content = choice.get("message", {}).get("content")
-                if not content:
-                    content = choice.get("text") or choice.get("delta", {}).get("content")
-                if not content:
-                    last_error = "empty content"
-                    break
-
-                parsed = _try_parse_json_response(content)
-                if parsed is not None:
-                    return {
-                        "description": parsed.get("description"),
-                        "primary_sector": parsed.get("primary_sector"),
-                        "sub_sector": parsed.get("sub_sector"),
-                        "target_customer": parsed.get("target_customer"),
-                        "business_model": parsed.get("business_model"),
-                        "main_product": parsed.get("main_product"),
-                        "website": parsed.get("website"),
-                    }
-                last_error = f"parse failed for {model}"
-                break
-            except requests.RequestException as e:
-                last_error = f"{model} error: {e}"
-                break
-
-    print(f"LLM extraction failed for '{name}': {last_error}")
     return _empty_extraction()
+
+
+def extract_company_info(name: str, text: str) -> dict:
+    """Extract company info from text using the smart model selector.
+
+    Args:
+        name: Company name.
+        text: Text content about the company.
+
+    Returns:
+        Dict with keys: description, primary_sector, sub_sector, target_customer,
+        business_model, main_product, website.
+        Values may be None if extraction fails.
+    """
+    return _enrich_with_model_selector(name, text)
 
 
 def _empty_extraction() -> dict:

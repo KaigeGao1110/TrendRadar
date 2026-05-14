@@ -216,7 +216,7 @@ class ChromaClient:
             Dict with counts of updated/skipped.
         """
         import os
-        import requests
+        from analyzer.model_selector import call_openrouter
 
         results = {"pains_updated": 0, "pains_skipped": 0, "clusters_updated": 0, "clusters_skipped": 0}
 
@@ -269,16 +269,6 @@ class ChromaClient:
             return results
 
         # Classify in batches of 10
-        api_key = os.environ.get("OPENROUTER_API_KEY", "")
-        if not api_key:
-            logger.warning("OPENROUTER_API_KEY not set, skipping cluster classification")
-            return results
-
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        }
-
         batch_size = 10
         for batch_start in range(0, len(clusters_to_update), batch_size):
             batch = clusters_to_update[batch_start:batch_start + batch_size]
@@ -300,15 +290,8 @@ Respond with ONLY valid JSON, a list of category names in order:
 {{"categories": ["Category1", "Category2", ...]}}"""
 
             try:
-                resp = requests.post(
-                    "https://openrouter.ai/api/v1/chat/completions",
-                    headers=headers,
-                    json={"model": "openai/gpt-oss-120b:free", "messages": [{"role": "user", "content": prompt}]},
-                    timeout=60,
-                )
-                resp.raise_for_status()
-                data = resp.json()
-                content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                result = call_openrouter(prompt, "cluster_classification", max_tokens=300)
+                content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
                 import json as json_mod
                 parsed = json_mod.loads(content)
                 categories = parsed.get("categories", [])

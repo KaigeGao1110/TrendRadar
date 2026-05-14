@@ -5,14 +5,12 @@ frustrations, and unmet needs mentioned in the content.
 """
 
 import os
-import json
 import re
-import requests
 from datetime import datetime
 from sources.rss import fetch_all_newsletters, NEWSLETTERS
 
-OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_MODEL = "openai/gpt-oss-120b:free"
+from analyzer.model_selector import call_openrouter
+
 REQUEST_TIMEOUT = 30
 
 
@@ -26,11 +24,7 @@ def extract_pains_from_text(text: str, source: str = "") -> list[dict]:
     Returns:
         List of pain signals: [{pain, context, severity, category}]
     """
-    api_key = os.environ.get("OPENROUTER_API_KEY", "")
-    if not api_key:
-        return []
-    
-    prompt = f"""Analyze this newsletter content and extract pain points, frustrations, 
+    prompt = f"""Analyze this newsletter content and extract pain points, frustrations,
 and unmet needs. Focus on:
 - Tools/software that people complain about
 - Processes that are described as broken or slow
@@ -41,30 +35,15 @@ Source: {source}
 Content: {text[:2000]}
 
 Return JSON array of pain signals (max 5):
-[{{"pain": "description of the pain point", "context": "where/how it was mentioned", 
+[{{"pain": "description of the pain point", "context": "where/how it was mentioned",
    "severity": "high/medium/low", "category": "industry or topic"}}]
 
 Return ONLY valid JSON array. If no pain signals found, return empty array [].
 """
-    
+
     try:
-        resp = requests.post(
-            OPENROUTER_API_URL,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": OPENROUTER_MODEL,
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 500,
-                "temperature": 0.3,
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        content = data["choices"][0]["message"]["content"]
+        result = call_openrouter(prompt, "rss_pain_extraction", max_tokens=500, temperature=0.3)
+        content = result["choices"][0]["message"]["content"]
         
         # Parse JSON
         try:
