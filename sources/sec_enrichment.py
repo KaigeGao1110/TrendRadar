@@ -772,9 +772,11 @@ def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None, workers
         limit: Optional max number of profiles to process.
         workers: Number of parallel threads (default 4). I/O-bound so 4-8 is good.
     """
+    from storage.sec_local_db import SecLocalDB
     from concurrent.futures import ThreadPoolExecutor, as_completed
     import threading
 
+    from datetime import datetime, timezone
     db = SecLocalDB()
     query = "SELECT * FROM sec_company_profiles WHERE primary_sector IS NULL"
     if limit:
