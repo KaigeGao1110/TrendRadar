@@ -762,8 +762,7 @@ def reenrich_low_quality(name: str, previous_result: dict) -> dict:
     return result
 
 
-def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None):
-    from datetime import datetime, timezone
+def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None, workers: int = 4):
     """Backfill primary_sector, sub_sector, target_customer, business_model, main_product.
 
     For profiles where primary_sector IS NULL, re-run enrichment to extract the missing fields.
@@ -771,11 +770,12 @@ def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None):
     Args:
         dry_run: If True, only print what would be updated without writing to DB.
         limit: Optional max number of profiles to process.
+        workers: Number of parallel threads (default 4). I/O-bound so 4-8 is good.
     """
-    from storage.sec_local_db import SecLocalDB
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
 
     db = SecLocalDB()
-    # Find profiles missing primary_sector
     query = "SELECT * FROM sec_company_profiles WHERE primary_sector IS NULL"
     if limit:
         query += f" LIMIT {limit}"
@@ -787,52 +787,71 @@ def backfill_profiles(dry_run: bool = True, limit: Optional[int] = None):
         return
 
     total = len(profiles)
-    print(f"Found {total} profiles needing backfill (dry_run={dry_run})")
+    print(f"Found {total} profiles needing backfill (dry_run={dry_run}, workers={workers})")
 
-    updated = 0
-    errors = 0
+    lock = threading.Lock()
+    counter = [0]
+    updated = [0]
+    errors = [0]
+    results_to_write = []
+    write_lock = threading.Lock()
 
-    for i, profile in enumerate(profiles, 1):
+    def process_one(args):
+        i, profile = args
         name = profile.get("entity_name") or profile.get("normalized_name", "")
-        print(f"[{i}/{total}] Processing: {name}")
-
-        # Run enrichment
-        result = enrich_company(name)
-
-        # Map result to profile fields
-        update_fields = {
-            "primary_sector": result.get("primary_sector"),
-            "sub_sector": result.get("sub_sector"),
-            "target_customer": result.get("target_customer"),
-            "business_model": result.get("business_model"),
-            "main_product": result.get("main_product"),
-            "description": result.get("description"),
-            "enrichment_source": result.get("enrichment_source"),
-            "enrichment_quality": result.get("enrichment_quality"),
-            "quality_reason": result.get("quality_reason"),
-            "enriched_at": datetime.now(timezone.utc).isoformat(),
-        }
-
-        if dry_run:
-            print(f"  [dry-run] would update: primary_sector={update_fields['primary_sector']}, "
-                  f"sub_sector={update_fields['sub_sector']}, "
-                  f"business_model={update_fields['business_model']}")
-        else:
-            cols = list(update_fields.keys())
-            vals = list(update_fields.values())
-            set_clause = ", ".join(f"{c}=?" for c in cols)
-            db.conn.execute(
-                f"UPDATE sec_company_profiles SET {set_clause} WHERE normalized_name=?",
-                vals + [profile["normalized_name"]],
-            )
-            db.conn.commit()
-            print(f"  [updated] quality={result.get('enrichment_quality')}, primary_sector={update_fields['primary_sector']}")
-            updated += 1
-
-        # Rate limiting: 0.5s between calls
+        with lock:
+            counter[0] += 1
+            pos = counter[0]
+        print(f"[{pos}/{total}] Processing: {name}", flush=True)
+        try:
+            result = enrich_company(name)
+            update_fields = {
+                "primary_sector": result.get("primary_sector"),
+                "sub_sector": result.get("sub_sector"),
+                "target_customer": result.get("target_customer"),
+                "business_model": result.get("business_model"),
+                "main_product": result.get("main_product"),
+                "description": result.get("description"),
+                "enrichment_source": result.get("enrichment_source"),
+                "enrichment_quality": result.get("enrichment_quality"),
+                "quality_reason": result.get("quality_reason"),
+                "enriched_at": datetime.now(timezone.utc).isoformat(),
+            }
+            if dry_run:
+                print(f"  [dry-run] primary_sector={update_fields['primary_sector']}, "
+                      f"quality={update_fields['enrichment_quality']}", flush=True)
+            else:
+                with write_lock:
+                    results_to_write.append((profile["normalized_name"], update_fields))
+                    updated[0] += 1
+        except Exception as e:
+            print(f"  [error] {e}", flush=True)
+            with lock:
+                errors[0] += 1
         time.sleep(0.5)
 
-    print(f"\nDone. {'Would update' if dry_run else 'Updated'} {updated}/{total}, errors={errors}")
+    args_list = list(enumerate(profiles, 1))
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = [executor.submit(process_one, args) for args in args_list]
+        for f in as_completed(futures):
+            pass
+
+    if not dry_run and results_to_write:
+        print(f"\nWriting {len(results_to_write)} results to DB...", flush=True)
+        cols = ["primary_sector", "sub_sector", "target_customer", "business_model",
+                "main_product", "description", "enrichment_source", "enrichment_quality",
+                "quality_reason", "enriched_at"]
+        set_clause = ", ".join(f"{c}=?" for c in cols)
+        for norm_name, fields in results_to_write:
+            vals = [fields[c] for c in cols] + [norm_name]
+            db.conn.execute(
+                f"UPDATE sec_company_profiles SET {set_clause} WHERE normalized_name=?",
+                vals
+            )
+        db.conn.commit()
+        print(f"Wrote {len(results_to_write)} records.", flush=True)
+
+    print(f"\nDone. {'Would update' if dry_run else 'Updated'} {updated[0]}/{total}, errors={errors[0]}")
 
 
 if __name__ == "__main__":

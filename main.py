@@ -441,7 +441,8 @@ from analyzer.cluster_engine import ClusterEngine
 
 
 @cli.command()
-def analyze_v2():
+@click.option("--timeout", default=1800, help="Timeout in seconds (default 1800 = 30min)")
+def analyze_v2(timeout):
     """Run v2.1 analysis: embedding + clustering + verification + Obsidian output."""
     import json as _json
     from datetime import datetime as _dt, timezone as _tz
@@ -464,6 +465,14 @@ def analyze_v2():
                 _os.environ["DEEPSEEK_API_KEY"] = env_vals["DEEPSEEK_API_KEY"]
         except Exception:
             pass
+
+    # Timeout handler
+    import signal
+    def _timeout_handler(_signum, _frame):
+        console.print("[red]❌ Timeout reached ([/red]" + str(timeout) + "[red]s)[/red]")
+        raise SystemExit(1)
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(timeout)
 
     with console.status("[bold green]Initializing v2.1 analysis pipeline..."):
         try:
