@@ -526,8 +526,72 @@ def _enrich_with_model_selector(name: str, text: str) -> dict:
     return _empty_extraction()
 
 
+def _enrich_with_mimo(name: str, text: str) -> dict:
+    """Extract company info using Xiaomi mimo-v2.5 via OpenAI-compatible API."""
+    import requests as _req
+
+    # Load MIMO_API_KEY from openclaw config
+    mimo_key = os.environ.get("MIMO_API_KEY")
+    if not mimo_key:
+        config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+        if os.path.exists(config_path):
+            with open(config_path, "r", encoding="utf-8") as f:
+                _cfg = json.load(f)
+            mimo_key = _cfg.get("env", {}).get("MIMO_API_KEY")
+    if not mimo_key:
+        print(f"MIMO_API_KEY not found, falling back to model selector for '{name}'")
+        return _enrich_with_model_selector(name, text)
+
+    prompt = (
+        f'Given this text about "{name}", extract JSON with:\n'
+        f"  description: one sentence describing what the company does\n"
+        f"  primary_sector: broad category (DevOps, Healthcare, Finance, Education, Logistics, Manufacturing, Media, Energy, Real Estate, Agriculture, Defense, Construction, Retail, Food, Gaming, Legal, Travel, Other)\n"
+        f"  sub_sector: specific niche within that sector\n"
+        f"  target_customer: who buys this product/service (developers, enterprises, SMBs, consumers, hospitals, government, etc.)\n"
+        f"  business_model: how they make money (SaaS subscription, marketplace, hardware sales, consulting, licensing, advertising, etc.)\n"
+        f"  main_product: name of core product/service if mentioned\n"
+        f"  website: homepage URL if available\n\n"
+        f'Return ONLY valid JSON, no markdown, no explanation.\n\n'
+        f"Text:\n{text[:2500]}"
+    )
+
+    try:
+        resp = _req.post(
+            "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {mimo_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "mimo-v2.5",
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 500,
+                "temperature": 0.3,
+            },
+            timeout=30,
+        )
+        resp.raise_for_status()
+        content = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+        parsed = _try_parse_json_response(content)
+        if parsed is not None:
+            return {
+                "description": parsed.get("description"),
+                "primary_sector": parsed.get("primary_sector"),
+                "sub_sector": parsed.get("sub_sector"),
+                "target_customer": parsed.get("target_customer"),
+                "business_model": parsed.get("business_model"),
+                "main_product": parsed.get("main_product"),
+                "website": parsed.get("website"),
+            }
+    except Exception as e:
+        print(f"MIMO v2.5 failed for '{name}': {e}, falling back to model selector")
+        return _enrich_with_model_selector(name, text)
+
+    return _empty_extraction()
+
+
 def extract_company_info(name: str, text: str) -> dict:
-    """Extract company info from text using the smart model selector.
+    """Extract company info from text using mimo-v2.5.
 
     Args:
         name: Company name.
@@ -538,7 +602,7 @@ def extract_company_info(name: str, text: str) -> dict:
         business_model, main_product, website.
         Values may be None if extraction fails.
     """
-    return _enrich_with_model_selector(name, text)
+    return _enrich_with_mimo(name, text)
 
 
 def _empty_extraction() -> dict:
