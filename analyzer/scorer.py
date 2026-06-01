@@ -35,13 +35,33 @@ BATCH_SIZE = 20
 RATE_LIMIT_INTERVAL = 0.35  # ~3 requests/sec max
 
 
+def _get_mimo_api_key() -> str:
+    """Get MIMO API key from env or openclaw config."""
+    key = os.environ.get("MIMO_API_KEY", "")
+    if not key:
+        config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+        if os.path.exists(config_path):
+            import json as _json
+            with open(config_path, "r", encoding="utf-8") as f:
+                _cfg = _json.load(f)
+            key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+    return key
+
+
 def _get_client() -> OpenAI:
-    """Get OpenAI-compatible client pointing to DeepSeek API or local Ollama fallback."""
-    api_key = os.environ.get("DEEPSEEK_API_KEY", "")
+    """Get OpenAI-compatible client pointing to Xiaomi MiMo API or local Ollama fallback."""
+    api_key = _get_mimo_api_key()
     if api_key:
         return OpenAI(
-            base_url="https://api.deepseek.com/v1",
+            base_url="https://token-plan-sgp.xiaomimimo.com/v1",
             api_key=api_key,
+        )
+    # Fallback to DeepSeek
+    ds_key = os.environ.get("DEEPSEEK_API_KEY", "")
+    if ds_key:
+        return OpenAI(
+            base_url="https://api.deepseek.com/v1",
+            api_key=ds_key,
         )
     # Fallback to Ollama
     return OpenAI(
@@ -50,7 +70,7 @@ def _get_client() -> OpenAI:
     )
 
 
-SCORING_MODEL = "deepseek-chat"
+SCORING_MODEL = "mimo-v2.5"
 
 
 SCORING_SYSTEM_PROMPT = """You are an expert startup opportunity analyst. Score each event on three dimensions:

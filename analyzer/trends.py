@@ -1,19 +1,36 @@
-"""AI-powered trend analysis across all data sources."""
+"""AI-powered trend analysis across all data sources — using Xiaomi MiMo v2.5."""
 
 import os
 import json
 import re
+import logging
 from typing import Optional
 from collections import Counter
 
-# Try to get API key from environment
-try:
-    import anthropic
-    ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
-except ImportError:
-    client = None
-    ANTHROPIC_API_KEY = ""
+logger = logging.getLogger(__name__)
+
+# MiMo v2.5 client (OpenAI-compatible)
+from openai import OpenAI
+
+
+def _get_mimo_api_key() -> str:
+    """Get MIMO API key from env or openclaw config."""
+    key = os.environ.get("MIMO_API_KEY", "")
+    if not key:
+        config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+        if os.path.exists(config_path):
+            with open(config_path, "r", encoding="utf-8") as f:
+                _cfg = json.load(f)
+            key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+    return key
+
+
+_mimo_key = _get_mimo_api_key()
+client = OpenAI(
+    base_url="https://token-plan-sgp.xiaomimimo.com/v1",
+    api_key=_mimo_key,
+) if _mimo_key else None
+MIMO_MODEL = "mimo-v2.5"
 
 
 def analyze_daily_trends(all_data: dict) -> dict:
@@ -35,13 +52,13 @@ def analyze_daily_trends(all_data: dict) -> dict:
     heuristic = _heuristic_analysis(all_data)
 
     # If LLM available, enhance with AI analysis
-    if client and ANTHROPIC_API_KEY:
+    if client:
         try:
             llm_result = _llm_analysis(all_data, heuristic)
             if llm_result:
                 return llm_result
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning("LLM analysis failed: %s", e)
 
     return heuristic
 
@@ -74,13 +91,13 @@ Respond with JSON only:
   "raw_insights": "brief analysis"
 }}
 """
-    response = client.messages.create(
-        model=os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
+    response = client.chat.completions.create(
+        model=MIMO_MODEL,
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )
 
-    text = response.content[0].text if response.content else "{}"
+    text = response.choices[0].message.content if response.choices else "{}"
     json_match = re.search(r'\{.*\}', text, re.DOTALL)
     if json_match:
         result = json.loads(json_match.group())

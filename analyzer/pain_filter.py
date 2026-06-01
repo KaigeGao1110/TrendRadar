@@ -1,6 +1,6 @@
-"""AI-powered pain point pre-filter using DeepSeek V4 Flash via DeepSeek API.
+"""AI-powered pain point pre-filter using Xiaomi MiMo v2.5.
 
-Filters Twitter pain signals before DynamoDB write to remove noise
+Filters pain signals before DynamoDB write to remove noise
 (non-startup-related content, pure venting, spam, etc.).
 """
 
@@ -20,9 +20,8 @@ from rich.table import Table
 logger = logging.getLogger(__name__)
 console = Console()
 
-DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
-DEEPSEEK_MODEL = "deepseek-chat"
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+MIMO_ENDPOINT = "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions"
+MIMO_MODEL = "mimo-v2.5"
 REQUEST_TIMEOUT = 30
 BATCH_TIMEOUT = 120  # seconds for entire batch
 CALL_INTERVAL = 0.3  # seconds between calls
@@ -59,22 +58,34 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
 
 
 class PainFilter:
-    """Pre-filter pain signals using DeepSeek V4 Flash."""
+    """Pre-filter pain signals using Xiaomi MiMo v2.5."""
 
     def __init__(self):
         self.stats = {"total": 0, "passed": 0, "rejected": 0, "errors": 0}
         self.reject_reasons: Counter = Counter()
+        self._mimo_key = self._get_mimo_key()
 
-    def _call_deepseek(self, prompt: str) -> str | None:
-        """Call DeepSeek API, falling back to Ollama if API key not set."""
-        # Try DeepSeek first
-        if DEEPSEEK_API_KEY:
+    def _get_mimo_key(self) -> str:
+        """Get MIMO API key from env or openclaw config."""
+        key = os.environ.get("MIMO_API_KEY", "")
+        if not key:
+            config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+            if os.path.exists(config_path):
+                with open(config_path, "r", encoding="utf-8") as f:
+                    _cfg = json.load(f)
+                key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+        return key
+
+    def _call_model(self, prompt: str) -> str | None:
+        """Call MiMo v2.5, falling back to DeepSeek then Ollama."""
+        # Try MiMo first
+        if self._mimo_key:
             try:
                 resp = requests.post(
-                    DEEPSEEK_ENDPOINT,
-                    headers={"Authorization": f"Bearer {DEEPSEEK_API_KEY}"},
+                    MIMO_ENDPOINT,
+                    headers={"Authorization": f"Bearer {self._mimo_key}"},
                     json={
-                        "model": DEEPSEEK_MODEL,
+                        "model": MIMO_MODEL,
                         "messages": [{"role": "user", "content": prompt}],
                         "temperature": 0.0,
                         "max_tokens": MAX_TOKENS,
@@ -84,13 +95,35 @@ class PainFilter:
                 resp.raise_for_status()
                 data = resp.json()
                 choices = data.get("choices", [])
-                if not choices:
-                    return None
-                return choices[0].get("message", {}).get("content", "") or None
+                if choices:
+                    return choices[0].get("message", {}).get("content", "") or None
             except requests.exceptions.RequestException as e:
-                logger.warning("DeepSeek request failed: %s", e)
+                logger.warning("MiMo request failed: %s, trying fallback", e)
 
-        # Fallback to Ollama if no API key
+        # Fallback to DeepSeek
+        ds_key = os.environ.get("DEEPSEEK_API_KEY", "")
+        if ds_key:
+            try:
+                resp = requests.post(
+                    "https://api.deepseek.com/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {ds_key}"},
+                    json={
+                        "model": "deepseek-chat",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.0,
+                        "max_tokens": MAX_TOKENS,
+                    },
+                    timeout=REQUEST_TIMEOUT,
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                choices = data.get("choices", [])
+                if choices:
+                    return choices[0].get("message", {}).get("content", "") or None
+            except requests.exceptions.RequestException as e:
+                logger.warning("DeepSeek fallback failed: %s", e)
+
+        # Fallback to Ollama
         try:
             resp = requests.post(
                 "http://localhost:11434/v1/chat/completions",
@@ -203,7 +236,7 @@ class PainFilter:
             views=views,
         )
 
-        raw = self._call_deepseek(user_prompt)
+        raw = self._call_model(user_prompt)
         if raw is None:
             # On error, conservatively pass through (don't lose data)
             return True, "deepseek_unavailable_passed_through"
