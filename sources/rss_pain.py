@@ -1,21 +1,33 @@
-"""RSS Pain Extractor — extract pain signals from newsletter content using LLM.
+"""RSS Pain Extractor — extract pain signals from newsletter content using Xiaomi MiMo v2.5.
 
-Fetches RSS newsletters and uses OpenRouter free model to identify pain points,
+Fetches RSS newsletters and uses MiMo v2.5 to identify pain points,
 frustrations, and unmet needs mentioned in the content.
 """
 
 import os
 import re
+import json
+import requests
 from datetime import datetime
 from sources.rss import fetch_all_newsletters, NEWSLETTERS
-
-from analyzer.model_selector import call_openrouter
 
 REQUEST_TIMEOUT = 30
 
 
+def _get_mimo_key() -> str:
+    """Get MIMO API key from env or openclaw config."""
+    key = os.environ.get("MIMO_API_KEY", "")
+    if not key:
+        config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+        if os.path.exists(config_path):
+            with open(config_path, "r", encoding="utf-8") as f:
+                _cfg = json.load(f)
+            key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+    return key
+
+
 def extract_pains_from_text(text: str, source: str = "") -> list[dict]:
-    """Use LLM to extract pain signals from text.
+    """Use MiMo v2.5 to extract pain signals from text.
     
     Args:
         text: Newsletter content to analyze
@@ -41,9 +53,27 @@ Return JSON array of pain signals (max 5):
 Return ONLY valid JSON array. If no pain signals found, return empty array [].
 """
 
+    mimo_key = _get_mimo_key()
     try:
-        result = call_openrouter(prompt, "rss_pain_extraction", max_tokens=500, temperature=0.3)
-        content = result["choices"][0]["message"]["content"]
+        if mimo_key:
+            resp = requests.post(
+                "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+                headers={"Authorization": f"Bearer {mimo_key}"},
+                json={
+                    "model": "mimo-v2.5",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 500,
+                    "temperature": 0.3,
+                },
+                timeout=REQUEST_TIMEOUT,
+            )
+            resp.raise_for_status()
+            content = resp.json()["choices"][0]["message"]["content"]
+        else:
+            # Fallback to OpenRouter
+            from analyzer.model_selector import call_openrouter
+            result = call_openrouter(prompt, "rss_pain_extraction", max_tokens=500, temperature=0.3)
+            content = result["choices"][0]["message"]["content"]
         
         # Parse JSON
         try:

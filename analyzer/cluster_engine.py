@@ -6,6 +6,7 @@ Uses embedding similarity for cross-source semantic matching.
 
 import json
 import logging
+import os
 import re
 import time
 from datetime import datetime, timezone
@@ -480,8 +481,8 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
     # ------------------------------------------------------------------
 
     def _classify_cluster(self, cluster: dict) -> str:
-        """Classify a cluster into a category using LLM."""
-        from analyzer.model_selector import call_openrouter
+        """Classify a cluster into a category using MiMo v2.5."""
+        import requests as _req
 
         title = cluster.get("title", "")
         description = cluster.get("description", "")
@@ -499,9 +500,37 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             'Respond with ONLY valid JSON, no markdown or explanation:\n{"category": "CategoryName"}'
         )
 
+        # Get MiMo API key
+        mimo_key = os.environ.get("MIMO_API_KEY", "") if 'os' in dir() else ""
+        if not mimo_key:
+            import os as _os
+            config_path = _os.path.expanduser("~/.openclaw/openclaw.json")
+            if _os.path.exists(config_path):
+                with open(config_path, "r", encoding="utf-8") as f:
+                    _cfg = json.load(f)
+                mimo_key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+
         try:
-            result = call_openrouter(prompt, "cluster_classification", max_tokens=200, temperature=0.3)
-            content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
+            if mimo_key:
+                resp = _req.post(
+                    "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {mimo_key}"},
+                    json={
+                        "model": "mimo-v2.5",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "max_tokens": 200,
+                        "temperature": 0.3,
+                    },
+                    timeout=30,
+                )
+                resp.raise_for_status()
+                content = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "")
+            else:
+                # Fallback to OpenRouter
+                from analyzer.model_selector import call_openrouter
+                result = call_openrouter(prompt, "cluster_classification", max_tokens=200, temperature=0.3)
+                content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
+
             import json as json_mod
             parsed = json_mod.loads(content)
             cat = parsed.get("category", "Other")
