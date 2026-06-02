@@ -557,7 +557,7 @@ def _enrich_with_mimo(name: str, text: str) -> dict:
 
     try:
         resp = _req.post(
-            "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+            "https://api.xiaomimimo.com/v1/chat/completions",
             headers={
                 "Authorization": f"Bearer {mimo_key}",
                 "Content-Type": "application/json",

@@ -53,7 +53,7 @@ def _get_client() -> OpenAI:
     api_key = _get_mimo_api_key()
     if api_key:
         return OpenAI(
-            base_url="https://token-plan-sgp.xiaomimimo.com/v1",
+            base_url="https://api.xiaomimimo.com/v1",
             api_key=api_key,
         )
     # Fallback to DeepSeek

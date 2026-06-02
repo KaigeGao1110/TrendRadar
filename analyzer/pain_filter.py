@@ -20,7 +20,7 @@ from rich.table import Table
 logger = logging.getLogger(__name__)
 console = Console()
 
-MIMO_ENDPOINT = "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions"
+MIMO_ENDPOINT = "https://api.xiaomimimo.com/v1/chat/completions"
 MIMO_MODEL = "mimo-v2.5"
 REQUEST_TIMEOUT = 30
 BATCH_TIMEOUT = 120  # seconds for entire batch

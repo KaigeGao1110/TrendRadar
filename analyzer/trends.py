@@ -27,7 +27,7 @@ def _get_mimo_api_key() -> str:
 
 _mimo_key = _get_mimo_api_key()
 client = OpenAI(
-    base_url="https://token-plan-sgp.xiaomimimo.com/v1",
+    base_url="https://api.xiaomimimo.com/v1",
     api_key=_mimo_key,
 ) if _mimo_key else None
 MIMO_MODEL = "mimo-v2.5"
