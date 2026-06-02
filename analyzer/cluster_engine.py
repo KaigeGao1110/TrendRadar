@@ -513,7 +513,7 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
         try:
             if mimo_key:
                 resp = _req.post(
-                    "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+                    "https://api.xiaomimimo.com/v1/chat/completions",
                     headers={"Authorization": f"Bearer {mimo_key}"},
                     json={
                         "model": "mimo-v2.5",

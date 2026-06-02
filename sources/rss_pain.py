@@ -57,7 +57,7 @@ Return ONLY valid JSON array. If no pain signals found, return empty array [].
     try:
         if mimo_key:
             resp = requests.post(
-                "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+                "https://api.xiaomimimo.com/v1/chat/completions",
                 headers={"Authorization": f"Bearer {mimo_key}"},
                 json={
                     "model": "mimo-v2.5",
