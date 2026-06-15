@@ -1,4 +1,4 @@
-"""AI-powered trend analysis across all data sources — using Xiaomi MiMo v2.5."""
+"""AI-powered trend analysis across all data sources — using DeepSeek V4 Flash."""
 
 import os
 import json
@@ -9,28 +9,28 @@ from collections import Counter
 
 logger = logging.getLogger(__name__)
 
-# MiMo v2.5 client (OpenAI-compatible)
+# DeepSeek V4 Flash client (OpenAI-compatible)
 from openai import OpenAI
 
 
-def _get_mimo_api_key() -> str:
-    """Get MIMO API key from env or openclaw config."""
-    key = os.environ.get("MIMO_API_KEY", "")
+def _get_deepseek_api_key() -> str:
+    """Get DeepSeek API key from env or openclaw config."""
+    key = os.environ.get("DEEPSEEK_API_KEY", "")
     if not key:
         config_path = os.path.expanduser("~/.openclaw/openclaw.json")
         if os.path.exists(config_path):
             with open(config_path, "r", encoding="utf-8") as f:
                 _cfg = json.load(f)
-            key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+            key = _cfg.get("env", {}).get("DEEPSEEK_API_KEY", "")
     return key
 
 
-_mimo_key = _get_mimo_api_key()
+_ds_key = _get_deepseek_api_key()
 client = OpenAI(
-    base_url="https://api.xiaomimimo.com/v1",
-    api_key=_mimo_key,
-) if _mimo_key else None
-MIMO_MODEL = "mimo-v2.5"
+    base_url="https://api.deepseek.com/v1",
+    api_key=_ds_key,
+) if _ds_key else None
+DEEPSEEK_MODEL = "deepseek-v4-flash"
 
 
 def analyze_daily_trends(all_data: dict) -> dict:
@@ -92,7 +92,7 @@ Respond with JSON only:
 }}
 """
     response = client.chat.completions.create(
-        model=MIMO_MODEL,
+        model=DEEPSEEK_MODEL,
         max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )

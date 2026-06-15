@@ -1,6 +1,6 @@
-"""RSS Pain Extractor — extract pain signals from newsletter content using Xiaomi MiMo v2.5.
+"""RSS Pain Extractor — extract pain signals from newsletter content using DeepSeek V4 Flash.
 
-Fetches RSS newsletters and uses MiMo v2.5 to identify pain points,
+Fetches RSS newsletters and uses DeepSeek to identify pain points,
 frustrations, and unmet needs mentioned in the content.
 """
 
@@ -14,20 +14,20 @@ from sources.rss import fetch_all_newsletters, NEWSLETTERS
 REQUEST_TIMEOUT = 30
 
 
-def _get_mimo_key() -> str:
-    """Get MIMO API key from env or openclaw config."""
-    key = os.environ.get("MIMO_API_KEY", "")
+def _get_ds_key() -> str:
+    """Get DeepSeek API key from env or openclaw config."""
+    key = os.environ.get("DEEPSEEK_API_KEY", "")
     if not key:
         config_path = os.path.expanduser("~/.openclaw/openclaw.json")
         if os.path.exists(config_path):
             with open(config_path, "r", encoding="utf-8") as f:
                 _cfg = json.load(f)
-            key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+            key = _cfg.get("env", {}).get("DEEPSEEK_API_KEY", "")
     return key
 
 
 def extract_pains_from_text(text: str, source: str = "") -> list[dict]:
-    """Use MiMo v2.5 to extract pain signals from text.
+    """Use DeepSeek V4 Flash to extract pain signals from text.
     
     Args:
         text: Newsletter content to analyze
@@ -53,14 +53,14 @@ Return JSON array of pain signals (max 5):
 Return ONLY valid JSON array. If no pain signals found, return empty array [].
 """
 
-    mimo_key = _get_mimo_key()
+    ds_key = _get_ds_key()
     try:
-        if mimo_key:
+        if ds_key:
             resp = requests.post(
-                "https://api.xiaomimimo.com/v1/chat/completions",
-                headers={"Authorization": f"Bearer {mimo_key}"},
+                "https://api.deepseek.com/v1/chat/completions",
+                headers={"Authorization": f"Bearer {ds_key}"},
                 json={
-                    "model": "mimo-v2.5",
+                    "model": "deepseek-v4-flash",
                     "messages": [{"role": "user", "content": prompt}],
                     "max_tokens": 500,
                     "temperature": 0.3,

@@ -1,4 +1,4 @@
-"""AI-powered pain point pre-filter using Xiaomi MiMo v2.5.
+"""AI-powered pain point pre-filter using DeepSeek V4 Flash.
 
 Filters pain signals before DynamoDB write to remove noise
 (non-startup-related content, pure venting, spam, etc.).
@@ -20,8 +20,8 @@ from rich.table import Table
 logger = logging.getLogger(__name__)
 console = Console()
 
-MIMO_ENDPOINT = "https://api.xiaomimimo.com/v1/chat/completions"
-MIMO_MODEL = "mimo-v2.5"
+DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_MODEL = "deepseek-v4-flash"
 REQUEST_TIMEOUT = 30
 BATCH_TIMEOUT = 120  # seconds for entire batch
 CALL_INTERVAL = 0.3  # seconds between calls
@@ -58,34 +58,33 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
 
 
 class PainFilter:
-    """Pre-filter pain signals using Xiaomi MiMo v2.5."""
+    """Pre-filter pain signals using DeepSeek V4 Flash."""
 
     def __init__(self):
         self.stats = {"total": 0, "passed": 0, "rejected": 0, "errors": 0}
         self.reject_reasons: Counter = Counter()
-        self._mimo_key = self._get_mimo_key()
+        self._ds_key = self._get_ds_key()
 
-    def _get_mimo_key(self) -> str:
-        """Get MIMO API key from env or openclaw config."""
-        key = os.environ.get("MIMO_API_KEY", "")
+    def _get_ds_key(self) -> str:
+        """Get DeepSeek API key from env or openclaw config."""
+        key = os.environ.get("DEEPSEEK_API_KEY", "")
         if not key:
             config_path = os.path.expanduser("~/.openclaw/openclaw.json")
             if os.path.exists(config_path):
                 with open(config_path, "r", encoding="utf-8") as f:
                     _cfg = json.load(f)
-                key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+                key = _cfg.get("env", {}).get("DEEPSEEK_API_KEY", "")
         return key
 
     def _call_model(self, prompt: str) -> str | None:
-        """Call MiMo v2.5, falling back to DeepSeek then Ollama."""
-        # Try MiMo first
-        if self._mimo_key:
+        """Call DeepSeek V4 Flash, falling back to Ollama."""
+        if self._ds_key:
             try:
                 resp = requests.post(
-                    MIMO_ENDPOINT,
-                    headers={"Authorization": f"Bearer {self._mimo_key}"},
+                    DEEPSEEK_ENDPOINT,
+                    headers={"Authorization": f"Bearer {self._ds_key}"},
                     json={
-                        "model": MIMO_MODEL,
+                        "model": DEEPSEEK_MODEL,
                         "messages": [{"role": "user", "content": prompt}],
                         "temperature": 0.0,
                         "max_tokens": MAX_TOKENS,
@@ -98,30 +97,7 @@ class PainFilter:
                 if choices:
                     return choices[0].get("message", {}).get("content", "") or None
             except requests.exceptions.RequestException as e:
-                logger.warning("MiMo request failed: %s, trying fallback", e)
-
-        # Fallback to DeepSeek
-        ds_key = os.environ.get("DEEPSEEK_API_KEY", "")
-        if ds_key:
-            try:
-                resp = requests.post(
-                    "https://api.deepseek.com/v1/chat/completions",
-                    headers={"Authorization": f"Bearer {ds_key}"},
-                    json={
-                        "model": "deepseek-chat",
-                        "messages": [{"role": "user", "content": prompt}],
-                        "temperature": 0.0,
-                        "max_tokens": MAX_TOKENS,
-                    },
-                    timeout=REQUEST_TIMEOUT,
-                )
-                resp.raise_for_status()
-                data = resp.json()
-                choices = data.get("choices", [])
-                if choices:
-                    return choices[0].get("message", {}).get("content", "") or None
-            except requests.exceptions.RequestException as e:
-                logger.warning("DeepSeek fallback failed: %s", e)
+                logger.warning("DeepSeek request failed: %s, trying Ollama fallback", e)
 
         # Fallback to Ollama
         try:

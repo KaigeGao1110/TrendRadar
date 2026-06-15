@@ -1,6 +1,6 @@
-"""Embedding client using doubao-embedding-vision via Ark (Volcengine) API.
+"""Embedding client using OpenRouter (openai/text-embedding-3-small).
 
-Generates 2048-dim vectors for text (and future: images).
+Generates 1536-dim vectors for text.
 """
 
 import math
@@ -13,20 +13,32 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-ARK_API_KEY = os.environ.get("ARK_API_KEY", "")
-EMBEDDING_URL = "https://ark.cn-beijing.volces.com/api/v3/embeddings/multimodal"
-MODEL = "doubao-embedding-vision-250615"
+OPENROUTER_API_URL = "https://openrouter.ai/api/v1/embeddings"
+MODEL = "openai/text-embedding-3-small"
 RATE_LIMIT_INTERVAL = 0.5  # seconds between calls
-DIMENSION = 2048
+DIMENSION = 1536
+
+
+def _get_openrouter_key() -> str:
+    """Get OpenRouter API key from env or openclaw config."""
+    key = os.environ.get("OPENROUTER_API_KEY", "")
+    if not key:
+        config_path = os.path.expanduser("~/.openclaw/openclaw.json")
+        if os.path.exists(config_path):
+            import json
+            with open(config_path, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            key = cfg.get("env", {}).get("OPENROUTER_API_KEY", "")
+    return key
 
 
 class EmbeddingClient:
-    """Generate embeddings using doubao-embedding-vision via Ark API."""
+    """Generate embeddings using OpenRouter (text-embedding-3-small)."""
 
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or ARK_API_KEY
+        self.api_key = api_key or _get_openrouter_key()
         if not self.api_key:
-            raise ValueError("ARK_API_KEY not set. Set it in .env or pass api_key=.")
+            raise ValueError("OPENROUTER_API_KEY not set. Set it in .env or pass api_key=.")
         self._last_call = 0.0
 
     def _rate_limit(self) -> None:
@@ -37,31 +49,34 @@ class EmbeddingClient:
         self._last_call = time.monotonic()
 
     def embed_text(self, text: str) -> list[float]:
-        """Generate embedding for a single text. Returns 2048-dim vector.
+        """Generate embedding for a single text. Returns 1536-dim vector.
 
         Args:
             text: Input text to embed.
 
         Returns:
-            List of 2048 floats.
+            List of 1536 floats.
 
         Raises:
-            RuntimeError: If all retries fail.
+            RuntimeError: After 3 failed attempts.
         """
-        self._rate_limit()
+        if not text or not text.strip():
+            return [0.0] * DIMENSION
 
+        self._rate_limit()
         last_err = None
+
         for attempt in range(3):
             try:
                 resp = requests.post(
-                    EMBEDDING_URL,
+                    OPENROUTER_API_URL,
                     headers={
                         "Authorization": f"Bearer {self.api_key}",
                         "Content-Type": "application/json",
                     },
                     json={
                         "model": MODEL,
-                        "input": [{"type": "text", "text": text}],
+                        "input": text,
                     },
                     timeout=45,
                 )
@@ -72,7 +87,7 @@ class EmbeddingClient:
                     )
 
                 data = resp.json()
-                embedding = data["data"]["embedding"]
+                embedding = data["data"][0]["embedding"]
 
                 if len(embedding) != DIMENSION:
                     logger.warning(
@@ -96,64 +111,10 @@ class EmbeddingClient:
             texts: List of input texts.
 
         Returns:
-            List of 2048-dim vectors, same order as input.
+            List of 1536-dim vectors, same order as input.
         """
         results = []
-        for i, text in enumerate(texts):
-            logger.debug("Embedding text %d/%d", i + 1, len(texts))
+        for text in texts:
             embedding = self.embed_text(text)
             results.append(embedding)
         return results
-
-    def embed_image(self, image_url: str) -> list[float]:
-        """Generate embedding for an image. (future use)
-
-        Args:
-            image_url: URL of the image to embed.
-
-        Returns:
-            List of 2048 floats.
-
-        Raises:
-            RuntimeError: If the API call fails.
-        """
-        self._rate_limit()
-
-        resp = requests.post(
-            EMBEDDING_URL,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": MODEL,
-                "input": [{"type": "image_url", "image_url": image_url}],
-            },
-            timeout=60,
-        )
-
-        if resp.status_code != 200:
-            raise RuntimeError(
-                f"Embedding API error {resp.status_code}: {resp.text[:500]}"
-            )
-
-        data = resp.json()
-        return data["data"]["embedding"]
-
-    @staticmethod
-    def cosine_similarity(a: list[float], b: list[float]) -> float:
-        """Calculate cosine similarity between two vectors.
-
-        Args:
-            a: First vector.
-            b: Second vector.
-
-        Returns:
-            Cosine similarity in [-1, 1].
-        """
-        dot = sum(x * y for x, y in zip(a, b))
-        mag_a = math.sqrt(sum(x * x for x in a))
-        mag_b = math.sqrt(sum(x * x for x in b))
-        if mag_a == 0 or mag_b == 0:
-            return 0.0
-        return dot / (mag_a * mag_b)

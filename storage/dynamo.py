@@ -591,11 +591,11 @@ class DynamoClient:
         if not response.get("Items"):
             return
         
-        pk = response["Items"][0]["first_seen_date#event_type"]
+        pk = response["Items"][0]["event_type#first_seen_date"]
         
         self.table.update_item(
             Key={
-                "first_seen_date#event_type": pk,
+                "event_type#first_seen_date": pk,
                 "event_id": event_id,
             },
             UpdateExpression=update_expr,
@@ -617,7 +617,7 @@ class DynamoClient:
         stats = {"success": 0, "failed": 0}
 
         # First, resolve event_ids to PKs via event_id-index GSI
-        pk_map = {}  # event_id -> PK (first_seen_date#event_type)
+        pk_map = {}  # event_id -> PK (event_type#first_seen_date)
         for event_id in event_ids:
             try:
                 response = self.table.query(
@@ -628,7 +628,7 @@ class DynamoClient:
                 )
                 items = response.get("Items", [])
                 if items:
-                    pk_map[event_id] = items[0]["first_seen_date#event_type"]
+                    pk_map[event_id] = items[0]["event_type#first_seen_date"]
                 else:
                     stats["failed"] += 1
             except ClientError:
@@ -642,7 +642,7 @@ class DynamoClient:
                 write_requests.append({
                     "PutRequest": {
                         "Item": {
-                            "first_seen_date#event_type": pk,
+                            "event_type#first_seen_date": pk,
                             "event_id": event_id,
                             "is_analyzed": "true",
                             "last_updated_at": datetime.now(timezone.utc).isoformat(),

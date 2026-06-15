@@ -500,23 +500,23 @@ IMPORTANT: You MUST respond with ONLY valid JSON, no other text, no markdown, no
             'Respond with ONLY valid JSON, no markdown or explanation:\n{"category": "CategoryName"}'
         )
 
-        # Get MiMo API key
-        mimo_key = os.environ.get("MIMO_API_KEY", "") if 'os' in dir() else ""
-        if not mimo_key:
+        # Get DeepSeek API key
+        ds_key = os.environ.get("DEEPSEEK_API_KEY", "") if 'os' in dir() else ""
+        if not ds_key:
             import os as _os
             config_path = _os.path.expanduser("~/.openclaw/openclaw.json")
             if _os.path.exists(config_path):
                 with open(config_path, "r", encoding="utf-8") as f:
                     _cfg = json.load(f)
-                mimo_key = _cfg.get("env", {}).get("MIMO_API_KEY", "")
+                ds_key = _cfg.get("env", {}).get("DEEPSEEK_API_KEY", "")
 
         try:
-            if mimo_key:
+            if ds_key:
                 resp = _req.post(
-                    "https://api.xiaomimimo.com/v1/chat/completions",
-                    headers={"Authorization": f"Bearer {mimo_key}"},
+                    "https://api.deepseek.com/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {ds_key}"},
                     json={
-                        "model": "mimo-v2.5",
+                        "model": "deepseek-v4-flash",
                         "messages": [{"role": "user", "content": prompt}],
                         "max_tokens": 200,
                         "temperature": 0.3,

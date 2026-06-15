@@ -526,20 +526,20 @@ def _enrich_with_model_selector(name: str, text: str) -> dict:
     return _empty_extraction()
 
 
-def _enrich_with_mimo(name: str, text: str) -> dict:
-    """Extract company info using Xiaomi mimo-v2.5 via OpenAI-compatible API."""
+def _enrich_with_deepseek(name: str, text: str) -> dict:
+    """Extract company info using DeepSeek V4 Flash."""
     import requests as _req
 
-    # Load MIMO_API_KEY from openclaw config
-    mimo_key = os.environ.get("MIMO_API_KEY")
-    if not mimo_key:
+    # Load DEEPSEEK_API_KEY from openclaw config
+    ds_key = os.environ.get("DEEPSEEK_API_KEY")
+    if not ds_key:
         config_path = os.path.expanduser("~/.openclaw/openclaw.json")
         if os.path.exists(config_path):
             with open(config_path, "r", encoding="utf-8") as f:
                 _cfg = json.load(f)
-            mimo_key = _cfg.get("env", {}).get("MIMO_API_KEY")
-    if not mimo_key:
-        print(f"MIMO_API_KEY not found, falling back to model selector for '{name}'")
+            ds_key = _cfg.get("env", {}).get("DEEPSEEK_API_KEY")
+    if not ds_key:
+        print(f"DEEPSEEK_API_KEY not found, falling back to model selector for '{name}'")
         return _enrich_with_model_selector(name, text)
 
     prompt = (
@@ -557,13 +557,13 @@ def _enrich_with_mimo(name: str, text: str) -> dict:
 
     try:
         resp = _req.post(
-            "https://api.xiaomimimo.com/v1/chat/completions",
+            "https://api.deepseek.com/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {mimo_key}",
+                "Authorization": f"Bearer {ds_key}",
                 "Content-Type": "application/json",
             },
             json={
-                "model": "mimo-v2.5",
+                "model": "deepseek-v4-flash",
                 "messages": [{"role": "user", "content": prompt}],
                 "max_tokens": 500,
                 "temperature": 0.3,
@@ -584,14 +584,14 @@ def _enrich_with_mimo(name: str, text: str) -> dict:
                 "website": parsed.get("website"),
             }
     except Exception as e:
-        print(f"MIMO v2.5 failed for '{name}': {e}, falling back to model selector")
+        print(f"DeepSeek failed for '{name}': {e}, falling back to model selector")
         return _enrich_with_model_selector(name, text)
 
     return _empty_extraction()
 
 
 def extract_company_info(name: str, text: str) -> dict:
-    """Extract company info from text using mimo-v2.5.
+    """Extract company info from text using DeepSeek V4 Flash.
 
     Args:
         name: Company name.
@@ -602,7 +602,7 @@ def extract_company_info(name: str, text: str) -> dict:
         business_model, main_product, website.
         Values may be None if extraction fails.
     """
-    return _enrich_with_mimo(name, text)
+    return _enrich_with_deepseek(name, text)
 
 
 def _empty_extraction() -> dict:
