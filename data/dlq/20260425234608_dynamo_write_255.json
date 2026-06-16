@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_255",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "An essential tool for prediction markets\n\nin our world, we mostly trade on news\n\nto trade better, it\u2019s crucial to hear about news before everyone else\n\nI\u2019ve spent the whole week looking for a tool for this\n\nand I finally found an app called Ratio\n\nmy goal now is to show you the real value of this product\n\nit\u2019s a genuinely convenient way to trade the news.\n\nthere\u2019s also a leaderboard - both global and just among your friends\n\na real example:\n\n> I opened the app\n> saw a piece of news about Venezuela (screenshot attached)\n> went to the market\n> evaluated the situation\n\nI learned about news that could flip the outcome of a market faster than 99% of traders\n\nthat\u2019s the main advantage of this tool\n\nright now access is invite\u2011only\n\nthe app is available on the Play Market and the App Store (UK/Canada)\n\nhttps://t.co/wqHljCCzM0 // XWGHU6EX",
+      "url": "https://x.com/dipper812/status/2017892658157392373",
+      "source": "twitter_pain",
+      "description": "An essential tool for prediction markets\n\nin our world, we mostly trade on news\n\nto trade better, it\u2019s crucial to hear about news before everyone else\n\nI\u2019ve spent the whole week looking for a tool for this\n\nand I finally found an app called Ratio\n\nmy goal now is to show you the real value of this product\n\nit\u2019s a genuinely convenient way to trade the news.\n\nthere\u2019s also a leaderboard - both global and just among your friends\n\na real example:\n\n> I opened the app\n> saw a piece of news about Venezuela (screenshot attached)\n> went to the market\n> evaluated the situation\n\nI learned about news that could flip the outcome of a market faster than 99% of traders\n\nthat\u2019s the main advantage of this tool\n\nright now access is invite\u2011only\n\nthe app is available on the Play Market and the App Store (UK/Canada)\n\nhttps://t.co/wqHljCCzM0 // XWGHU6EX",
+      "published_at": "2026-02-01T09:27:54+00:00",
+      "metadata": {
+        "favorites": 26,
+        "retweets": 0,
+        "views": 538,
+        "replies": 7,
+        "screen_name": "dipper812",
+        "followers_count": 1190,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.950213+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

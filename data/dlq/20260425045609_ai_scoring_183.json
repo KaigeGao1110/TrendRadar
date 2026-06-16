@@ -1,0 +1,13 @@
+{
+  "id": "20260425045609_ai_scoring_183",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "c2cd2c97b33860bfc5e67f829a490de8",
+    "title": "AltSchool ($176M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:56:09.436355+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

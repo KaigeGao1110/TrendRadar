@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_274",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I have been looking for a tool like this for a while. Tired out a bunch but MagicPath is the clear winner.",
+      "url": "https://x.com/0xMrWzrd/status/1997111915982508094",
+      "source": "twitter_pain",
+      "description": "I have been looking for a tool like this for a while. Tired out a bunch but MagicPath is the clear winner.",
+      "published_at": "2025-12-06T01:12:39+00:00",
+      "metadata": {
+        "favorites": 6,
+        "retweets": 0,
+        "views": 353,
+        "replies": 0,
+        "screen_name": "0xMrWzrd",
+        "followers_count": 7745,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.488373+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

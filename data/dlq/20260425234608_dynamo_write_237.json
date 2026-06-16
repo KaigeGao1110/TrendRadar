@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_237",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "happiest birthday to the reason this account exists, my friendly dimpled puppy!! you've made the last 2 years of my life so beautiful and fun \ud83e\udef3 i wish there was another word for it, but i truly love you soo much \ud83e\udd0d\n\nHAPPY SARANG DAY\n#\uc2a4\ubb34\ubc88\uc9f8_\uc0ac\ub791\uc774_\ud53c\uc5b4\ub098\ub294\ub0a0\n#AllLoveForSarang https://t.co/giquHjvAzc",
+      "url": "https://x.com/sarangie1st/status/2045155725048000671",
+      "source": "twitter_pain",
+      "description": "happiest birthday to the reason this account exists, my friendly dimpled puppy!! you've made the last 2 years of my life so beautiful and fun \ud83e\udef3 i wish there was another word for it, but i truly love you soo much \ud83e\udd0d\n\nHAPPY SARANG DAY\n#\uc2a4\ubb34\ubc88\uc9f8_\uc0ac\ub791\uc774_\ud53c\uc5b4\ub098\ub294\ub0a0\n#AllLoveForSarang https://t.co/giquHjvAzc",
+      "published_at": "2026-04-17T15:01:36+00:00",
+      "metadata": {
+        "favorites": 131,
+        "retweets": 50,
+        "views": 1357,
+        "replies": 9,
+        "screen_name": "sarangie1st",
+        "followers_count": 1812,
+        "search_query": "\"I wish there was\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.455672+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

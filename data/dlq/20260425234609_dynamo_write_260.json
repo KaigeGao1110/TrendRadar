@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_260",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Crazy: Someone just built the exact tool Andrej Karpathy said someone should build. \n\n48 hours after Karpathy posted his LLM Knowledge Bases workflow, this showed up on GitHub. \n\nIt's called Graphify. One command. Any folder. \nFull knowledge graph. \n\nPoint it at any folder. Run /graphify inside Claude Code. Walk away. \n\nHere is what comes out the other side: \n-> A navigable knowledge graph of everything in that folder \n-> An Obsidian vault with backlinked articles",
+      "url": "https://x.com/Tabbu_ai/status/2043632979155861613",
+      "source": "twitter_pain",
+      "description": "Crazy: Someone just built the exact tool Andrej Karpathy said someone should build. \n\n48 hours after Karpathy posted his LLM Knowledge Bases workflow, this showed up on GitHub. \n\nIt's called Graphify. One command. Any folder. \nFull knowledge graph. \n\nPoint it at any folder. Run /graphify inside Claude Code. Walk away. \n\nHere is what comes out the other side: \n-> A navigable knowledge graph of everything in that folder \n-> An Obsidian vault with backlinked articles",
+      "published_at": "2026-04-13T10:10:45+00:00",
+      "metadata": {
+        "favorites": 15,
+        "retweets": 1,
+        "views": 593,
+        "replies": 1,
+        "screen_name": "Tabbu_ai",
+        "followers_count": 2883,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.090517+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

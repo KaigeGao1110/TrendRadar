@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_244",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "ISO:\n\nSomeone should build a unified way to search all 50 states's databases to follow campaign-finance records in state politics.",
+      "url": "https://x.com/teddyschleifer/status/2024998811190338042",
+      "source": "twitter_pain",
+      "description": "ISO:\n\nSomeone should build a unified way to search all 50 states's databases to follow campaign-finance records in state politics.",
+      "published_at": "2026-02-21T00:05:13+00:00",
+      "metadata": {
+        "favorites": 66,
+        "retweets": 6,
+        "views": 11947,
+        "replies": 8,
+        "screen_name": "teddyschleifer",
+        "followers_count": 55510,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.649440+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,28 @@
+{
+  "id": "20260425234610_dynamo_write_311",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@OBlue69172 @Robbie_3456547 This is the problem I can see though. Only on proper full review can you see the possible goal. But this was an on field decision made in the moment. So I understand why the fan base is so frustrated with it, I\u2019m a united fan and even I have the same anger.",
+      "url": "https://x.com/forevermufc20/status/2048168463517061144",
+      "source": "twitter_pain",
+      "description": "@OBlue69172 @Robbie_3456547 This is the problem I can see though. Only on proper full review can you see the possible goal. But this was an on field decision made in the moment. So I understand why the fan base is so frustrated with it, I\u2019m a united fan and even I have the same anger.",
+      "published_at": "2026-04-25T22:33:09+00:00",
+      "metadata": {
+        "favorites": 0,
+        "retweets": 0,
+        "views": 29,
+        "replies": 0,
+        "screen_name": "forevermufc20",
+        "followers_count": 1043,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:10.570390+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

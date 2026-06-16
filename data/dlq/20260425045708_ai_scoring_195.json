@@ -1,0 +1,13 @@
+{
+  "id": "20260425045708_ai_scoring_195",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "1fdfd5ed483899f1e96502940e8d8ded",
+    "title": "Rebellions ($549M / $2.3B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:57:08.165740+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

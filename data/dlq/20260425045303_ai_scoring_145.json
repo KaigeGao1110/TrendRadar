@@ -1,0 +1,13 @@
+{
+  "id": "20260425045303_ai_scoring_145",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d7e86eb88fd4c4d6410df7ddce3e8d18",
+    "title": "Valinor ($25M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:03.498125+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425045212_ai_scoring_136",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "7665a1fd9780c7beb3d760b6bc94a27a",
+    "title": "11x ($76M / $350M)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:52:12.184015+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

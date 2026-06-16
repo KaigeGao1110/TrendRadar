@@ -1,0 +1,13 @@
+{
+  "id": "20260425044741_ai_scoring_89",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "cbd92e17905f3cd31da5536a8168867c",
+    "title": "Media & Entertainment raises 0 Unknown"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:41.112538+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

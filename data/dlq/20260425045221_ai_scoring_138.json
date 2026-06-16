@@ -1,0 +1,13 @@
+{
+  "id": "20260425045221_ai_scoring_138",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "3d0d77f0877f6547f55568dbeb695ec5",
+    "title": "Railway ($124M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:52:21.972757+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

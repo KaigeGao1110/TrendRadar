@@ -1,0 +1,13 @@
+{
+  "id": "20260425045337_ai_scoring_152",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "4e7d28a4db5aa12beac7886f8066285c",
+    "title": "Doxel ($57M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:37.778655+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

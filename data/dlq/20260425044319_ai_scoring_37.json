@@ -1,0 +1,13 @@
+{
+  "id": "20260425044319_ai_scoring_37",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "f16d1b16a2267899a616dd127a6da350",
+    "title": "Wayve ($2.8B / $8.6B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:19.208483+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

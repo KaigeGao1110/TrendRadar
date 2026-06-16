@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_225",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "America is WRONG if it thinks the Falklands are up for debate. \n\nBut I can also understand why they feel so frustrated with us. \n\nOur politicians have made truly idiotic decisions.  https://t.co/UjCXx56dNg",
+      "url": "https://x.com/GoodwinMJ/status/2047741308182143159",
+      "source": "twitter_pain",
+      "description": "America is WRONG if it thinks the Falklands are up for debate. \n\nBut I can also understand why they feel so frustrated with us. \n\nOur politicians have made truly idiotic decisions.  https://t.co/UjCXx56dNg",
+      "published_at": "2026-04-24T18:15:47+00:00",
+      "metadata": {
+        "favorites": 1216,
+        "retweets": 150,
+        "views": 47210,
+        "replies": 367,
+        "screen_name": "GoodwinMJ",
+        "followers_count": 291205,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.071596+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

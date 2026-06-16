@@ -1,0 +1,13 @@
+{
+  "id": "20260425045431_ai_scoring_163",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "0349eca2ace66bf31bf8ab4cc30a2b86",
+    "title": "Discord ($995M / $15.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:31.599154+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425045142_ai_scoring_130",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "b60cdd26693f9d349b973af05f620344",
+    "title": "Grafana Labs ($804M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:51:42.794393+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

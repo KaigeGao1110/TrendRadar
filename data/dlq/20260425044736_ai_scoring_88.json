@@ -1,0 +1,13 @@
+{
+  "id": "20260425044736_ai_scoring_88",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "abd7551b6c16ec03ee12b28bee019650",
+    "title": "Gather AI ($71M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:36.231222+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

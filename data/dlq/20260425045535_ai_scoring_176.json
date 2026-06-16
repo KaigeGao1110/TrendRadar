@@ -1,0 +1,13 @@
+{
+  "id": "20260425045535_ai_scoring_176",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "3aa8ae27e17ffa6ed78c277bd69dc035",
+    "title": "Orbital Lasers ($20M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:35.203811+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

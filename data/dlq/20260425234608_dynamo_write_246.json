@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_246",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Why is everyone talking about Bags Hackathon?\n\n@prestonharty talks about why @BagsHackathon is a game-changer for \"normies\" and crypto-newbies alike.\n\nIf you\u2019ve been looking for a tool that\u2019s actually simple and easy to use, this is it.\n\nSimplicity is the ultimate sophistication.\n\nWatch \ud83d\udcf8\ud83d\udd25\n\nFT: @youfadedwealth x @prestonharty x @erinmagennis",
+      "url": "https://x.com/Bucciboss/status/2045857595722801575",
+      "source": "twitter_pain",
+      "description": "Why is everyone talking about Bags Hackathon?\n\n@prestonharty talks about why @BagsHackathon is a game-changer for \"normies\" and crypto-newbies alike.\n\nIf you\u2019ve been looking for a tool that\u2019s actually simple and easy to use, this is it.\n\nSimplicity is the ultimate sophistication.\n\nWatch \ud83d\udcf8\ud83d\udd25\n\nFT: @youfadedwealth x @prestonharty x @erinmagennis",
+      "published_at": "2026-04-19T13:30:35+00:00",
+      "metadata": {
+        "favorites": 62,
+        "retweets": 18,
+        "views": 6159,
+        "replies": 29,
+        "screen_name": "Bucciboss",
+        "followers_count": 3000,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.703407+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

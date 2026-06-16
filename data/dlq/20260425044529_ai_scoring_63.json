@@ -1,0 +1,13 @@
+{
+  "id": "20260425044529_ai_scoring_63",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "6efcaf2c0ddd1733c3a743835a592b3e",
+    "title": "DD377 / First, fast, forgotten: the media lifecycle"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:45:29.032087+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

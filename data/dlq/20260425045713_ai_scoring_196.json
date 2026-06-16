@@ -1,0 +1,13 @@
+{
+  "id": "20260425045713_ai_scoring_196",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "a3a9ac6f11feeb5d613e9c9586bab7f9",
+    "title": "Palantir Technologies ($2.9B / NYSE: PLTR)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:57:13.052074+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

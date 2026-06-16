@@ -1,0 +1,13 @@
+{
+  "id": "20260425045902_ai_scoring_217",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "f507c2de70dfe089dc84f07160accf77",
+    "title": "GitHub's Fake Star Economy"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:59:02.341216+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

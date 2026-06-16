@@ -1,0 +1,13 @@
+{
+  "id": "20260425044819_ai_scoring_95",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "7ee70ba42293ff67663f628f1dd2cfc7",
+    "title": "Retool ($141M / $3.2B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:19.686007+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

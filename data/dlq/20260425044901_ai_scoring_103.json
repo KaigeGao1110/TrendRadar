@@ -1,0 +1,13 @@
+{
+  "id": "20260425044901_ai_scoring_103",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "10a467e067b6b5b0b641b5f00526096e",
+    "title": "Spade ($61M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:49:01.781289+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

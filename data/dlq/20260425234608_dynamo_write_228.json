@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_228",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Genevieve Holl-Allen, \"What further sanctions should be on Israel?\"\n\nZack Polanski, \"All options are on the table\"\n\n\"Israel is behaving in a completely uncontrolled way, in the way they believe they have immunity to any kind of sanction or criticism\"\n\n\"What I'm so frustrated with the Labour government is that we just get words, and the words aren't even strong enough\"\n\n\"They have levers and mechanisms they could put into play that would reduce the destruction, crisis and deaths we see every single day\"\n\n\"It's not just that this just happened in Lebanon and now we need sanctions\"\n\n\"We're been calling for this for years\"\n\n\"Now it's even more blatant, even more inhumane\"\n\n\"What would Israel actually have to do and say that this is not a country behaving like an ally?\"\n\n\"Countries that believe in international law need to come together and say this is not acceptable\"",
+      "url": "https://x.com/implausibleblog/status/2042306722124218412",
+      "source": "twitter_pain",
+      "description": "Genevieve Holl-Allen, \"What further sanctions should be on Israel?\"\n\nZack Polanski, \"All options are on the table\"\n\n\"Israel is behaving in a completely uncontrolled way, in the way they believe they have immunity to any kind of sanction or criticism\"\n\n\"What I'm so frustrated with the Labour government is that we just get words, and the words aren't even strong enough\"\n\n\"They have levers and mechanisms they could put into play that would reduce the destruction, crisis and deaths we see every single day\"\n\n\"It's not just that this just happened in Lebanon and now we need sanctions\"\n\n\"We're been calling for this for years\"\n\n\"Now it's even more blatant, even more inhumane\"\n\n\"What would Israel actually have to do and say that this is not a country behaving like an ally?\"\n\n\"Countries that believe in international law need to come together and say this is not acceptable\"",
+      "published_at": "2026-04-09T18:20:41+00:00",
+      "metadata": {
+        "favorites": 480,
+        "retweets": 169,
+        "views": 6082,
+        "replies": 7,
+        "screen_name": "implausibleblog",
+        "followers_count": 124019,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.154188+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

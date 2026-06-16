@@ -1,0 +1,13 @@
+{
+  "id": "20260425044835_ai_scoring_98",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "033c54c6d813967b7a0f824d617fbd21",
+    "title": "No Pilot, No GPS, No Cloud: How this Indian drone startup reached 'Sam Altman-led' Y Combinator after Shark Tank India crash"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:35.853347+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

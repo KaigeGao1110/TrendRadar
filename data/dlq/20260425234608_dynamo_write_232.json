@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_232",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I wish there was behind the scenes footage that showed Jim Cummings voicing Cat and then immediately the monstrosity that was part Dog part flea in Catdog\u2019s \u2018Flea or Die!\u2019 https://t.co/2WnlnMNQUD",
+      "url": "https://x.com/horror4kids/status/2047030858939318781",
+      "source": "twitter_pain",
+      "description": "I wish there was behind the scenes footage that showed Jim Cummings voicing Cat and then immediately the monstrosity that was part Dog part flea in Catdog\u2019s \u2018Flea or Die!\u2019 https://t.co/2WnlnMNQUD",
+      "published_at": "2026-04-22T19:12:43+00:00",
+      "metadata": {
+        "favorites": 339,
+        "retweets": 55,
+        "views": 22012,
+        "replies": 4,
+        "screen_name": "horror4kids",
+        "followers_count": 90211,
+        "search_query": "\"I wish there was\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.263401+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

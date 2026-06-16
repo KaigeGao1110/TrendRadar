@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_238",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "why is there no kitchen kiss hourly account?",
+      "url": "https://x.com/celine613828/status/2047427866703401176",
+      "source": "twitter_pain",
+      "description": "why is there no kitchen kiss hourly account?",
+      "published_at": "2026-04-23T21:30:17+00:00",
+      "metadata": {
+        "favorites": 98,
+        "retweets": 0,
+        "views": 4242,
+        "replies": 5,
+        "screen_name": "celine613828",
+        "followers_count": 1829,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.485340+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

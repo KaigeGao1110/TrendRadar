@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_264",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "fyi, if you're looking for a tool to create private or public airdrops, check out mint club.\n\nwe support @base, @arbitrum, @bnbchain, and even @zora chain \ud83d\ude09\n\nhttps://t.co/22sgRjy8ce https://t.co/d0lBWFqe5n",
+      "url": "https://x.com/MintClubPro/status/2033352899632542064",
+      "source": "twitter_pain",
+      "description": "fyi, if you're looking for a tool to create private or public airdrops, check out mint club.\n\nwe support @base, @arbitrum, @bnbchain, and even @zora chain \ud83d\ude09\n\nhttps://t.co/22sgRjy8ce https://t.co/d0lBWFqe5n",
+      "published_at": "2026-03-16T01:21:23+00:00",
+      "metadata": {
+        "favorites": 12,
+        "retweets": 5,
+        "views": 975,
+        "replies": 0,
+        "screen_name": "MintClubPro",
+        "followers_count": 74664,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.206890+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044313_ai_scoring_36",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "c5fa092475f37220d5e4a242d123e498",
+    "title": "OpenPhone ($161M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:13.836966+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

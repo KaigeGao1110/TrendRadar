@@ -1,0 +1,13 @@
+{
+  "id": "20260425044324_ai_scoring_38",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "8495d9354097289216c29d8d65b79e57",
+    "title": "Mogul ($7M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:24.546551+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044800_ai_scoring_92",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "0175e552cee44df41b72adf24edecb14",
+    "title": "Hermeus ($319M / $1.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:00.101293+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

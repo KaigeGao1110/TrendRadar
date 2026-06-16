@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_230",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Benophie are forbidden love   \n \nBenedict didn\u2019t give this confession for y\u2019all to say otherwise\n\n\u201cI HAVE HEARD EVERY QUALM YOU\u2019VE RAISED ABOUT BEING WITH ME, AND I WISH THERE WAS SOME OTHER WAY FOR US TO BE TOGETHER But the thought of spending a single day without you torments my soul. You deserve the very world, BUT HOW ELSE AM I TO BE WITH A WOMAN SOCIETY HAS MADE IT IMPOSSIBLE FOR ME TO BE WITH? The woman I was foolish enough to fall in love with\u2026\u201d",
+      "url": "https://x.com/Baebenophie/status/2043800242689077494",
+      "source": "twitter_pain",
+      "description": "Benophie are forbidden love   \n \nBenedict didn\u2019t give this confession for y\u2019all to say otherwise\n\n\u201cI HAVE HEARD EVERY QUALM YOU\u2019VE RAISED ABOUT BEING WITH ME, AND I WISH THERE WAS SOME OTHER WAY FOR US TO BE TOGETHER But the thought of spending a single day without you torments my soul. You deserve the very world, BUT HOW ELSE AM I TO BE WITH A WOMAN SOCIETY HAS MADE IT IMPOSSIBLE FOR ME TO BE WITH? The woman I was foolish enough to fall in love with\u2026\u201d",
+      "published_at": "2026-04-13T21:15:24+00:00",
+      "metadata": {
+        "favorites": 476,
+        "retweets": 71,
+        "views": 7618,
+        "replies": 0,
+        "screen_name": "Baebenophie",
+        "followers_count": 2926,
+        "search_query": "\"I wish there was\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.209568+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

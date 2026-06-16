@@ -1,0 +1,13 @@
+{
+  "id": "20260425045426_ai_scoring_162",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "3f7d8faf6fe49fbb56163aacf644f951",
+    "title": "Ginkgo Bioworks ($720M / NYSE: DNA)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:26.713687+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044711_ai_scoring_84",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "96125a939bba23f2d2b66cfc2e32ff84",
+    "title": "Envoy ($201M / $1.4B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:11.758743+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

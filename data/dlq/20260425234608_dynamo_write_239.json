@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_239",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Someone should build a hook that would bridge to @octra, encrypt, transfer and bridge back. Completely private transfer of a ERC20 token that can later be adapted to any existing token. This long route should take under 5 mins and still be faster than anything live onchain today.",
+      "url": "https://x.com/octralex/status/2047342093064909269",
+      "source": "twitter_pain",
+      "description": "Someone should build a hook that would bridge to @octra, encrypt, transfer and bridge back. Completely private transfer of a ERC20 token that can later be adapted to any existing token. This long route should take under 5 mins and still be faster than anything live onchain today.",
+      "published_at": "2026-04-23T15:49:27+00:00",
+      "metadata": {
+        "favorites": 86,
+        "retweets": 8,
+        "views": 5926,
+        "replies": 13,
+        "screen_name": "octralex",
+        "followers_count": 4728,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.512276+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044657_ai_scoring_81",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "93d30ec7235225c28e40a8d95c24f921",
+    "title": "IQM Quantum Computers ($600M / $1.8B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:57.069174+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

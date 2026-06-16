@@ -1,0 +1,13 @@
+{
+  "id": "20260425044519_ai_scoring_61",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "54893596cb26204b599c3d6589a28e55",
+    "title": "Waymo ($27.1B / $126.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:45:19.248297+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

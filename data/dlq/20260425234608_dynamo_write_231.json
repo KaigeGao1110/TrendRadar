@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_231",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@beffjezos Agreed. They basically have root on your computer, and it's quite easy to embed backdoors deep in them. The training runs of those models aren't even that expensive, someone should build a US charity to make Open AI.",
+      "url": "https://x.com/__tinygrad__/status/2039251368071029160",
+      "source": "twitter_pain",
+      "description": "@beffjezos Agreed. They basically have root on your computer, and it's quite easy to embed backdoors deep in them. The training runs of those models aren't even that expensive, someone should build a US charity to make Open AI.",
+      "published_at": "2026-04-01T07:59:48+00:00",
+      "metadata": {
+        "favorites": 459,
+        "retweets": 13,
+        "views": 25835,
+        "replies": 14,
+        "screen_name": "__tinygrad__",
+        "followers_count": 72017,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.237190+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

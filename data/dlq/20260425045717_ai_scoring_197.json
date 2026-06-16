@@ -1,0 +1,13 @@
+{
+  "id": "20260425045717_ai_scoring_197",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "3a8f63a6ee70048dcbdc0e7165e0fec2",
+    "title": "NationGraph ($23M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:57:17.942670+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

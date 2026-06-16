@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_278",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Why is there no x plaque for achievement? \n\nHit 100k followers- you get a plaque!\n\nHit 1m impressive- you get a plaque!\n\nGot ratioed -you get a plaque!\n\nGot dragged through the mud -you get a plaque!\n\nX should look into this fr.",
+      "url": "https://x.com/seancryptiq/status/2047305130668618168",
+      "source": "twitter_pain",
+      "description": "Why is there no x plaque for achievement? \n\nHit 100k followers- you get a plaque!\n\nHit 1m impressive- you get a plaque!\n\nGot ratioed -you get a plaque!\n\nGot dragged through the mud -you get a plaque!\n\nX should look into this fr.",
+      "published_at": "2026-04-23T13:22:34+00:00",
+      "metadata": {
+        "favorites": 4,
+        "retweets": 1,
+        "views": 62,
+        "replies": 2,
+        "screen_name": "seancryptiq",
+        "followers_count": 13717,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.599697+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

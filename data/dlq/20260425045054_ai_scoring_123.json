@@ -1,0 +1,13 @@
+{
+  "id": "20260425045054_ai_scoring_123",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "87fe66d1062872f535a14dcd89fa90c6",
+    "title": "Clay ($202M / $3.1B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:50:54.508449+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

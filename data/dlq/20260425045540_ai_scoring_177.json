@@ -1,0 +1,13 @@
+{
+  "id": "20260425045540_ai_scoring_177",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "a9a25d38fcc2aa3fae45acd75b69413a",
+    "title": "Show HN: Browser Harness \u2013 Gives LLM freedom to complete any browser task"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:40.096807+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

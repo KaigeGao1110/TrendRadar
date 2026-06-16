@@ -1,0 +1,13 @@
+{
+  "id": "20260425045835_ai_scoring_212",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d69fa9ce0ea6e63e997ad551e05f3700",
+    "title": "Sweetgreen ($635M / NYSE: SG)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:58:35.554115+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

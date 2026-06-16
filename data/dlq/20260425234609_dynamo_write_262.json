@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_262",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Why is there no buzz for this year's NFL Draft? The QBs.\n\nBesides Mendoza & Simpson, you've got:\n\n- Sid the Sloth (Beck)\n- Disappointing seniors (Allar & Nussmeier)\n- Obligatory random North Dakota St. QB (Payton)\n- QB who should be a WR (Green)\n- 3 future UFL QBs (Klubnik, Altmyer, Robertson)",
+      "url": "https://x.com/CSOonX/status/2044772020173602834",
+      "source": "twitter_pain",
+      "description": "Why is there no buzz for this year's NFL Draft? The QBs.\n\nBesides Mendoza & Simpson, you've got:\n\n- Sid the Sloth (Beck)\n- Disappointing seniors (Allar & Nussmeier)\n- Obligatory random North Dakota St. QB (Payton)\n- QB who should be a WR (Green)\n- 3 future UFL QBs (Klubnik, Altmyer, Robertson)",
+      "published_at": "2026-04-16T13:36:54+00:00",
+      "metadata": {
+        "favorites": 13,
+        "retweets": 1,
+        "views": 3528,
+        "replies": 2,
+        "screen_name": "CSOonX",
+        "followers_count": 102982,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.149426+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

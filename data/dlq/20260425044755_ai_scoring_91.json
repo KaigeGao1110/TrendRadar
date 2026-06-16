@@ -1,0 +1,13 @@
+{
+  "id": "20260425044755_ai_scoring_91",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "63b2a5adeac9335f489efc60dc4e40c8",
+    "title": "It takes too long to do things in the government"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:55.214046+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

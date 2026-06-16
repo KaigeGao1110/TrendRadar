@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_268",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Absolutely stunning. Someone should build it later this century.",
+      "url": "https://x.com/is_OwenLewis/status/2032257016803348665",
+      "source": "twitter_pain",
+      "description": "Absolutely stunning. Someone should build it later this century.",
+      "published_at": "2026-03-13T00:46:44+00:00",
+      "metadata": {
+        "favorites": 8,
+        "retweets": 0,
+        "views": 576,
+        "replies": 1,
+        "screen_name": "is_OwenLewis",
+        "followers_count": 5040,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.321447+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

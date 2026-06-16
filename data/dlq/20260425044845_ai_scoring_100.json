@@ -1,0 +1,13 @@
+{
+  "id": "20260425044845_ai_scoring_100",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "f4bc9e974d472fcd409282a6bdf788a1",
+    "title": "Microsoft (- / NASDAQ: MSFT)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:45.638792+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

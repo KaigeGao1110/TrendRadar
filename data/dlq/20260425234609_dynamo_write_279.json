@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_279",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I\u2019m looking for a tool that scans and analyzes coins by their CA on Solana.\n\nCan someone recommend a few?",
+      "url": "https://x.com/dext_official/status/2009231447652225226",
+      "source": "twitter_pain",
+      "description": "I\u2019m looking for a tool that scans and analyzes coins by their CA on Solana.\n\nCan someone recommend a few?",
+      "published_at": "2026-01-08T11:51:21+00:00",
+      "metadata": {
+        "favorites": 3,
+        "retweets": 1,
+        "views": 43,
+        "replies": 0,
+        "screen_name": "dext_official",
+        "followers_count": 490,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.627289+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

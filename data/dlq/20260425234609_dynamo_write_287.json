@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_287",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "im so frustrated with myself",
+      "url": "https://x.com/hanarexics/status/2048173281425990135",
+      "source": "twitter_pain",
+      "description": "im so frustrated with myself",
+      "published_at": "2026-04-25T22:52:18+00:00",
+      "metadata": {
+        "favorites": 2,
+        "retweets": 0,
+        "views": 25,
+        "replies": 0,
+        "screen_name": "hanarexics",
+        "followers_count": 454,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.849234+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

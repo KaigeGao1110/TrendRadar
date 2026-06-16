@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_277",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Really cool tool here from Damon with Draft Stacks.  A great way of stacking and grouping tiers of players for a war room and setting up a big board.\n\nCheck it out if you are looking for a tool to do this!",
+      "url": "https://x.com/NFLDraft_Westen/status/2041610467143983306",
+      "source": "twitter_pain",
+      "description": "Really cool tool here from Damon with Draft Stacks.  A great way of stacking and grouping tiers of players for a war room and setting up a big board.\n\nCheck it out if you are looking for a tool to do this!",
+      "published_at": "2026-04-07T20:14:01+00:00",
+      "metadata": {
+        "favorites": 4,
+        "retweets": 1,
+        "views": 787,
+        "replies": 1,
+        "screen_name": "NFLDraft_Westen",
+        "followers_count": 1403,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.571016+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

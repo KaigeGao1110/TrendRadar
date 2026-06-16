@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_240",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Your reply still doesn\u2019t touch a single point in the post. It completely sidesteps the question: why is there no cry of \u201cHinduphobia\u201d in the Kharat case, but the TCS Nashik case instantly gets reframed as \u201cIslamophobia\u201d and community victimhood the moment Muslim accused are involved.\n\nWhen you say \u201call predators are bad\u201d in that context, you\u2019re not being neutral; you\u2019re quietly giving Islam a soft shield. You blur a very specific pattern of grooming and forced conversion into a vague \u201ceveryone is equally bad\u201d line so you never have to name what\u2019s actually happening.\n\n It\u2019s classic whataboutery: bring up another horror, say \u201csee, it\u2019s all the same\u201d, and keep dodging the one pattern you\u2019re clearly uncomfortable calling out.\n\nVERY VERY DISHONEST and manipulative.",
+      "url": "https://x.com/Cloudwatch199/status/2044628786545881550",
+      "source": "twitter_pain",
+      "description": "Your reply still doesn\u2019t touch a single point in the post. It completely sidesteps the question: why is there no cry of \u201cHinduphobia\u201d in the Kharat case, but the TCS Nashik case instantly gets reframed as \u201cIslamophobia\u201d and community victimhood the moment Muslim accused are involved.\n\nWhen you say \u201call predators are bad\u201d in that context, you\u2019re not being neutral; you\u2019re quietly giving Islam a soft shield. You blur a very specific pattern of grooming and forced conversion into a vague \u201ceveryone is equally bad\u201d line so you never have to name what\u2019s actually happening.\n\n It\u2019s classic whataboutery: bring up another horror, say \u201csee, it\u2019s all the same\u201d, and keep dodging the one pattern you\u2019re clearly uncomfortable calling out.\n\nVERY VERY DISHONEST and manipulative.",
+      "published_at": "2026-04-16T04:07:44+00:00",
+      "metadata": {
+        "favorites": 85,
+        "retweets": 20,
+        "views": 3981,
+        "replies": 1,
+        "screen_name": "Cloudwatch199",
+        "followers_count": 30108,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.539270+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

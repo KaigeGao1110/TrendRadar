@@ -1,0 +1,13 @@
+{
+  "id": "20260425045436_ai_scoring_164",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "9c7af93e7b5327e5507d899277ef9f4e",
+    "title": "Nordcraft 2.0: I design agent with full HTML/CSS control and SSR"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:36.496152+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

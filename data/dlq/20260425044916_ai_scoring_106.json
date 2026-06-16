@@ -1,0 +1,13 @@
+{
+  "id": "20260425044916_ai_scoring_106",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "435ce34d5766e8d20dc4dd73e863a2a1",
+    "title": "MatX ($605M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:49:16.475236+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

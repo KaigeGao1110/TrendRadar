@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_249",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "\"Why is there no Dem Project 2025\". Ah, Well, honestly it seems like some people have no idea the scale of the organizations we are up against. That's a deep dive for another time. But, we do need a unified vision for the future. We need a project 2028:",
+      "url": "https://x.com/BrandonLBradfor/status/2045964395377996202",
+      "source": "twitter_pain",
+      "description": "\"Why is there no Dem Project 2025\". Ah, Well, honestly it seems like some people have no idea the scale of the organizations we are up against. That's a deep dive for another time. But, we do need a unified vision for the future. We need a project 2028:",
+      "published_at": "2026-04-19T20:34:58+00:00",
+      "metadata": {
+        "favorites": 35,
+        "retweets": 6,
+        "views": 1993,
+        "replies": 4,
+        "screen_name": "BrandonLBradfor",
+        "followers_count": 27322,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.784308+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

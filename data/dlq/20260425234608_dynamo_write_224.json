@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_224",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "\ud83d\udea8 BREAKING: Andrej Karpathy said someone should build this. 48 hours later it appeared on GitHub. For free.\n\nIt's called Graphify.\n\nBookmark it for later.\n\nKarpathy keeps a /raw folder where he drops papers, tweets, screenshots, and notes. He called for a real product to turn that chaos into structured knowledge. Someone answered.\n\nOne command. Any folder. Full knowledge graph.\n\n/graphify ./raw\n\nWhat comes out:\n\n\u2192 An interactive knowledge graph you can click, search, and filter by community\n\u2192 A plain-language report with god nodes, surprising connections, and suggested questions\n\u2192 An Obsidian vault with backlinked articles (opt-in)\n\u2192 A wiki starting at index.md that any agent can navigate\n\nThe number that matters: 71.5x fewer tokens per query vs reading raw files. On a mixed corpus of repos, papers, and images, average query cost dropped from ~123K tokens to ~1.7K.\n\nThat is not optimization. That is a different paradigm for how AI reasons over large codebases.\n\nFully multimodal. Code in 19 languages via tree-sitter AST. PDFs. Images via Claude Vision. Screenshots, diagrams, whiteboard photos. Everything goes into one graph.\n\nNo vector database. No embeddings. Leiden community detection finds clusters by edge density. The graph topology is the similarity signal.\n\nAuto-syncs as your codebase changes. Git hooks rebuild the graph after every commit and branch switch. SHA256 cache means re-runs only process changed files.\n\nWorks with Claude Code, Codex, OpenCode, OpenClaw, and Factory Droid.\n\npip install graphify && graphify install\n\nMIT License. 100% Opensource.\n\n(Link in the comments)",
+      "url": "https://x.com/eng_khairallah1/status/2041900838080372902",
+      "source": "twitter_pain",
+      "description": "\ud83d\udea8 BREAKING: Andrej Karpathy said someone should build this. 48 hours later it appeared on GitHub. For free.\n\nIt's called Graphify.\n\nBookmark it for later.\n\nKarpathy keeps a /raw folder where he drops papers, tweets, screenshots, and notes. He called for a real product to turn that chaos into structured knowledge. Someone answered.\n\nOne command. Any folder. Full knowledge graph.\n\n/graphify ./raw\n\nWhat comes out:\n\n\u2192 An interactive knowledge graph you can click, search, and filter by community\n\u2192 A plain-language report with god nodes, surprising connections, and suggested questions\n\u2192 An Obsidian vault with backlinked articles (opt-in)\n\u2192 A wiki starting at index.md that any agent can navigate\n\nThe number that matters: 71.5x fewer tokens per query vs reading raw files. On a mixed corpus of repos, papers, and images, average query cost dropped from ~123K tokens to ~1.7K.\n\nThat is not optimization. That is a different paradigm for how AI reasons over large codebases.\n\nFully multimodal. Code in 19 languages via tree-sitter AST. PDFs. Images via Claude Vision. Screenshots, diagrams, whiteboard photos. Everything goes into one graph.\n\nNo vector database. No embeddings. Leiden community detection finds clusters by edge density. The graph topology is the similarity signal.\n\nAuto-syncs as your codebase changes. Git hooks rebuild the graph after every commit and branch switch. SHA256 cache means re-runs only process changed files.\n\nWorks with Claude Code, Codex, OpenCode, OpenClaw, and Factory Droid.\n\npip install graphify && graphify install\n\nMIT License. 100% Opensource.\n\n(Link in the comments)",
+      "published_at": "2026-04-08T15:27:51+00:00",
+      "metadata": {
+        "favorites": 1579,
+        "retweets": 204,
+        "views": 102270,
+        "replies": 58,
+        "screen_name": "eng_khairallah1",
+        "followers_count": 37084,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.043407+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

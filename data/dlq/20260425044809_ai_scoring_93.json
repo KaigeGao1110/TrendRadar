@@ -1,0 +1,13 @@
+{
+  "id": "20260425044809_ai_scoring_93",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "b9876fdd5982cd08039618f8d0897285",
+    "title": "Clasp ($50M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:09.901246+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

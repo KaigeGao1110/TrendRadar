@@ -1,0 +1,13 @@
+{
+  "id": "20260425044613_ai_scoring_72",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "b0173f19db2481e5d3a89d29b55264bf",
+    "title": "Manifold ($8M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:13.019525+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

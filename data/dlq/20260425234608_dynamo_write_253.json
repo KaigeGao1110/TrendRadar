@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_253",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I\u2019m picking B.\n\nBut I wish there was an option between B and C. \n\nI keep emergency cookies in my nightstand and I don\u2019t wanna hear any BS about it. \n\nB looks like he might have something to say about that. \n\nAnd C would just steal my cookies.",
+      "url": "https://x.com/Notwokenow/status/2047303266925523046",
+      "source": "twitter_pain",
+      "description": "I\u2019m picking B.\n\nBut I wish there was an option between B and C. \n\nI keep emergency cookies in my nightstand and I don\u2019t wanna hear any BS about it. \n\nB looks like he might have something to say about that. \n\nAnd C would just steal my cookies.",
+      "published_at": "2026-04-23T13:15:10+00:00",
+      "metadata": {
+        "favorites": 28,
+        "retweets": 1,
+        "views": 1937,
+        "replies": 21,
+        "screen_name": "Notwokenow",
+        "followers_count": 139543,
+        "search_query": "\"I wish there was\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.896547+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

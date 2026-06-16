@@ -1,0 +1,13 @@
+{
+  "id": "20260425045653_ai_scoring_192",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d396805ec4e04311a6e56dd8d24a4e7c",
+    "title": "Truebill ($84M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:56:53.454641+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

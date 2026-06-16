@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_242",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@Arsenal @deel Arteta is deliberately trying to gift Manchester City this trophy. What the hell is Gyokeres doing on the bench? What\u2019s all this nonsense from Mikel Arteta!!! \n\nDamn! I\u2019m so frustrated with this Fake Spanish Man \n\nHe has to leave my club. I don\u2019t care",
+      "url": "https://x.com/EdiriQX/status/2048060899886309408",
+      "source": "twitter_pain",
+      "description": "@Arsenal @deel Arteta is deliberately trying to gift Manchester City this trophy. What the hell is Gyokeres doing on the bench? What\u2019s all this nonsense from Mikel Arteta!!! \n\nDamn! I\u2019m so frustrated with this Fake Spanish Man \n\nHe has to leave my club. I don\u2019t care",
+      "published_at": "2026-04-25T15:25:44+00:00",
+      "metadata": {
+        "favorites": 73,
+        "retweets": 4,
+        "views": 3777,
+        "replies": 13,
+        "screen_name": "EdiriQX",
+        "followers_count": 13902,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.593231+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

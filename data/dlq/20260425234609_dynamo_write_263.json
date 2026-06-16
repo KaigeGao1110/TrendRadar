@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_263",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "For any existing Validators that're actively Validating people, if u are looking for a tool to determine Sybils or bad actors, here's the tool I've built for my own purpose \ud83d\udc40\n\n> Original version of the script was kinda slow and might took hours (had difficult logic), I made some changes without any impact to final outcome. Now it takes from 2 mins and up to 10/15/20 mins (for heavy old wallets)\n\nYou can inspect the code via GPT if u want, to make sure it's clean for ya \n\n>  Bot is free, all you need Alchemi + Ankr API + create TG bot (I'm used to bot instead of web UI)\n\nGitHub > https://t.co/Kg0qoCoUH5",
+      "url": "https://x.com/yichuan_drive/status/2045012492594688384",
+      "source": "twitter_pain",
+      "description": "For any existing Validators that're actively Validating people, if u are looking for a tool to determine Sybils or bad actors, here's the tool I've built for my own purpose \ud83d\udc40\n\n> Original version of the script was kinda slow and might took hours (had difficult logic), I made some changes without any impact to final outcome. Now it takes from 2 mins and up to 10/15/20 mins (for heavy old wallets)\n\nYou can inspect the code via GPT if u want, to make sure it's clean for ya \n\n>  Bot is free, all you need Alchemi + Ankr API + create TG bot (I'm used to bot instead of web UI)\n\nGitHub > https://t.co/Kg0qoCoUH5",
+      "published_at": "2026-04-17T05:32:27+00:00",
+      "metadata": {
+        "favorites": 12,
+        "retweets": 0,
+        "views": 101,
+        "replies": 5,
+        "screen_name": "yichuan_drive",
+        "followers_count": 2186,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.177860+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

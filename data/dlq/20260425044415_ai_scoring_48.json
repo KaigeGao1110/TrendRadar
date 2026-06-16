@@ -1,0 +1,13 @@
+{
+  "id": "20260425044415_ai_scoring_48",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "51d633ec3031b4c201a346ea4460917a",
+    "title": "CodeCanary: Turn session replays into revenue"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:44:15.732957+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

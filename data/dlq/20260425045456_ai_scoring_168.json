@@ -1,0 +1,13 @@
+{
+  "id": "20260425045456_ai_scoring_168",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "9bf808058b539469f9a93e2ffee0753f",
+    "title": "Zepto ($2.4B / $7.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:56.063696+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

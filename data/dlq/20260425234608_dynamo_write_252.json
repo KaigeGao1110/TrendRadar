@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_252",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Yesterday I was on a call with a founder (YC 26\u2019)\n\nThey were so frustrated with not being able to vibe code a good landing page using Claude code, similar to what they see on X and other platforms.\n\nI suggested them to use free framer templates instead.",
+      "url": "https://x.com/praveenisomer/status/2047282164879024523",
+      "source": "twitter_pain",
+      "description": "Yesterday I was on a call with a founder (YC 26\u2019)\n\nThey were so frustrated with not being able to vibe code a good landing page using Claude code, similar to what they see on X and other platforms.\n\nI suggested them to use free framer templates instead.",
+      "published_at": "2026-04-23T11:51:19+00:00",
+      "metadata": {
+        "favorites": 30,
+        "retweets": 1,
+        "views": 3051,
+        "replies": 5,
+        "screen_name": "praveenisomer",
+        "followers_count": 7242,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.867244+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

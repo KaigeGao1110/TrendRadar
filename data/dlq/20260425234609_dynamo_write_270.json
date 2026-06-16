@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_270",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "The You Can Just Build Things commercial was excellent.\n\nWe\u2019re in this strange moment where the gap between idea and execution has completely collapsed. That thing you keep saying someone should build this about? You can build it now.\n\nYou\u2019re not waiting on a developer. You\u2019re not waiting on funding. The only thing between you and the thing you want to exist is deciding to start.\n\nThat\u2019s what made it excellent. It was just true.",
+      "url": "https://x.com/r0ck3t23/status/2020704337819791769",
+      "source": "twitter_pain",
+      "description": "The You Can Just Build Things commercial was excellent.\n\nWe\u2019re in this strange moment where the gap between idea and execution has completely collapsed. That thing you keep saying someone should build this about? You can build it now.\n\nYou\u2019re not waiting on a developer. You\u2019re not waiting on funding. The only thing between you and the thing you want to exist is deciding to start.\n\nThat\u2019s what made it excellent. It was just true.",
+      "published_at": "2026-02-09T03:40:31+00:00",
+      "metadata": {
+        "favorites": 7,
+        "retweets": 2,
+        "views": 589,
+        "replies": 0,
+        "screen_name": "r0ck3t23",
+        "followers_count": 30251,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.377649+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

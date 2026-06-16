@@ -1,0 +1,28 @@
+{
+  "id": "20260425234610_dynamo_write_298",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "WHY IS THERE NO FUCKIGN FOOD IN THIS STUPID HOUSE",
+      "url": "https://x.com/SmokeFaggot2016/status/2047447514811371592",
+      "source": "twitter_pain",
+      "description": "WHY IS THERE NO FUCKIGN FOOD IN THIS STUPID HOUSE",
+      "published_at": "2026-04-23T22:48:21+00:00",
+      "metadata": {
+        "favorites": 1,
+        "retweets": 0,
+        "views": 86,
+        "replies": 1,
+        "screen_name": "SmokeFaggot2016",
+        "followers_count": 41,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:10.170443+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

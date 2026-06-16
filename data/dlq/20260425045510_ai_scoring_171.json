@@ -1,0 +1,13 @@
+{
+  "id": "20260425045510_ai_scoring_171",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "e76f227fd6ad4e3dbe1788fc41446c17",
+    "title": "Hopin ($1.0B / $7.8B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:10.744248+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

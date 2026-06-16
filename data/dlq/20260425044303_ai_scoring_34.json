@@ -1,0 +1,13 @@
+{
+  "id": "20260425044303_ai_scoring_34",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "64ef6e526b22630872345775a0f15508",
+    "title": "Propel ($67M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:03.174118+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

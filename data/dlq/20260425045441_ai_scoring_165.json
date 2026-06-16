@@ -1,0 +1,13 @@
+{
+  "id": "20260425045441_ai_scoring_165",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "0fab16f7b7091f696ab715a83b02502d",
+    "title": "Clipboard Health ($94M / $1.3B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:41.385393+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

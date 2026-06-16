@@ -1,0 +1,13 @@
+{
+  "id": "20260425045554_ai_scoring_180",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "a66a1f6467b18f67746b459af41d6a1f",
+    "title": "incident.io ($101M / $400M)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:54.771285+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

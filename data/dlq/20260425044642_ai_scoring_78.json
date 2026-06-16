@@ -1,0 +1,13 @@
+{
+  "id": "20260425044642_ai_scoring_78",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "e4ace5a2894e52c39d5307108768650f",
+    "title": "DoW Contracting for Startups 101"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:42.369786+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

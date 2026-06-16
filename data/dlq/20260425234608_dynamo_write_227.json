@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_227",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I wish there was such a thing as true perpetual motion, but with a little maintenance and the fact that the magnets will last about a hundred years before they lose power this is about as close as we get.\n\nAnyone need to charge their power tool's lithium batteries? \ud83d\udcaa\ud83d\udcaf\ud83d\udca5\n\n#FreeEnergy",
+      "url": "https://x.com/deepwebslinger/status/2048059587602043018",
+      "source": "twitter_pain",
+      "description": "I wish there was such a thing as true perpetual motion, but with a little maintenance and the fact that the magnets will last about a hundred years before they lose power this is about as close as we get.\n\nAnyone need to charge their power tool's lithium batteries? \ud83d\udcaa\ud83d\udcaf\ud83d\udca5\n\n#FreeEnergy",
+      "published_at": "2026-04-25T15:20:31+00:00",
+      "metadata": {
+        "favorites": 542,
+        "retweets": 126,
+        "views": 39280,
+        "replies": 38,
+        "screen_name": "deepwebslinger",
+        "followers_count": 88396,
+        "search_query": "\"I wish there was\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.127149+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

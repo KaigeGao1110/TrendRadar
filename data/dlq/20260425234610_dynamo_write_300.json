@@ -1,0 +1,28 @@
+{
+  "id": "20260425234610_dynamo_write_300",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "I am so frustrated with the @USPS. On week three of Priority Mail shipment being diverted back to St. Paul, MN only its way to Florida. @WhiteHouse maybe @DOGE needs to investigate th USPS. https://t.co/k0AM2TcLME",
+      "url": "https://x.com/KenJohnsonUSA/status/2047327353966108999",
+      "source": "twitter_pain",
+      "description": "I am so frustrated with the @USPS. On week three of Priority Mail shipment being diverted back to St. Paul, MN only its way to Florida. @WhiteHouse maybe @DOGE needs to investigate th USPS. https://t.co/k0AM2TcLME",
+      "published_at": "2026-04-23T14:50:53+00:00",
+      "metadata": {
+        "favorites": 1,
+        "retweets": 1,
+        "views": 9,
+        "replies": 2,
+        "screen_name": "KenJohnsonUSA",
+        "followers_count": 9034,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:10.260298+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

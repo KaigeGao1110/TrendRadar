@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_223",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Exclusive: the BJP's top Tamil Nadu leader @annamalai_k says his state will not be impacted by the Delimitation Bill. The Centre has officially promised a 50% increase for all states, he tells me. \n\nI counter: verbal assurances do not count as law.  Why is there no mention of the 50% increase in the actual Bill?\n\nFull interview drops soon on @newslaundry @thenewsminute",
+      "url": "https://x.com/SreenivasanJain/status/2045065294125973596",
+      "source": "twitter_pain",
+      "description": "Exclusive: the BJP's top Tamil Nadu leader @annamalai_k says his state will not be impacted by the Delimitation Bill. The Centre has officially promised a 50% increase for all states, he tells me. \n\nI counter: verbal assurances do not count as law.  Why is there no mention of the 50% increase in the actual Bill?\n\nFull interview drops soon on @newslaundry @thenewsminute",
+      "published_at": "2026-04-17T09:02:16+00:00",
+      "metadata": {
+        "favorites": 1990,
+        "retweets": 367,
+        "views": 175732,
+        "replies": 195,
+        "screen_name": "SreenivasanJain",
+        "followers_count": 619683,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.016393+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

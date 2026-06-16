@@ -1,0 +1,13 @@
+{
+  "id": "20260425044215_ai_scoring_25",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "2dfc1f547b7d1f3adc518f802255ca93",
+    "title": "Optimizely ($251M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:42:15.090689+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

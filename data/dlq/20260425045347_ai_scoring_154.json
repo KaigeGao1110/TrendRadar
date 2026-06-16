@@ -1,0 +1,13 @@
+{
+  "id": "20260425045347_ai_scoring_154",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "4161df8ef0e811b7214fea43ba3c230f",
+    "title": "Nexthop AI ($610M / $4.2B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:47.563857+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

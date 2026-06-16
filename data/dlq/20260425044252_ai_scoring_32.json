@@ -1,0 +1,13 @@
+{
+  "id": "20260425044252_ai_scoring_32",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d9b4c01fcd8486fe461c2c1371681d32",
+    "title": "Human API ($37M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:42:52.466071+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

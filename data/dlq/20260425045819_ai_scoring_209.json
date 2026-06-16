@@ -1,0 +1,13 @@
+{
+  "id": "20260425045819_ai_scoring_209",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "db2b8ae8c3068f6555961d4c6ab8a6a0",
+    "title": "Sherpas ($4M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:58:19.458255+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

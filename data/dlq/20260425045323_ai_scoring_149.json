@@ -1,0 +1,13 @@
+{
+  "id": "20260425045323_ai_scoring_149",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "b027e758e6d7f3a19ba12d72a29ddbb0",
+    "title": "Coinbase ($506M / NASDAQ: COIN)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:23.085016+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

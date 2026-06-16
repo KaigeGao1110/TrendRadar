@@ -1,0 +1,13 @@
+{
+  "id": "20260425045515_ai_scoring_172",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "cccb9ad46038154db9d7fd8f8532be96",
+    "title": "Beyond Meat ($124M / NASDAQ: BYND)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:15.641493+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

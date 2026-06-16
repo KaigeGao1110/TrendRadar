@@ -1,0 +1,13 @@
+{
+  "id": "20260425045332_ai_scoring_151",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "32a22671b3ea89a5a5c49721549d7553",
+    "title": "Vercel ($863M / $9.3B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:32.884597+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044726_ai_scoring_86",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "e65f837b1d8418bd40057347a4bac4d4",
+    "title": "SentinelOne ($692M / NYSE: S)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:26.450913+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

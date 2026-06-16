@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_271",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "To be properly vague, they need better tools measure uncertainty. Someone should build that\u2026 https://t.co/rgJWsK9MVO",
+      "url": "https://x.com/Memetic_Theory/status/2047358926971433059",
+      "source": "twitter_pain",
+      "description": "To be properly vague, they need better tools measure uncertainty. Someone should build that\u2026 https://t.co/rgJWsK9MVO",
+      "published_at": "2026-04-23T16:56:20+00:00",
+      "metadata": {
+        "favorites": 7,
+        "retweets": 0,
+        "views": 244,
+        "replies": 0,
+        "screen_name": "Memetic_Theory",
+        "followers_count": 6635,
+        "search_query": "\"someone should build\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.405477+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

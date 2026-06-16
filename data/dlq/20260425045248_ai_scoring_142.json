@@ -1,0 +1,13 @@
+{
+  "id": "20260425045248_ai_scoring_142",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "7f3471773d9d05d6abe954f99b04cb32",
+    "title": "Activision Blizzard (- / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:52:48.812401+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

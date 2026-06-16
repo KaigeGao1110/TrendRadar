@@ -1,0 +1,13 @@
+{
+  "id": "20260425044558_ai_scoring_69",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "cc1acb1777979398b87a825dfeb0b9ec",
+    "title": "TraceUI: Turn any website into on-brand Ads"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:45:58.355626+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

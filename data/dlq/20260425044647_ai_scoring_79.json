@@ -1,0 +1,13 @@
+{
+  "id": "20260425044647_ai_scoring_79",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "189602d8c5e311ff24ade20844ac9a51",
+    "title": "Google Plans to Invest Up to $40B in Anthropic"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:47.280099+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

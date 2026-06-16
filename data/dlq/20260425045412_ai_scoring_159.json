@@ -1,0 +1,13 @@
+{
+  "id": "20260425045412_ai_scoring_159",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "c98c19638ea2651ce58eb75c8320134e",
+    "title": "Oklo ($6M / NYSE: OKLO)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:12.039160+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

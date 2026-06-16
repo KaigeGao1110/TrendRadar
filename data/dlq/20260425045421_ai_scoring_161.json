@@ -1,0 +1,13 @@
+{
+  "id": "20260425045421_ai_scoring_161",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "60640a3bdc656e5d6bed5a59f24010d7",
+    "title": "Emerald AI ($68M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:54:21.817181+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

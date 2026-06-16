@@ -1,0 +1,13 @@
+{
+  "id": "20260425045500_ai_scoring_169",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "34d05a2e096c81e5ebf8803220eda8ae",
+    "title": "Sqreen ($16M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:00.948733+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

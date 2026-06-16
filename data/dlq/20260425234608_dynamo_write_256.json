@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_256",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@CompletedStreet Yeah, it is, and it's why Angelenos are so frustrated with top down policies from Sacramento that encourage demolition of existing buildings to build new, less beautiful buildings. Commercial corridors and apartments blocks are ghost towns, and not that long ago, they were alive.",
+      "url": "https://x.com/esotouric/status/2040973525801152868",
+      "source": "twitter_pain",
+      "description": "@CompletedStreet Yeah, it is, and it's why Angelenos are so frustrated with top down policies from Sacramento that encourage demolition of existing buildings to build new, less beautiful buildings. Commercial corridors and apartments blocks are ghost towns, and not that long ago, they were alive.",
+      "published_at": "2026-04-06T02:03:02+00:00",
+      "metadata": {
+        "favorites": 22,
+        "retweets": 2,
+        "views": 362,
+        "replies": 2,
+        "screen_name": "esotouric",
+        "followers_count": 14744,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.981927+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044824_ai_scoring_96",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "3c0ef9dde50f3a6f1461cca70b68d6df",
+    "title": "RoboForce ($67M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:24.569616+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

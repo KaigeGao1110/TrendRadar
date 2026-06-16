@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_248",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "been looking for a tool that takes Figma designs straight to a live site?\n\nFigma Make is it. tried a lot of tools, this one actually fits\n\ndesign in Figma \u2192 build with Figma Make\nthat\u2019s the whole workflow now https://t.co/iVEPsqRlRp",
+      "url": "https://x.com/tranmautritam/status/2036800694163063166",
+      "source": "twitter_pain",
+      "description": "been looking for a tool that takes Figma designs straight to a live site?\n\nFigma Make is it. tried a lot of tools, this one actually fits\n\ndesign in Figma \u2192 build with Figma Make\nthat\u2019s the whole workflow now https://t.co/iVEPsqRlRp",
+      "published_at": "2026-03-25T13:41:42+00:00",
+      "metadata": {
+        "favorites": 42,
+        "retweets": 4,
+        "views": 4533,
+        "replies": 6,
+        "screen_name": "tranmautritam",
+        "followers_count": 29280,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.757259+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

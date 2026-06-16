@@ -1,0 +1,28 @@
+{
+  "id": "20260425234608_dynamo_write_251",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "WOW! Grok is really killing it.\n\nI\u2019m having fun generating videos and images with @grok imagine.  \n\nIf you\u2019re looking for a tool, try Grok first  you\u2019ll probably cancel your other subscriptions immediately.\n\nbtw sounds on\ud83d\udd0a https://t.co/H6BaKo5FsX",
+      "url": "https://x.com/OzzyChina/status/2033497259351106048",
+      "source": "twitter_pain",
+      "description": "WOW! Grok is really killing it.\n\nI\u2019m having fun generating videos and images with @grok imagine.  \n\nIf you\u2019re looking for a tool, try Grok first  you\u2019ll probably cancel your other subscriptions immediately.\n\nbtw sounds on\ud83d\udd0a https://t.co/H6BaKo5FsX",
+      "published_at": "2026-03-16T10:55:01+00:00",
+      "metadata": {
+        "favorites": 31,
+        "retweets": 0,
+        "views": 2976,
+        "replies": 29,
+        "screen_name": "OzzyChina",
+        "followers_count": 15805,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:08.840218+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

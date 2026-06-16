@@ -1,0 +1,13 @@
+{
+  "id": "20260425044701_ai_scoring_82",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "796c0c235f7b2a5d8d277e74ca558280",
+    "title": "Asendia AI: AI Recruiters for Staffing Agencies and Enterprise"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:01.965476+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044652_ai_scoring_80",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "e64b17b56077ba14da3ec7ba93497810",
+    "title": "Loft ($888M / $2.9B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:52.177917+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

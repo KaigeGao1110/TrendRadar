@@ -1,0 +1,28 @@
+{
+  "id": "20260425234610_dynamo_write_307",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@DannPetty @yahyavision I\u2019ll check QuiverAI out. \nBeen looking for a tool to generate illustrations.",
+      "url": "https://x.com/Ebenspiration/status/2048043121997430874",
+      "source": "twitter_pain",
+      "description": "@DannPetty @yahyavision I\u2019ll check QuiverAI out. \nBeen looking for a tool to generate illustrations.",
+      "published_at": "2026-04-25T14:15:05+00:00",
+      "metadata": {
+        "favorites": 0,
+        "retweets": 0,
+        "views": 243,
+        "replies": 2,
+        "screen_name": "Ebenspiration",
+        "followers_count": 179,
+        "search_query": "\"looking for a tool\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:10.455291+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044945_ai_scoring_111",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "25193800e53a28662467edb240cfd8f7",
+    "title": "360 View (- / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:49:45.817556+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

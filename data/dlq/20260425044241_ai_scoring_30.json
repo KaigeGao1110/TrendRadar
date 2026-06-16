@@ -1,0 +1,13 @@
+{
+  "id": "20260425044241_ai_scoring_30",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "5b83f5d880368cc873e3864087046e0a",
+    "title": "Avantos ($35M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:42:41.794382+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

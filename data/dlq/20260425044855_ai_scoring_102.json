@@ -1,0 +1,13 @@
+{
+  "id": "20260425044855_ai_scoring_102",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "b13f7bc67361a650ce739b3027c57bea",
+    "title": "XCath ($46M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:48:55.424750+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

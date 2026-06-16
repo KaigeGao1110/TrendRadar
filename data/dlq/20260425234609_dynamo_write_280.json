@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_280",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "What is least helpful to \u201c the overall cause\u201d is Trump\u2019s relentless truth social posts attacking a 2500 year civilization. \n\nIran will never respond favorably to Trumps threats. \nWhy is there NO ONE in the Administration seeking career diplomats with Iranian knowledge advising Trump ?\n\nOh.. I get it .. they were all fired\u2026  \n\nThis entire episode is a monumental strategic blunder .\n\nAnd relying on Jared Kurshner  and Steve Whitkoff , two real estate developers with significant investments in the countries that oppose Iran to negotiate a peace settlement with Iran is the ultimate oxymoron. \n\nIt\u2019s a nightmare Trump created. \nAnd if Congress does not immediately get involved with hearings addressing this Iran War - we all lose .,,",
+      "url": "https://x.com/Monterray1615/status/2047092906536694165",
+      "source": "twitter_pain",
+      "description": "What is least helpful to \u201c the overall cause\u201d is Trump\u2019s relentless truth social posts attacking a 2500 year civilization. \n\nIran will never respond favorably to Trumps threats. \nWhy is there NO ONE in the Administration seeking career diplomats with Iranian knowledge advising Trump ?\n\nOh.. I get it .. they were all fired\u2026  \n\nThis entire episode is a monumental strategic blunder .\n\nAnd relying on Jared Kurshner  and Steve Whitkoff , two real estate developers with significant investments in the countries that oppose Iran to negotiate a peace settlement with Iran is the ultimate oxymoron. \n\nIt\u2019s a nightmare Trump created. \nAnd if Congress does not immediately get involved with hearings addressing this Iran War - we all lose .,,",
+      "published_at": "2026-04-22T23:19:16+00:00",
+      "metadata": {
+        "favorites": 3,
+        "retweets": 0,
+        "views": 202,
+        "replies": 1,
+        "screen_name": "Monterray1615",
+        "followers_count": 391,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.654285+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

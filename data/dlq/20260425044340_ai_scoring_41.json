@@ -1,0 +1,13 @@
+{
+  "id": "20260425044340_ai_scoring_41",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "4411e30432649d757272459c2b5e2695",
+    "title": "Beautiful.ai ($45M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:40.582233+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

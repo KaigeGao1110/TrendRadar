@@ -1,0 +1,13 @@
+{
+  "id": "20260425045049_ai_scoring_122",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "7d7d7fecad04edc35113c4512da34fd6",
+    "title": "Cartography Biosciences ($124M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:50:49.615779+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

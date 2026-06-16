@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_259",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "Abandoned \ud83d\ude07 BAMBI #A383564, 1 yr old in dire straits @ Corpus Christi AC\u203c\ufe0f\nSweet &amp; gentle girl like her namesake, why is there no interest in her\u2049\ufe0f\nPLZ help save her w/ NEEDED PLEDGES\n#RESCUE #FOSTER\nWhy Not #ADOPT?\nShe\u2019s a true \ud83d\udc8e to be treasured! https://t.co/rns8T6JMla",
+      "url": "https://x.com/SamfromSpain/status/2045144977290744272",
+      "source": "twitter_pain",
+      "description": "Abandoned \ud83d\ude07 BAMBI #A383564, 1 yr old in dire straits @ Corpus Christi AC\u203c\ufe0f\nSweet &amp; gentle girl like her namesake, why is there no interest in her\u2049\ufe0f\nPLZ help save her w/ NEEDED PLEDGES\n#RESCUE #FOSTER\nWhy Not #ADOPT?\nShe\u2019s a true \ud83d\udc8e to be treasured! https://t.co/rns8T6JMla",
+      "published_at": "2026-04-17T14:18:54+00:00",
+      "metadata": {
+        "favorites": 16,
+        "retweets": 15,
+        "views": 132,
+        "replies": 1,
+        "screen_name": "SamfromSpain",
+        "followers_count": 1923,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.063513+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

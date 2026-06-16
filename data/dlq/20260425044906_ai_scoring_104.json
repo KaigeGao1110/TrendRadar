@@ -1,0 +1,13 @@
+{
+  "id": "20260425044906_ai_scoring_104",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "65d0535539a793a557fb500058162337",
+    "title": "OpenAI ($167.9B / $840.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:49:06.676390+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

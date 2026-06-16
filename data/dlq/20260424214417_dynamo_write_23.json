@@ -1,0 +1,30 @@
+{
+  "id": "20260424214417_dynamo_write_23",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "yc",
+    "item": {
+      "name": "Eden Robotics",
+      "one_liner": "Autonomous services for humanity.",
+      "batch": "P26",
+      "industry": [
+        "Industrials",
+        "Manufacturing and Robotics"
+      ],
+      "tags": [
+        "Artificial Intelligence",
+        "Robotic Process Automation",
+        "Robotics",
+        "Automation"
+      ],
+      "url": "https://www.ycombinator.com/companies/eden-robotics",
+      "team_size": 4,
+      "status": "Active"
+    }
+  },
+  "error": "An error occurred (ValidationException) when calling the PutItem operation: One or more parameter values were invalid: Missing the key event_type#first_seen_date in the item",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 53, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 134, in save_event\n    self.table.put_item(Item=event)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/home/kaige/Projects/TrendRadar/.venv/lib/python3.13/site-packages/boto3/resources/factory.py\", line 581, in do_action\n    response = action(self, *args, **kwargs)\n  File \"/home/kaige/Projects/TrendRadar/.venv/lib/python3.13/site-packages/boto3/resources/action.py\", line 88, in __call__\n    response = getattr(parent.meta.client, operation_name)(*args, **params)\n  File \"/home/kaige/Projects/TrendRadar/.venv/lib/python3.13/site-packages/botocore/client.py\", line 606, in _api_call\n    return self._make_api_call(operation_name, kwargs)\n           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/kaige/Projects/TrendRadar/.venv/lib/python3.13/site-packages/botocore/context.py\", line 123, in wrapper\n    return func(*args, **kwargs)\n  File \"/home/kaige/Projects/TrendRadar/.venv/lib/python3.13/site-packages/botocore/client.py\", line 1094, in _make_api_call\n    raise error_class(parsed_response, operation_name)\nbotocore.exceptions.ClientError: An error occurred (ValidationException) when calling the PutItem operation: One or more parameter values were invalid: Missing the key event_type#first_seen_date in the item\n",
+  "failed_at": "2026-04-24T21:44:17.390030+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

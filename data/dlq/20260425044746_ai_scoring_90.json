@@ -1,0 +1,13 @@
+{
+  "id": "20260425044746_ai_scoring_90",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "a32cdf50fbea0372c9eb7ceaf9725bf8",
+    "title": "Reddit ($1.3B / NYSE: RDDT)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:47:46.003920+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

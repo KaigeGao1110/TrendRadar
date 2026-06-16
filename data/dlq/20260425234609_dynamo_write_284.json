@@ -1,0 +1,28 @@
+{
+  "id": "20260425234609_dynamo_write_284",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@vigilanthwip Why is there no shadow",
+      "url": "https://x.com/Spiderman31216/status/2047280600370004040",
+      "source": "twitter_pain",
+      "description": "@vigilanthwip Why is there no shadow",
+      "published_at": "2026-04-23T11:45:06+00:00",
+      "metadata": {
+        "favorites": 2,
+        "retweets": 0,
+        "views": 568,
+        "replies": 2,
+        "screen_name": "Spiderman31216",
+        "followers_count": 271,
+        "search_query": "\"why is there no\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:09.764229+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

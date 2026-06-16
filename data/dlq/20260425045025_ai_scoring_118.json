@@ -1,0 +1,13 @@
+{
+  "id": "20260425045025_ai_scoring_118",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "7a429016c5cf825d540144378de79fd9",
+    "title": "Squarespace ($579M / $10.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:50:25.113785+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

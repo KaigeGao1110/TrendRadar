@@ -1,0 +1,13 @@
+{
+  "id": "20260425045352_ai_scoring_155",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "242119b3f21d8b1f6ef1636f616f22fa",
+    "title": "Chime ($2.2B / NASDAQ: CHYM)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:52.480497+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

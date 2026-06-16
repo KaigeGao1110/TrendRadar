@@ -1,0 +1,13 @@
+{
+  "id": "20260425045525_ai_scoring_174",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "ff0381fd13e6be453e531eeb57004d5e",
+    "title": "ByteDance ($8.1B / $180.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:25.427248+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

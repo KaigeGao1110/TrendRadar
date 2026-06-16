@@ -1,0 +1,13 @@
+{
+  "id": "20260425044608_ai_scoring_71",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "0124380f9f4b6acc7ac6006d2ff56381",
+    "title": "Fly.io ($111M / $467M)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:08.136654+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

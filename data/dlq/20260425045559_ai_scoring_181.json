@@ -1,0 +1,13 @@
+{
+  "id": "20260425045559_ai_scoring_181",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "ad0e8ff838d9fa15fccd0685f10059d8",
+    "title": "CSS as a Query Language"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:55:59.657104+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

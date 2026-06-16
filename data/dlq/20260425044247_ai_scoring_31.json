@@ -1,0 +1,13 @@
+{
+  "id": "20260425044247_ai_scoring_31",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "8dd3c05a5bf4d0ce1eba3a28d89a45c2",
+    "title": "Upvest ($208M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:42:47.138624+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

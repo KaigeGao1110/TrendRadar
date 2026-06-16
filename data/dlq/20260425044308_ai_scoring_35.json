@@ -1,0 +1,13 @@
+{
+  "id": "20260425044308_ai_scoring_35",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d0ce84b7c7192a162b5affeb4050e458",
+    "title": "Labelbox ($189M / $1.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:43:08.504643+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425045318_ai_scoring_148",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "c7595d2fe7822449d7766c012b51515d",
+    "title": "Understood Care ($8M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:18.174194+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

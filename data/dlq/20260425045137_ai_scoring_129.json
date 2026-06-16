@@ -1,0 +1,13 @@
+{
+  "id": "20260425045137_ai_scoring_129",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "f55d2faab8454895673ae6b2132bbd7c",
+    "title": "Glean ($765M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:51:37.906705+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044435_ai_scoring_52",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "58d7c81df3637f7c582b2bef3fa54141",
+    "title": "Dash0 ($155M / $1.0B)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:44:35.283393+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425044622_ai_scoring_74",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "c9db59f93c04d3e462ef324c95d882c3",
+    "title": "Nubank ($2.3B / NYSE: NU)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:46:22.797677+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

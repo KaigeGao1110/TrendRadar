@@ -1,0 +1,13 @@
+{
+  "id": "20260425045357_ai_scoring_156",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "ba9b8ac55a2dcd75156878b97657d9d0",
+    "title": "Shackleton Finance (- / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:53:57.368312+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

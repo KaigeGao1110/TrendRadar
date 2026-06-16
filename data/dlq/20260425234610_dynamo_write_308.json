@@ -1,0 +1,28 @@
+{
+  "id": "20260425234610_dynamo_write_308",
+  "task_type": "dynamo_write",
+  "payload": {
+    "source": "twitter_pain",
+    "item": {
+      "title": "@LinkedIn so frustrated with your level of service been on linked in for decades and can\u2019t get help to restore my account",
+      "url": "https://x.com/manzano1776/status/2047365670396985747",
+      "source": "twitter_pain",
+      "description": "@LinkedIn so frustrated with your level of service been on linked in for decades and can\u2019t get help to restore my account",
+      "published_at": "2026-04-23T17:23:08+00:00",
+      "metadata": {
+        "favorites": 0,
+        "retweets": 0,
+        "views": 5,
+        "replies": 1,
+        "screen_name": "manzano1776",
+        "followers_count": 20,
+        "search_query": "\"so frustrated with\""
+      }
+    }
+  },
+  "error": "'str' object has no attribute 'isoformat'",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/kaige/Projects/TrendRadar/main.py\", line 55, in _process_source_data\n    result = dynamo_client.save_event(\n        source=source,\n    ...<5 lines>...\n        published_at=published_at,\n    )\n  File \"/home/kaige/Projects/TrendRadar/storage/dynamo.py\", line 125, in save_event\n    \"published_at\": published_at.isoformat(),\n                    ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'isoformat'. Did you mean: 'format'?\n",
+  "failed_at": "2026-04-25T23:46:10.483225+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}

@@ -1,0 +1,13 @@
+{
+  "id": "20260425045722_ai_scoring_198",
+  "task_type": "ai_scoring",
+  "payload": {
+    "event_id": "d763bd83550b4be8e4eda04636360387",
+    "title": "Lio ($33M / -)"
+  },
+  "error": "OpenAI returned unparseable response",
+  "traceback": "",
+  "failed_at": "2026-04-25T04:57:22.840709+00:00",
+  "retry_count": 0,
+  "last_retried_at": null
+}
